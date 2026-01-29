@@ -2,16 +2,16 @@
 
 | Tool Type | Name | Tags | Open Source | Platform | Input | Output Format | Output Size | Processing Time | Entry Guide | Notes |
 |----------|------|------|-------------|----------|-------|---------------|-------------|-----------------|-------------|------|
-| Trainer + Viewer | **Luma AI** | trainer, online, commercial, web-view | No | Cloud | Video / Images | Proprietary, `.ply` (mesh / point cloud export) | Medium | Medium | Easy | Fully automated cloud-based pipeline |
-| Trainer + Viewer | **Teleport** | trainer, online, commercial, immersive-view | No | Cloud | Video / Images | Proprietary | Medium | Low | Easy | Desktop and VR-oriented cloud-based pipeline |
+| Trainer + Viewer | **Luma AI** | trainer, online, commercial, web-view | No | Cloud | Video / Images | Proprietary, `.ply` (mesh / point cloud export) | Low | Medium | Easy | Fully automated cloud-based pipeline |
+| Trainer + Viewer | **Teleport** | trainer, online, commercial, immersive-view | No | Cloud | Video / Images | Proprietary | Variable | Medium | Easy | Desktop and VR-oriented cloud-based pipeline |
 | Trainer + Viewer | **Polycam** | trainer, online, mobile, commercial, web-view | No | iOS / Android / Cloud | Video / Images | Multiple 3D formats | Medium | Low | Easy | Mobile and cloud-enabled GS pipeline |
 | Trainer + Viewer | **Postshot** | trainer, desktop, commercial, desktop-view | No | Windows | Images / Video | `.ply`, `.spz`, `.psht` | High | Medium | Medium | Local desktop GS training |
 | Trainer + Viewer | **Scaniverse** | trainer, mobile, commercial, immersive-view | No | iOS / Android | Video | `.ply`, `.spz` | Medium | Low | Easy | On-device GS capture and VR viewing |
-| Trainer | **Inria Gaussian Splatting** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | Medium | High | Medium | Reference open-source implementation |
-| Trainer | **gsplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | Variable | High | Medium | High-performance PyTorch library for GS |
-| Trainer + Viewer | **Nerfstudio** | trainer, desktop, open-source, framework | Yes | Windows / Linux | Images / Video / COLMAP | `.ply` | Variable | Variable | Medium | Modular framework |
-| Trainer | **OpenSplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images (COLMAP / Nerfstudio) | `.ply` | Variable | Medium | Medium | C++ native GS implementation based on LibTorch |
-| Trainer + Viewer | **LichtFeld Studio** | trainer, desktop, open-source | Yes | Windows / Linux | Images / Video / COLMAP | `.ply`, `.spz`, `.lfs` | Medium | Medium | Medium | Optimized C++ trainer |
+| Trainer | **Inria Gaussian Splatting** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | High | High | Medium | Reference open-source implementation |
+| Trainer | **gsplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | High | Medium | Medium | High-performance PyTorch library for GS |
+| Trainer + Viewer | **Nerfstudio** | trainer, desktop, open-source, framework | Yes | Windows / Linux | Images / Video / COLMAP | `.ply` | Medium | Low | Medium | Modular framework |
+| Trainer | **OpenSplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images (COLMAP / Nerfstudio) | `.ply` | Medium | Medium | Medium | C++ native GS implementation based on LibTorch |
+| Trainer + Viewer | **LichtFeld Studio** | trainer, desktop, open-source | Yes | Windows / Linux | Images / Video / COLMAP | `.ply`, `.spz`, `.lfs` | High | Medium | Medium | Optimized C++ trainer |
 
 ## Notes on the Trainers Table
 
@@ -24,7 +24,7 @@
 ### Teleport
 - Designed primarily for immersive and VR-oriented visualization.
 - Free plan allows up to **5 models**; **`.ply` export** only in paid plan.
-- Supports **lightweight (0.25 M)** models for fast previews and **full (~2 M)** models with **LOD** for immersive VR viewing.
+- Supports **lightweight (0.25 M)** models for fast previews and **full (~2 M)** models with **LOD** for immersive VR viewing.
 
 ### Polycam
 - Mobile 3D capture app (iOS/Android) for photogrammetry, LiDAR scans, and 360° captures, with on-device editing and sharing.  
