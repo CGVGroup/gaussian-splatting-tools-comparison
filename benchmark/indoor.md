@@ -22,7 +22,7 @@ All implementations were trained under the following conditions:
 - Default hyper-parameters were used unless explicitly modified for reproducibility
 - Exported models were converted to `.ply` format 
 
-For LichtFeld Studio, the MCMC densification pipeline was enabled.
+For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ---
 
