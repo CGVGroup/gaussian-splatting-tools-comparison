@@ -35,7 +35,7 @@ Tools are grouped using collapsible sections for readability in GitHub.
 |----------|------|------|-------------|----------|-------|---------------|-------------|-----------------|-------------|------|
 | Trainer | **Inria Gaussian Splatting** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | High | High | Medium | Reference open-source implementation |
 | Trainer | **gsplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | High | Medium | Medium | High-performance PyTorch library for GS |
-| Trainer + Viewer | **Nerfstudio** | trainer, desktop, open-source, framework | Yes | Windows / Linux | Images / Video / COLMAP | `.ply` | Medium | Low | Medium | Modular framework |
+| Trainer + Viewer | **Nerfstudio** | trainer, desktop, open-source, framework | Yes | Windows / Linux | Images / Video / COLMAP | `.ply` | Low | Low | Medium | Modular framework |
 | Trainer | **OpenSplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images (COLMAP / Nerfstudio) | `.ply` | Medium | Medium | Medium | C++ native GS implementation based on LibTorch |
 | Trainer + Viewer | **LichtFeld Studio** | trainer, desktop, open-source | Yes | Windows / Linux | Images / Video / COLMAP | `.ply`, `.spz`, `.lfs` | High | Medium | Medium | Optimized C++ trainer |
 
