@@ -3,6 +3,8 @@
 This document provides a qualitative overview of Gaussian Splatting training pipelines, including both commercial and open-source tools.  
 Tools are grouped using collapsible sections for readability in GitHub.
 
+Qualitative labels such as *Low*, *Medium*, and *High* reflect empirical observations gathered during experimentation and should be interpreted comparatively rather than as absolute thresholds.
+
 ---
 
 ## 📦 Commercial Trainers
