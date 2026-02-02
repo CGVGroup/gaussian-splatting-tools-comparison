@@ -1,14 +1,12 @@
 # Indoor Dataset — Benchmark Results
 
-This section reports quantitative benchmarking results for several open-source
-Gaussian Splatting implementations evaluated on the same indoor dataset.
+This section reports quantitative benchmarking results for several open-source Gaussian Splatting implementations evaluated on the same indoor dataset.
 
 ---
 
 ## Dataset Description
 
-The indoor dataset consists of **151 RGB frames** extracted from the following
-video sequence:
+The indoor dataset consists of **151 frames** extracted from the following video sequence:
 
 https://huggingface.co/datasets/DL3DV/DL3DV-10K-Sample/tree/main/5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00
 
@@ -16,16 +14,15 @@ https://huggingface.co/datasets/DL3DV/DL3DV-10K-Sample/tree/main/5c3af581028068a
 
 ## Experimental Protocol
 
-All implementations were trained using:
+All implementations were trained under the following conditions:
 
 - **30,000 optimization iterations**
 - Same image set (151 frames)
-- Single-GPU execution (NVIDIA RTX 4060)
-- Default hyper-parameters unless otherwise specified by each framework
-- Exported models converted to `.ply` format
+- Training executed on a **single NVIDIA RTX 4060 GPU**
+- Default hyper-parameters were used unless explicitly modified for reproducibility
+- Exported models were converted to `.ply` format 
 
 For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
-
 ---
 
 ## Quantitative Results — Indoor Dataset
