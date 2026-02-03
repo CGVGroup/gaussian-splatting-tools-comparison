@@ -97,6 +97,8 @@ The raw reconstruction produced by Inria shows:
 ![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
 ![Inria raw view 2](../media/indoor/inria/raw/inria_00.png)
 
+---
+
 ### gsplat — Raw Output
 
 The gsplat reconstruction exhibits:
@@ -108,6 +110,8 @@ The gsplat reconstruction exhibits:
 
 ![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_00.png)
 ![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_01.png)
+
+---
 
 ### OpenSplat — Raw Output
 
@@ -121,6 +125,8 @@ The OpenSplat model shows:
 ![OpenSplat raw view 1](../media/indoor/opensplat/raw/opensplat_00.png)
 ![OpenSplat raw view 2](../media/indoor/opensplat/raw/opensplat_01.png)
 
+---
+
 ### Nerfstudio — Raw Output
 
 Nerfstudio’s raw model presents:
@@ -132,6 +138,8 @@ Nerfstudio’s raw model presents:
 
 ![Nerfstudio raw view 1](../media/indoor/nerfstudio/raw/nerfstudio_00.png)
 ![Nerfstudio raw view 2](../media/indoor/nerfstudio/raw/nerfstudio_01.png)
+
+---
   
 ### LichtFeld Studio — Raw Output
 
@@ -144,6 +152,8 @@ The LichtFeld Studio output contains:
 
 ![Lichtfeld raw view 1](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
 ![Lichtfeld raw view 2](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
+
+---
 
 ### Summary of Visual Findings (Before Cleaning)
 
