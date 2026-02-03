@@ -158,14 +158,10 @@ The LichtFeld Studio output contains:
 
 Across all raw reconstructions:
 
-- **Inria** and **OpenSplat** generated comparatively **more compact scene
-  volumes**.
-- **gsplat** and **LichtFeld Studio** exhibited the **largest spatial spread**
-  and most pronounced peripheral artifacts.
-- **Nerfstudio** produced the sparsest models, but with **isolated distant
-  clusters** affecting global compactness.
-- All pipelines benefit significantly from a dedicated cleaning stage prior to
-  deployment in real-time or immersive applications.
+- **Inria** and **OpenSplat** generated comparatively **more compact scene volumes**.
+- **gsplat** and **LichtFeld Studio** exhibited the **largest spatial spread** and most pronounced peripheral artifacts.
+- **Nerfstudio** produced the sparsest models, but with **isolated distant clusters** affecting global compactness.
+- All pipelines benefit significantly from a dedicated cleaning stage prior to deployment in real-time or immersive applications.
 
 ---
 
@@ -195,3 +191,121 @@ In particular, the following operations were applied:
 This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
 
 </details>
+
+---
+
+## Scene Cleaning Evaluation — Indoor Dataset
+
+<details open>
+<summary><strong>Show / Hide Section</strong></summary>
+
+<br>
+
+This table quantifies the impact of SuperSplat-based cleaning by comparing each raw reconstruction against its cleaned counterpart.
+
+| Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
+|------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
+| Inria GS | 867,000 | 866,617 | −0.04% | 231 | 209.9 | −9.1% |
+| gsplat | 1,000,000 | 876,117 | −12.4% | 230 | 201.9 | −12.2% |
+| OpenSplat | 510,000 | 273,368 | −46.4% | 123 | 66.2 | −46.2% |
+| Nerfstudio | 170,000 | 126,841 | −25.4% | 43 | 30.7 | −28.6% |
+| LichtFeld Studio | 1,000,000 | 800,578 | −19.9% | 242 | 193.9 | −19.9% |
+
+## Observations
+
+- **OpenSplat** shows the largest reduction after cleaning (≈ −46 % in both Gaussian count and file size), indicating a substantial amount of spatial outliers and oversized primitives in the raw reconstruction.
+
+- **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining a compact representation, suggesting that its training pipeline already performs partial pruning but still benefits from post-processing.
+
+- **gsplat** and **LichtFeld Studio** undergo reductions of approximately 20 %, reflecting aggressive densification during training and the presence of removable background Gaussians in the raw outputs.
+
+- **Inria GS** remains nearly unchanged after cleaning, which indicates that its reference implementation already produces structurally conservative and stable reconstructions with limited far-field noise.
+
+</details>
+
+---
+
+## 🔍 Visual Inspection — After Cleaning
+
+This section focuses exclusively on the **post-cleaning appearance** of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.
+
+### Inria Gaussian Splatting — Cleaned Output
+
+The cleaned Inria reconstruction appears:
+
+- highly compact and centered around the main scene volume,
+- with most peripheral floating splats removed,
+- shelves, furniture, and table geometry remain stable and well-defined,
+- minimal degradation of interior details after filtering.
+
+Residual artifacts persist mainly at the extreme lateral boundaries but are significantly reduced compared to the raw output.
+
+---
+
+### gsplat — Cleaned Output
+
+The cleaned gsplat model shows:
+
+- a noticeably tighter bounding volume,
+- strong reduction of radial streak artifacts,
+- improved readability of shelves and decorative objects,
+- preserved fine details on pillows and tableware.
+
+Some peripheral noise remains visible along the scene edges, but in a much thinner halo.
+
+---
+
+### OpenSplat — Cleaned Output
+
+OpenSplat exhibits one of the most striking improvements after cleaning:
+
+- the scene becomes sharply delimited,
+- most exterior ghost structures disappear,
+- the main furniture block appears well isolated,
+- remaining splats are concentrated almost exclusively inside the true scene envelope.
+
+Compared to its raw version, the cleaned output feels **much more surgical and minimal**, with very little leftover peripheral clutter.
+
+---
+
+### Nerfstudio — Cleaned Output
+
+The cleaned Nerfstudio reconstruction is:
+
+- extremely compact,
+- tightly cropped around the shelves and table,
+- nearly free of floating splats outside the scene,
+- with crisp silhouettes at the borders.
+
+The density appears visibly lower than other methods, but structural elements such as chairs, table surfaces, and stacked cushions remain recognizable.
+
+---
+
+### LichtFeld Studio — Cleaned Output
+
+LichtFeld Studio’s cleaned result shows:
+
+- a significant tightening of the scene volume,
+- reduction of external halos,
+- preservation of the interior spatial layout,
+- dense accumulation of splats inside the furniture cluster.
+
+While some peripheral noise is still visible at the edges, the reconstruction remains visually rich and continuous.
+
+---
+
+## Summary of Visual Findings (After Cleaning)
+
+After cleaning, the five pipelines exhibit different balances between noise removal, spatial compactness, and reconstruction density:
+
+- **Inria GS** produces a highly contained reconstruction volume, with only minor residual artifacts visible near the extreme lateral boundaries.
+
+- **OpenSplat** yields a compact and sharply delimited scene, although small remnants of peripheral clutter can still be observed at the edges.
+
+- **Nerfstudio** maintains a relatively compact reconstruction while preserving the main structural elements such as chairs, table surfaces, and stacked cushions.
+
+- **gsplat** and **LichtFeld Studio** retain denser interior regions and show thin halos of residual noise near the scene boundaries, indicating a more conservative removal of peripheral Gaussians.
+
+---
+
+
