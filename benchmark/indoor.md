@@ -94,6 +94,13 @@ The raw reconstruction produced by Inria shows:
 - peripheral filament-like structures,
 - moderate outliers surrounding the main reconstruction.
 
+## Inria GS — Raw Reconstruction
+
+![](../media/indoor/inria/raw/images/inria_00.jpg)
+
+![](../media/indoor/inria/raw/images/inria_01.jpg)
+
+
 ### gsplat — Raw Output
 
 The gsplat reconstruction exhibits:
