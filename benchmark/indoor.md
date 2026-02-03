@@ -96,10 +96,7 @@ The raw reconstruction produced by Inria shows:
 
 ## Inria GS — Raw Reconstruction
 
-![](../media/indoor/inria/raw/images/inria_00.png)
-
-![](../media/indoor/inria/raw/images/inria_01.png)
-
+![](../media/indoor/inria/raw/inria_00.png)
 
 ### gsplat — Raw Output
 
