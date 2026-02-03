@@ -28,6 +28,11 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ## Quantitative Results — Indoor Dataset
 
+<details open>
+<summary><strong>Show / Hide Section</strong></summary>
+
+<br>
+
 | Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
 | Inria GS | 231 | 867,000 | 26.6 | 150 | 17.3 | Adaptive density control | [How-To](../tools/inria.md) |
@@ -46,23 +51,19 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 - The original **Inria GS** reference implementation remained the slowest, although it produced structurally stable reconstructions.
 
+</details>
+
 ---
 
 ## Qualitative Evaluation Protocol
 
-Beyond quantitative benchmarking, a qualitative evaluation was conducted on all
-reconstructed scenes.
+Beyond quantitative benchmarking, a qualitative evaluation was conducted on all reconstructed scenes.
 
-Each raw `.ply` output was first inspected visually using **SuperSplat** in
-order to assess noise distribution, structural coherence, and rendering
-stability.
+Each raw `.ply` output was first inspected visually using **SuperSplat** in order to assess noise distribution, structural coherence, and rendering stability.
 
-Subsequently, a consistent scene-cleaning procedure was applied to all models.
-The cleaned reconstructions were then re-inspected under the same conditions to
-enable direct visual comparison between raw and post-processed outputs.
+Subsequently, a consistent scene-cleaning procedure was applied to all models. The cleaned reconstructions were then re-inspected under the same conditions to enable direct visual comparison between raw and post-processed outputs.
 
-This two-stage inspection protocol supports the qualitative analyses and visual
-materials presented in the following sections.
+This two-stage inspection protocol supports the qualitative analyses and visual materials presented in the following sections.
 
 ## Visual Inspection — Raw Reconstructions (Before Cleaning)
 
@@ -71,8 +72,7 @@ materials presented in the following sections.
 
 <br>
 
-Before applying any post-processing or pruning, all reconstructed Gaussian
-Splatting models were visually inspected using **SuperSplat Editor**.
+Before applying any post-processing or pruning, all reconstructed Gaussian Splatting models were visually inspected using **SuperSplat Editor**.
 
 The goal of this inspection phase was:
 
@@ -82,8 +82,7 @@ The goal of this inspection phase was:
 - and to qualitatively assess differences between densification strategies
   prior to any cleaning operations.
 
-Each tool was evaluated using its exported `.ply` model under identical
-visualization conditions.
+Each tool was evaluated using its exported `.ply` model under identical visualization conditions.
 
 ### Inria Gaussian Splatting — Raw Output
 
@@ -168,18 +167,31 @@ Across all raw reconstructions:
 - All pipelines benefit significantly from a dedicated cleaning stage prior to
   deployment in real-time or immersive applications.
 
-</details>
-
 ---
 
-<details>
-<summary><strong>▶ Visual Inspection — After Cleaning (to be completed)</strong></summary>
+</details>
+
+## Scene Cleaning Procedure (SuperSplat)
+
+<details open>
+<summary><strong>Show / Hide Section</strong></summary>
 
 <br>
 
-This section will present qualitative comparisons between raw and cleaned
-reconstructions, including side-by-side screenshots and orbit renders, as well
-as observations on noise removal, spatial compactness, and suitability for
-real-time or immersive visualization.
+After inspecting the raw reconstructions, all scenes were cleaned using **SuperSplat** in order to reduce outliers and restrict the reconstruction to the indoor region of interest.
+
+The cleaning process was designed to be consistent across all tools and relied on a combination of **spatial filtering** and **attribute-based pruning** to remove spurious Gaussians while preserving the main architectural structure of the scene.
+
+In particular, the following operations were applied:
+
+1. **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats.
+2. **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
+3. **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
+4. **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate abnormally large primitives often corresponding to sky, floor extrapolations, or reconstruction artifacts.
+5. **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
+6. **Manual inspection and refinement**, performed after automatic filtering to ensure that walls, furniture, and major structural elements were preserved.
+7. **Export of the cleaned models** as new `.ply` files for subsequent visual inspection and quantitative comparison.
+
+This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
 
 </details>
