@@ -84,6 +84,8 @@ The goal of this inspection phase was:
 
 Each tool was evaluated using its exported `.ply` model under identical visualization conditions.
 
+All figures in this section correspond to screenshots captured in SuperSplat, showing the raw exported .ply models prior to any cleaning or post-processing.
+
 ### Inria Gaussian Splatting — Raw Output
 
 The raw reconstruction produced by Inria shows:
@@ -225,9 +227,11 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 ---
 
-## 🔍 Visual Inspection — After Cleaning
+## Visual Inspection — After Cleaning
 
 This section focuses exclusively on the **post-cleaning appearance** of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.
+
+This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure
 
 ### Inria Gaussian Splatting — Cleaned Output
 
