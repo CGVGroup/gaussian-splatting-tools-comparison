@@ -240,6 +240,11 @@ The cleaned Inria reconstruction appears:
 
 ![Inria cleaned view 1](../media/indoor/inria/cleaned/images/inria_cleaned_00.png)
 ![Inria cleaned view 2](../media/indoor/inria/cleaned/images/inria_cleaned_01.png)
+<video width="640" controls>
+  <source src="../media/indoor/inria/cleaned/videos/inria_video_cleaned.mp4" type="video/mp4">
+</video>
+
+
 
 ---
 
