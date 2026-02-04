@@ -214,8 +214,8 @@ This section presents both screenshots and screen-recorded orbit videos captured
 
 The cleaned Inria reconstruction displays a highly compact central scene volume tightly aligned with the indoor region of interest. The overall spatial extent is reduced, with most peripheral outliers and far-field artifacts removed.
 
-![Inria cleaned view 1](../media/indoor/inria/cleaned/images/inria_cleaned_00.png)
-![Inria cleaned view 2](../media/indoor/inria/cleaned/images/inria_cleaned_01.png)
+![Inria cleaned view 1](../media/indoor/inria/cleaned/inria_cleaned_00.png)
+![Inria cleaned view 2](../media/indoor/inria/cleaned/inria_cleaned_01.png)
 
 https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420
 
@@ -225,8 +225,8 @@ https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420
 
 The cleaned gsplat reconstruction exhibits a strongly compacted central scene volume and a markedly reduced overall spatial extent compared to the raw output. Most peripheral outliers and far-field artifacts have been removed, while dense interior regions and fine structural detail are preserved.
 
-![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_00.png)
-![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_01.png)
+![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/gsplat_cleaned_00.png)
+![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/gsplat_cleaned_01.png)
 
 https://github.com/user-attachments/assets/f2dfa455-ae07-4eae-80f2-072601882549
 
@@ -236,8 +236,8 @@ https://github.com/user-attachments/assets/f2dfa455-ae07-4eae-80f2-072601882549
 
 The cleaned OpenSplat reconstruction presents a sharply delimited central scene volume with Gaussians concentrated almost exclusively inside the true interior region. The overall spatial extent is substantially reduced, with only minor peripheral outliers remaining near the scene boundaries.
 
-![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_00.png)
-![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_01.png)
+![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/opensplat_cleaned_00.png)
+![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/opensplat_cleaned_01.png)
 
 https://github.com/user-attachments/assets/3b4954fa-b950-46ec-b32b-728b1f27b378
 
@@ -247,8 +247,8 @@ https://github.com/user-attachments/assets/3b4954fa-b950-46ec-b32b-728b1f27b378
 
 The cleaned Nerfstudio reconstruction shows an extremely compact central scene volume and a very limited overall spatial extent. Peripheral outliers and far-field clusters are almost entirely eliminated, yielding a tightly cropped reconstruction while preserving the main architectural elements of the scene.
 
-![Nerfstudio cleaned view 1](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_00.png)
-![Nerfstudio cleaned view 2](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_01.png)
+![Nerfstudio cleaned view 1](../media/indoor/nerfstudio/cleaned/nerfstudio_cleaned_00.png)
+![Nerfstudio cleaned view 2](../media/indoor/nerfstudio/cleaned/nerfstudio_cleaned_01.png)
 
 https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49
 
@@ -258,8 +258,8 @@ https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49
 
 The cleaned LichtFeld Studio reconstruction now displays a compact central scene volume with a substantially reduced overall spatial extent. Most peripheral outliers and far-field artifacts have been removed, although faint residual halos remain visible near the scene boundaries, reflecting a conservative final pruning stage while maintaining dense interior structure.
 
-![LichtFeld Studio cleaned view 1](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_00.png)
-![LichtFeld Studio cleaned view 2](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_01.png)
+![LichtFeld Studio cleaned view 1](../media/indoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_00.png)
+![LichtFeld Studio cleaned view 2](../media/indoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_01.png)
 
 https://github.com/user-attachments/assets/0363dd17-6705-4a65-b7c4-8bd875d3a325
 
@@ -278,5 +278,3 @@ After cleaning, the five pipelines exhibit different balances between noise remo
 </details>
 
 ---
-
-
