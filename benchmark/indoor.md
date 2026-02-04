@@ -240,11 +240,8 @@ The cleaned Inria reconstruction appears:
 
 ![Inria cleaned view 1](../media/indoor/inria/cleaned/images/inria_cleaned_00.png)
 ![Inria cleaned view 2](../media/indoor/inria/cleaned/images/inria_cleaned_01.png)
-<video width="640" controls>
-  <source src="../media/indoor/inria/cleaned/videos/inria_video_cleaned.mp4" type="video/mp4">
-</video>
 
-
+https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420
 
 ---
 
@@ -260,6 +257,8 @@ The cleaned gsplat model shows:
 ![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_00.png)
 ![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_01.png)
 
+https://github.com/user-attachments/assets/f2dfa455-ae07-4eae-80f2-072601882549
+
 ---
 
 ### OpenSplat — Cleaned Output
@@ -273,6 +272,8 @@ OpenSplat exhibits one of the most striking improvements after cleaning:
 
 ![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_00.png)
 ![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_01.png)
+
+https://github.com/user-attachments/assets/3b4954fa-b950-46ec-b32b-728b1f27b378
 
 ---
 
@@ -288,6 +289,8 @@ The cleaned Nerfstudio reconstruction is:
 ![Nerfstudio cleaned view 1](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_00.png)
 ![Nerfstudio cleaned view 2](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_01.png)
 
+https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49
+
 ---
 
 ### LichtFeld Studio — Cleaned Output
@@ -301,6 +304,8 @@ LichtFeld Studio’s cleaned result shows:
 
 ![LichtFeld Studio cleaned view 1](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_00.png)
 ![LichtFeld Studio cleaned view 2](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_01.png)
+
+https://github.com/user-attachments/assets/0363dd17-6705-4a65-b7c4-8bd875d3a325
 
 ---
 
