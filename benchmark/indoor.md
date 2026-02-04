@@ -238,7 +238,8 @@ The cleaned Inria reconstruction appears:
 - shelves, furniture, and table geometry remain stable and well-defined,
 - minimal degradation of interior details after filtering.
 
-Residual artifacts persist mainly at the extreme lateral boundaries but are significantly reduced compared to the raw output.
+![Inria cleaned view 1](../media/indoor/inria/cleaned/images/inria_cleaned_00.png)
+![Inria cleaned view 2](../media/indoor/inria/cleaned/images/inria_cleaned_01.png)
 
 ---
 
@@ -251,7 +252,8 @@ The cleaned gsplat model shows:
 - improved readability of shelves and decorative objects,
 - preserved fine details on pillows and tableware.
 
-Some peripheral noise remains visible along the scene edges, but in a much thinner halo.
+![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_00.png)
+![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_01.png)
 
 ---
 
@@ -264,7 +266,8 @@ OpenSplat exhibits one of the most striking improvements after cleaning:
 - the main furniture block appears well isolated,
 - remaining splats are concentrated almost exclusively inside the true scene envelope.
 
-Compared to its raw version, the cleaned output feels **much more surgical and minimal**, with very little leftover peripheral clutter.
+![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_00.png)
+![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_01.png)
 
 ---
 
@@ -277,7 +280,8 @@ The cleaned Nerfstudio reconstruction is:
 - nearly free of floating splats outside the scene,
 - with crisp silhouettes at the borders.
 
-The density appears visibly lower than other methods, but structural elements such as chairs, table surfaces, and stacked cushions remain recognizable.
+![Nerfstudio cleaned view 1](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_00.png)
+![Nerfstudio cleaned view 2](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_01.png)
 
 ---
 
@@ -290,7 +294,8 @@ LichtFeld Studio’s cleaned result shows:
 - preservation of the interior spatial layout,
 - dense accumulation of splats inside the furniture cluster.
 
-While some peripheral noise is still visible at the edges, the reconstruction remains visually rich and continuous.
+![LichtFeld Studio cleaned view 1](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_00.png)
+![LichtFeld Studio cleaned view 2](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_01.png)
 
 ---
 
