@@ -1,6 +1,6 @@
-# Indoor Dataset — Benchmark Results
+# Indoor Dataset — Benchmark Results and Visual Inspection
 
-This section reports quantitative benchmarking results for several open-source Gaussian Splatting implementations evaluated on the same indoor dataset.
+This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
 
 ---
 
@@ -43,7 +43,7 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ## Observations
 
-- **Nerfstudio** produced the most compact representation and shortest training time, at the cost of reduced Gaussian density.
+- **Nerfstudio** produced the most compact representation, with the lowest Gaussian count and smallest output size, and shortest training time, at the cost of reduced Gaussian density.
 
 - **OpenSplat** achieved a favorable compromise between output size and visual quality through aggressive pruning.
 
@@ -59,41 +59,33 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 Beyond quantitative benchmarking, a qualitative evaluation was conducted on all reconstructed scenes.
 
-Each raw `.ply` output was first inspected visually using **SuperSplat** in order to assess noise distribution, structural coherence, and rendering stability.
+Each raw `.ply` output was first inspected visually using **SuperSplat** in order to assess noise distribution and structural coherence.
 
-Subsequently, a consistent scene-cleaning procedure was applied to all models. The cleaned reconstructions were then re-inspected under the same conditions to enable direct visual comparison between raw and post-processed outputs.
+Subsequently, scene-cleaning was applied to all models. The cleaned reconstructions were then re-inspected using **SuperSplat** to enable direct visual comparison between raw and post-processed outputs.
 
 This two-stage inspection protocol supports the qualitative analyses and visual materials presented in the following sections.
 
-## Visual Inspection — Raw Reconstructions (Before Cleaning)
+## Visual Inspection — Before Cleaning (Raw Reconstructions)
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
 
 <br>
 
-Before applying any post-processing or pruning, all reconstructed Gaussian Splatting models were visually inspected using **SuperSplat Editor**.
+Before applying any post-processing, all reconstructed Gaussian Splatting models were visually inspected in the **SuperSplat Editor** using their exported `.ply` files.
 
-The goal of this inspection phase was:
+The goal of this inspection was:
 
 - to evaluate the **spatial compactness** of the reconstruction,
 - to analyze the **distribution of outlier Gaussians**,
 - to identify large-scale **floating artifacts**,
-- and to qualitatively assess differences between densification strategies
-  prior to any cleaning operations.
+- and to qualitatively assess differences between the analyzed tools prior to any cleaning operations.
 
-Each tool was evaluated using its exported `.ply` model under identical visualization conditions.
-
-All figures in this section correspond to screenshots captured in SuperSplat, showing the raw exported .ply models prior to any cleaning or post-processing.
+All figures in this section correspond to screenshots captured in SuperSplat.
 
 ### Inria Gaussian Splatting — Raw Output
 
-The raw reconstruction produced by Inria shows:
-
-- a well-formed central scene volume,
-- recognizable geometry of the shelves and furniture,
-- peripheral filament-like structures,
-- moderate outliers surrounding the main reconstruction.
+The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with only a small number of peripheral outliers and thin far-field artifacts surrounding the main reconstruction.
 
 ![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
 ![Inria raw view 2](../media/indoor/inria/raw/inria_00.png)
@@ -102,12 +94,7 @@ The raw reconstruction produced by Inria shows:
 
 ### gsplat — Raw Output
 
-The gsplat reconstruction exhibits:
-
-- a dense core region with good structural detail,
-- a wide radial spread of Gaussians,
-- long streak-like artifacts extending outward,
-- substantial peripheral noise.
+The gsplat reconstruction exhibits a dense central scene volume with high structural fidelity. However, its overall spatial extent is significantly larger than the one of the Inria recostruction, with numerous peripheral outliers and elongated far-field artifacts radiating outward from the scene core.
 
 ![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_00.png)
 ![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_01.png)
@@ -116,12 +103,7 @@ The gsplat reconstruction exhibits:
 
 ### OpenSplat — Raw Output
 
-The OpenSplat model shows:
-
-- a clearly defined central structure,
-- outliers distributed mainly near the scene boundary,
-- fewer extreme-distance splats compared to gsplat,
-- moderate peripheral clutter.
+The OpenSplat model presents a well-defined central scene volume with most Gaussians concentrated near the interior region. The overall spatial extent is moderate, with peripheral outliers largely confined to the scene boundaries and fewer far-field artifacts than gsplat, resulting in a comparatively compact reconstruction similar to similar to that observed for Inria.
 
 ![OpenSplat raw view 1](../media/indoor/opensplat/raw/opensplat_00.png)
 ![OpenSplat raw view 2](../media/indoor/opensplat/raw/opensplat_01.png)
@@ -130,12 +112,7 @@ The OpenSplat model shows:
 
 ### Nerfstudio — Raw Output
 
-Nerfstudio’s raw model presents:
-
-- a relatively small and sparse central cluster,
-- several isolated Gaussian groups far from the main scene,
-- scattered outliers across the viewing volume,
-- low overall density.
+Nerfstudio’s raw output displays a relatively sparse central scene volume and reduced Gaussian density. The overall spatial extent remains moderate compared to that observed for gsplat, although elongated artifacts are present and several isolated peripheral outliers and small far-field clusters are visible beyond the scene core, slightly degrading global compactness.
 
 ![Nerfstudio raw view 1](../media/indoor/nerfstudio/raw/nerfstudio_00.png)
 ![Nerfstudio raw view 2](../media/indoor/nerfstudio/raw/nerfstudio_01.png)
@@ -144,12 +121,7 @@ Nerfstudio’s raw model presents:
   
 ### LichtFeld Studio — Raw Output
 
-The LichtFeld Studio output contains:
-
-- a very dense central reconstruction,
-- extensive peripheral streaks,
-- large spatial spread,
-- numerous floating structures.
+The LichtFeld Studio reconstruction contains a very dense central scene volume coupled with a large overall spatial extent. Numerous peripheral outliers and far-field artifacts surround the main reconstruction region.
 
 ![Lichtfeld raw view 1](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
 ![Lichtfeld raw view 2](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
@@ -161,13 +133,13 @@ The LichtFeld Studio output contains:
 Across all raw reconstructions:
 
 - **Inria** and **OpenSplat** generated comparatively **more compact scene volumes**.
-- **gsplat** and **LichtFeld Studio** exhibited the **largest spatial spread** and most pronounced peripheral artifacts.
-- **Nerfstudio** produced the sparsest models, but with **isolated distant clusters** affecting global compactness.
+- **gsplat** and **LichtFeld Studio** exhibited **large spatial spread** and pronounced peripheral artifacts.
+- **Nerfstudio** produced the lightest model, but with **isolated distant clusters** affecting global compactness.
 - All pipelines benefit significantly from a dedicated cleaning stage prior to deployment in real-time or immersive applications.
 
----
-
 </details>
+
+---
 
 ## Scene Cleaning Procedure (SuperSplat)
 
@@ -182,13 +154,13 @@ The cleaning process was designed to be consistent across all tools and relied o
 
 In particular, the following operations were applied:
 
-1. **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats.
-2. **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
-3. **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
-4. **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate abnormally large primitives often corresponding to sky, floor extrapolations, or reconstruction artifacts.
-5. **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
-6. **Manual inspection and refinement**, performed after automatic filtering to ensure that walls, furniture, and major structural elements were preserved.
-7. **Export of the cleaned models** as new `.ply` files for subsequent visual inspection and quantitative comparison.
+- **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats.
+- **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
+- **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
+- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate abnormally large primitives often corresponding, floor extrapolations, or reconstruction artifacts.
+- **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
+- **Manual inspection and refinement**, performed after automatic filtering to ensure that walls, furniture, and major structural elements were preserved.
+7. **Export of the cleaned models** as new `.ply`.
 
 This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
 
@@ -196,7 +168,7 @@ This cleaning stage was applied uniformly to all reconstructions in order to ena
 
 ---
 
-## Scene Cleaning Evaluation — Indoor Dataset
+## Scene Cleaning Evaluation
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
@@ -208,18 +180,18 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 | Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
 |------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
 | Inria GS | 867,000 | 866,617 | −0.04% | 231 | 209.9 | −9.1% |
-| gsplat | 1,000,000 | 876,117 | −12.4% | 230 | 201.9 | −12.2% |
+| gsplat | 1,000,000 | 875,884 | −12.4% | 230 | 197.1 | −14.3% |
 | OpenSplat | 510,000 | 273,368 | −46.4% | 123 | 66.2 | −46.2% |
 | Nerfstudio | 170,000 | 126,841 | −25.4% | 43 | 30.7 | −28.6% |
-| LichtFeld Studio | 1,000,000 | 800,578 | −19.9% | 242 | 193.9 | −19.9% |
+| LichtFeld Studio | 1,000,000 | 800,515 | −20.0% | 242 | 189.3 | −21.8% |
 
 ## Observations
 
-- **OpenSplat** shows the largest reduction after cleaning (≈ −46 % in both Gaussian count and file size), indicating a substantial amount of spatial outliers and oversized primitives in the raw reconstruction.
+- **OpenSplat** shows the largest reduction after cleaning (≈ −46 % in both Gaussian count and file size).
 
 - **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining a compact representation, suggesting that its training pipeline already performs partial pruning but still benefits from post-processing.
 
-- **gsplat** and **LichtFeld Studio** undergo reductions of approximately 20 %, reflecting aggressive densification during training and the presence of removable background Gaussians in the raw outputs.
+- **gsplat** and **LichtFeld Studio** undergo moderate reductions after cleaning, with gsplat showing a smaller decrease than LichtFeld Studio, reflecting aggressive densification during training and the presence of removable background Gaussians in the raw outputs.
 
 - **Inria GS** remains nearly unchanged after cleaning, which indicates that its reference implementation already produces structurally conservative and stable reconstructions with limited far-field noise.
 
@@ -229,18 +201,18 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 ## Visual Inspection — After Cleaning
 
+<details open>
+<summary><strong>Show / Hide Section</strong></summary>
+
+<br>
+
 This section focuses exclusively on the **post-cleaning appearance** of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.
 
 This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure
 
 ### Inria Gaussian Splatting — Cleaned Output
 
-The cleaned Inria reconstruction appears:
-
-- highly compact and centered around the main scene volume,
-- with most peripheral floating splats removed,
-- shelves, furniture, and table geometry remain stable and well-defined,
-- minimal degradation of interior details after filtering.
+The cleaned Inria reconstruction displays a highly compact central scene volume tightly aligned with the indoor region of interest. The overall spatial extent is reduced, with most peripheral outliers and far-field artifacts removed.
 
 ![Inria cleaned view 1](../media/indoor/inria/cleaned/images/inria_cleaned_00.png)
 ![Inria cleaned view 2](../media/indoor/inria/cleaned/images/inria_cleaned_01.png)
@@ -251,12 +223,7 @@ https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420
 
 ### gsplat — Cleaned Output
 
-The cleaned gsplat model shows:
-
-- a noticeably tighter bounding volume,
-- strong reduction of radial streak artifacts,
-- improved readability of shelves and decorative objects,
-- preserved fine details on pillows and tableware.
+The cleaned gsplat reconstruction exhibits a strongly compacted central scene volume and a markedly reduced overall spatial extent compared to the raw output. Most peripheral outliers and far-field artifacts have been removed, while dense interior regions and fine structural detail are preserved.
 
 ![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_00.png)
 ![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/images/gsplat_cleaned_01.png)
@@ -267,12 +234,7 @@ https://github.com/user-attachments/assets/f2dfa455-ae07-4eae-80f2-072601882549
 
 ### OpenSplat — Cleaned Output
 
-OpenSplat exhibits one of the most striking improvements after cleaning:
-
-- the scene becomes sharply delimited,
-- most exterior ghost structures disappear,
-- the main furniture block appears well isolated,
-- remaining splats are concentrated almost exclusively inside the true scene envelope.
+The cleaned OpenSplat reconstruction presents a sharply delimited central scene volume with Gaussians concentrated almost exclusively inside the true interior region. The overall spatial extent is substantially reduced, with only minor peripheral outliers remaining near the scene boundaries.
 
 ![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_00.png)
 ![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/images/opensplat_cleaned_01.png)
@@ -283,12 +245,7 @@ https://github.com/user-attachments/assets/3b4954fa-b950-46ec-b32b-728b1f27b378
 
 ### Nerfstudio — Cleaned Output
 
-The cleaned Nerfstudio reconstruction is:
-
-- extremely compact,
-- tightly cropped around the shelves and table,
-- nearly free of floating splats outside the scene,
-- with crisp silhouettes at the borders.
+The cleaned Nerfstudio reconstruction shows an extremely compact central scene volume and a very limited overall spatial extent. Peripheral outliers and far-field clusters are almost entirely eliminated, yielding a tightly cropped reconstruction while preserving the main architectural elements of the scene.
 
 ![Nerfstudio cleaned view 1](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_00.png)
 ![Nerfstudio cleaned view 2](../media/indoor/nerfstudio/cleaned/images/nerfstudio_cleaned_01.png)
@@ -299,12 +256,7 @@ https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49
 
 ### LichtFeld Studio — Cleaned Output
 
-LichtFeld Studio’s cleaned result shows:
-
-- a significant tightening of the scene volume,
-- reduction of external halos,
-- preservation of the interior spatial layout,
-- dense accumulation of splats inside the furniture cluster.
+The cleaned LichtFeld Studio reconstruction now displays a compact central scene volume with a substantially reduced overall spatial extent. Most peripheral outliers and far-field artifacts have been removed, although faint residual halos remain visible near the scene boundaries, reflecting a conservative final pruning stage while maintaining dense interior structure.
 
 ![LichtFeld Studio cleaned view 1](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_00.png)
 ![LichtFeld Studio cleaned view 2](../media/indoor/lichtfeldstudio/cleaned/images/lichtfeldstudio_cleaned_01.png)
@@ -317,13 +269,13 @@ https://github.com/user-attachments/assets/0363dd17-6705-4a65-b7c4-8bd875d3a325
 
 After cleaning, the five pipelines exhibit different balances between noise removal, spatial compactness, and reconstruction density:
 
-- **Inria GS** produces a highly contained reconstruction volume, with only minor residual artifacts visible near the extreme lateral boundaries.
+- **Inria GS** and **OpenSplat**, which already produced relatively compact raw reconstructions, further reduce their overall spatial extent after cleaning, leaving only minor peripheral remnants near the scene boundaries.
 
-- **OpenSplat** yields a compact and sharply delimited scene, although small remnants of peripheral clutter can still be observed at the edges.
+- **gsplat** and **LichtFeld Studio**, previously characterized by large spatial spread and extensive far-field clutter, now exhibit substantially tighter scene volumes, although dense interior regions and thin residual halos persist near the boundaries.
 
-- **Nerfstudio** maintains a relatively compact reconstruction while preserving the main structural elements such as chairs, table surfaces, and stacked cushions.
+- **Nerfstudio**, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures.
 
-- **gsplat** and **LichtFeld Studio** retain denser interior regions and show thin halos of residual noise near the scene boundaries, indicating a more conservative removal of peripheral Gaussians.
+</details>
 
 ---
 
