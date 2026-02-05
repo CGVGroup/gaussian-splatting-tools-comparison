@@ -141,7 +141,7 @@ Across all raw reconstructions:
 
 ---
 
-## Scene Cleaning Procedure (SuperSplat)
+## Scene Cleaning Procedure
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
@@ -150,16 +150,18 @@ Across all raw reconstructions:
 
 After inspecting the raw reconstructions, all scenes were cleaned using **SuperSplat** in order to reduce outliers and restrict the reconstruction to the indoor region of interest.
 
-The cleaning process was designed to be consistent across all tools and relied on a combination of **spatial filtering** and **attribute-based pruning** to remove spurious Gaussians while preserving the main architectural structure of the scene.
+The cleaning process was designed to be consistent across all tools and relied on a combination of **spatial filtering** and **attribute-based pruning** to remove spurious Gaussians while preserving the main architectural structure of the scene. The reconstructed environment exhibited well-defined spatial boundaries inherent to indoor settings, which made it relatively easy to localize the central scene core and to separate it from peripheral and removable Gaussians.
+
+In particular, the confined nature of the indoor scene allowed for an effective spatial restriction of the region of interest, enabling the removal of a large number of removable Gaussians without compromising walls, furniture, or other structural elements. As a result, filtering operations could be applied in a controlled manner, with their effects being straightforward to visually assess and validate.
 
 In particular, the following operations were applied:
 
-- **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats.
+- **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats outside the room boundaries.
 - **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
 - **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
 - **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate abnormally large primitives often corresponding, floor extrapolations, or reconstruction artifacts.
 - **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
-- **Manual inspection and refinement**, performed after automatic filtering to ensure that walls, furniture, and major structural elements were preserved.
+- **Manual inspection and refinement**, performed to ensure that walls, furniture, and major structural elements were preserved.
 7. **Export of the cleaned models** as new `.ply`.
 
 This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
