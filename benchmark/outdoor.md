@@ -135,13 +135,6 @@ The raw reconstruction produced by LichtFeld Studio shows a dense outdoor scene.
 
 Across all raw reconstructions:
 
-- All pipelines reconstruct a clearly identifiable central outdoor structure and include far-field environmental Gaussians corresponding to surrounding vegetation or sky regions.
-- Across all methods, elongated streaks and large surface Gaussians in upper regions representing the sky are consistently observed in the raw outputs.
-- **Inria** and **gsplat** exhibit comparatively limited artifact extent, with gsplat appearing slightly more spatially dispersed.
-- **OpenSplat** presents numerous elongated streaks around the main structure, particularly in upper sky-related regions, while floating clusters are comparatively limited.
-- **Nerfstudio** produces the lightest model but shows many elongated streaks and several isolated floating clusters extending well beyond the central structure, resulting in a globally extended reconstruction.
-- **LichtFeld Studio** reconstructs an extremely large scene volume while keeping most Gaussians—both structural and removable—spatially concentrated around the scene core.
-
 - All pipelines reconstruct a clearly identifiable central outdoor structure and include far-field environmental Gaussians corresponding to vegetation or sky regions.
 - Across all methods, elongated streaks and large surface Gaussians in upper regions representing the sky are consistently observed.
 - **Inria** and **gsplat** exhibit comparatively limited artifact extent relative to the other pipelines, with gsplat slightly more spatially dispersed.
@@ -154,28 +147,30 @@ Across all raw reconstructions:
 
 ---
 
-## Scene Cleaning Procedure (SuperSplat)
+## Scene Cleaning Procedure
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
 
 <br>
 
-After inspecting the raw reconstructions, all scenes were cleaned using **SuperSplat** in order to reduce outliers and restrict the reconstruction to the indoor region of interest.
+After inspecting the raw reconstructions, all outdoor scenes were cleaned using **SuperSplat** with the goal of reducing removable Gaussians while preserving both the main scene structure and relevant environmental context.
 
-The cleaning process was designed to be consistent across all tools and relied on a combination of **spatial filtering** and **attribute-based pruning** to remove spurious Gaussians while preserving the main architectural structure of the scene.
+The cleaning process was applied consistently across all five pipelines but proved inherently challenging due to the characteristics of the outdoor reconstructions. In all cases, environmental background elements (such as vegetation, sky regions, and ground reflections) were represented by Gaussians located at significant distances from the central scene core, often forming clusters rather than compact background layers. As a result, a straightforward spatial restriction of the scene volume was not always feasible without risking the removal of valid scene content.
 
-In particular, the following operations were applied:
+In reconstructions with very large spatial extents, such as **LichtFeld Studio**, and with well defined clusters of spurious Gaussians, such as **Nerfstudio**,  an initial coarse spatial restriction was possible to reduce the recontruction volume or eliminate extreme outliers. However, subsequent refinement stages required careful, localized filtering, as many Gaussians located far from the central structure still corresponded to legitimate background geometry.
 
-- **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats.
-- **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
-- **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
-- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate abnormally large primitives often corresponding, floor extrapolations, or reconstruction artifacts.
-- **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
-- **Manual inspection and refinement**, performed after automatic filtering to ensure that walls, furniture, and major structural elements were preserved.
-7. **Export of the cleaned models** as new `.ply`.
+Furthermore, several Gaussians that visually appeared removable (such as elongated streaks, thin spike-like structures, or large-scale primitives) were found to contribute to meaningful elements of the scene, including portions of the sky, background vegetation, or ground reflections. This ambiguity made aggressive pruning unsuitable and necessitated a conservative and selective cleaning strategy.
 
-This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
+The following operations were therefore applied:
+
+- **Spatial restriction of the scene volume**, performed cautiously to reduce the reconstruction volume or to remove only clearly detached background clusters while preserving distant but valid environmental elements.
+- **Distance-based pruning**, applied conservatively to eliminate Gaussians located well beyond the meaningful reconstruction envelope.
+- **Opacity-based filtering**, removing low-opacity Gaussians with negligible visual contribution.
+- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to identify and selectively remove abnormally large primitives not associated with stable scene geometry.
+- **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and did not correspond to coherent environmental elements.
+- **Manual inspection and refinement**, required to disambiguate between removable artifacts and Gaussians representing valid background elements.
+- **Export of the cleaned models** as new `.ply`.
 
 </details>
 
