@@ -96,7 +96,7 @@ The raw reconstruction produced by Inria shows a clearly identifiable central ou
 
 ### gsplat — Raw Output
 
-The gsplat raw reconstruction shows a clearly identifiable central outdoor structure. When visualized to encompass the full extent of the model, far-field background regions corresponding to environmental elements appear less spatially compact than in Inria, and a large number of long vertical streaks and floating clusters are visible near the scene core. In addition, both large-scale Gaussians Gaussians and thin streaks are present in upper regions of the reconstruction, corresponding to portions of the sky. 
+The gsplat raw reconstruction shows a clearly identifiable central outdoor structure. When visualized to encompass the full extent of the model, far-field background regions corresponding to environmental elements appear less spatially compact than in Inria, and a large number of long vertical streaks and floating clusters are visible near the scene core. In addition, both large-scale Gaussians and thin streaks are present in upper regions of the reconstruction, corresponding to portions of the sky. 
 
 ![gsplat raw view 1](../media/outdoor/gsplat/raw/gsplat_00.png)
 ![gsplat raw view 2](../media/outdoor/gsplat/raw/gsplat_01.png)
@@ -105,7 +105,7 @@ The gsplat raw reconstruction shows a clearly identifiable central outdoor struc
 
 ### OpenSplat — Raw Output
 
-The OpenSplat raw reconstruction shows a clearly identifiable central outdoor structure within a large reconstructed volume. When visualized to include the full model extent, the scene envelope appears more compact than that of gsplat, but pronounced peripheral streaks remain visible around the main reconstruction region, while far-field background geometry and floating clusters are less pervasive. Overall, the reconstruction retains noticeable far-field extensions prior to cleaning despite improved spatial containment.
+The OpenSplat raw reconstruction shows a clearly identifiable central outdoor structure. When visualized to include the full extent of the model, the scene envelope appears moderately compact, but numerous elongated streak-like artifacts extend outward from the main structure. Far-field background regions are present but remain less spatially dispersed than in gsplat and Nerfstudio, while isolated floating clusters are comparatively limited. Prominent streaks are visible in upper regions of the reconstruction, corresponding to portions of the sky
 
 ![OpenSplat raw view 1](../media/outdoor/opensplat/raw/opensplat_00.png)
 ![OpenSplat raw view 2](../media/outdoor/opensplat/raw/opensplat_01.png)
@@ -114,7 +114,7 @@ The OpenSplat raw reconstruction shows a clearly identifiable central outdoor st
 
 ### Nerfstudio — Raw Output
 
-The Nerfstudio raw reconstruction presents a relatively sparse central outdoor scene embedded within a very large reconstructed volume. When inspected at full spatial extent, far-field background regions occupy a substantial portion of the scene envelope, accompanied by numerous elongated peripheral streaks and several isolated floating clusters extending well beyond the scene core, resulting in limited global compactness prior to any cleaning operations.
+The Nerfstudio raw reconstruction shows a clearly identifiable central outdoor structure. When visualized to encompass the full extent of the modeln,  the scene envelope appears moderately compact, but numerous elongated streaks extend outward from the scene core, together with several isolated floating clusters distributed well beyond the main reconstructed region. In addition, upper portions of the reconstruction contain large-scale Gaussians and spike-like artifacts corresponding to sky regions. Overall, the reconstruction appears globally extended.
 
 ![Nerfstudio raw view 1](../media/outdoor/nerfstudio/raw/nerfstudio_00.png)
 ![Nerfstudio raw view 2](../media/outdoor/nerfstudio/raw/nerfstudio_01.png)
@@ -123,7 +123,7 @@ The Nerfstudio raw reconstruction presents a relatively sparse central outdoor s
   
 ### LichtFeld Studio — Raw Output
 
-The raw reconstruction produced by LichtFeld Studio shows a dense and visually continuous outdoor scene, with both the main structure and surrounding background regions reconstructed in a relatively cohesive manner. When visualized to include the full scene extent, the model occupies an extremely large spatial volume. Peripheral streak-like structures are still present, but most Gaussians remain spatially connected to the main reconstructed region. Overall, the reconstruction appears dense and globally extended prior to any cleaning operations.
+The raw reconstruction produced by LichtFeld Studio shows a dense outdoor scene. When visualized at full scene extent, both structural Gaussians and removable background components remain spatially concentrated around the scene core rather than dispersing into distant clusters. Streaks corresponding to portions of the sky are visible in the upper region, together with larger surface Gaussians located further above. Overall, the raw output appears highly concentrated in space but globally extended, with most geometry (both relevant and removable) remaining locally grouped.
 
 ![Lichtfeld raw view 1](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
 ![Lichtfeld raw view 2](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
@@ -135,10 +135,20 @@ The raw reconstruction produced by LichtFeld Studio shows a dense and visually c
 
 Across all raw reconstructions:
 
-- **gsplat** exhibits the most populated far-field regions, with pronounced radial streaks and numerous floating clusters contributing to the lowest global compactness among the evaluated methods.
-- **gsplat** and **LichtFeld Studio** exhibited **large spatial spread** and pronounced peripheral artifacts.
-- **Nerfstudio** produced the lightest model, but with **isolated distant clusters** affecting global compactness.
-- All pipelines benefit significantly from a dedicated cleaning stage prior to deployment in real-time or immersive applications.
+- All pipelines reconstruct a clearly identifiable central outdoor structure and include far-field environmental Gaussians corresponding to surrounding vegetation or sky regions.
+- Across all methods, elongated streaks and large surface Gaussians in upper regions representing the sky are consistently observed in the raw outputs.
+- **Inria** and **gsplat** exhibit comparatively limited artifact extent, with gsplat appearing slightly more spatially dispersed.
+- **OpenSplat** presents numerous elongated streaks around the main structure, particularly in upper sky-related regions, while floating clusters are comparatively limited.
+- **Nerfstudio** produces the lightest model but shows many elongated streaks and several isolated floating clusters extending well beyond the central structure, resulting in a globally extended reconstruction.
+- **LichtFeld Studio** reconstructs an extremely large scene volume while keeping most Gaussians—both structural and removable—spatially concentrated around the scene core.
+
+- All pipelines reconstruct a clearly identifiable central outdoor structure and include far-field environmental Gaussians corresponding to vegetation or sky regions.
+- Across all methods, elongated streaks and large surface Gaussians in upper regions representing the sky are consistently observed.
+- **Inria** and **gsplat** exhibit comparatively limited artifact extent relative to the other pipelines, with gsplat slightly more spatially dispersed.
+- **OpenSplat** presents numerous elongated streaks around the main structure, particularly in upper sky-related regions, while floating clusters are comparatively limited.
+- **Nerfstudio** produces the lightest model but shows many elongated streaks and several isolated floating clusters far from the central structure, resulting in a globally extended reconstruction.
+- **LichtFeld Studio** reconstructs an extremely large scene volume while keeping most Gaussians—both structural and removable—spatially concentrated around the scene core.
+
 
 </details>
 
