@@ -26,7 +26,7 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ---
 
-## Quantitative Results — Indoor Dataset
+## Quantitative Results
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
