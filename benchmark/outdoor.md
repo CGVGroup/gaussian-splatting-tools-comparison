@@ -1,12 +1,12 @@
-# Outdoor Dataset — Benchmark Results
+# Outdoor Dataset — Benchmark Results and Visual Inspection
 
-This section reports quantitative benchmarking results for several open-source Gaussian Splatting implementations evaluated on the same outdoor dataset.
+This section reports quantitative benchmarking results for several open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
 
 ---
 
 ## Dataset Description
 
-The outdoor dataset consists of **151 frames** extracted from the followingvideo sequence:
+The outdoor dataset consists of **151 frames** extracted from the following video sequence:
 
 https://huggingface.co/datasets/DL3DV/DL3DV-10K-Sample/tree/main/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f
 
@@ -26,7 +26,12 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ---
 
-## Quantitative Results — Outdoor Dataset
+## Quantitative Results
+
+<details open>
+<summary><strong>Show / Hide Section</strong></summary>
+
+<br>
 
 | Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
@@ -40,68 +45,13 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ## Observations
 
-- **Nerfstudio** produced an extremely compact model in terms of Gaussian count, resulting in the smallest output file and fastest training time among all evaluated tools.
+- **Nerfstudio** produced the most compact representation, with the lowest Gaussian count and smallest output size, and shortest training time, at the cost of reduced Gaussian density.
 
 - **OpenSplat** achieved a favorable compromise between reconstruction density and output size through aggressive pruning.
 
 - **gsplat** and **LichtFeld Studio** generated the densest reconstructions, with correspondingly larger output files.
 
 - The original **Inria GS** reference implementation remained slower than the other pipelines, although it produced stable large-scale outdoor reconstructions.
-
----
-
-# Indoor Dataset — Benchmark Results and Visual Inspection
-
-This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
-
----
-
-## Dataset Description
-
-The indoor dataset consists of **151 frames** extracted from the following video sequence:
-
-https://huggingface.co/datasets/DL3DV/DL3DV-10K-Sample/tree/main/5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00
-
----
-
-## Experimental Protocol
-
-All implementations were trained under the following conditions:
-
-- **30,000 optimization iterations**
-- Same image set (151 frames)
-- Training executed on a **single NVIDIA RTX 4060 GPU**
-- Default hyper-parameters were used unless explicitly modified for reproducibility
-- Exported models were converted to `.ply` format 
-
-For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
-
----
-
-## Quantitative Results — Indoor Dataset
-
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
-
-| Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
-|------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria GS | 231 | 867,000 | 26.6 | 150 | 17.3 | Adaptive density control | [How-To](../tools/inria.md) |
-| gsplat | 230 | 1,000,000 | 23.0 | 50 | 5.0 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
-| OpenSplat | 123 | 510,000 | 24.1 | 60 | 11.7 | Native pruning | [How-To](../tools/opensplat.md) |
-| Nerfstudio | 43 | 170,000 | 25.3 | 30 | 17.6 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
-| LichtFeld Studio | 242 | 1,000,000 | 24.2 | 64 | 6.4 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
-
-## Observations
-
-- **Nerfstudio** produced the most compact representation, with the lowest Gaussian count and smallest output size, and shortest training time, at the cost of reduced Gaussian density.
-
-- **OpenSplat** achieved a favorable compromise between output size and visual quality through aggressive pruning.
-
-- **gsplat** and **LichtFeld Studio** generated the densest models, with correspondingly larger output files.
-
-- The original **Inria GS** reference implementation remained the slowest, although it produced structurally stable reconstructions.
 
 </details>
 
@@ -137,46 +87,47 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 
 ### Inria Gaussian Splatting — Raw Output
 
-The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with only a small number of peripheral outliers and thin far-field artifacts surrounding the main reconstruction.
+The raw reconstruction produced by Inria shows a clearly identifiable central outdoor structure. When visualized to encompass the full extent of the model, Gaussians populate far-field background regions corresponding to distant environmental elements such as vegetation. The distribution remains relatively coherent, with streak-like artifacts visible near the central structure and within distant background regions. In addition, some large-scale Gaussians are present in upper regions of the reconstruction, corresponding to portions of the sky.
 
-![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
-![Inria raw view 2](../media/indoor/inria/raw/inria_00.png)
+![Inria raw view 1](../media/outdoor/inria/raw/inria_00.png)
+![Inria raw view 2](../media/outdoor/inria/raw/inria_01.png)
 
 ---
 
 ### gsplat — Raw Output
 
-The gsplat reconstruction exhibits a dense central scene volume with high structural fidelity. However, its overall spatial extent is significantly larger than the one of the Inria recostruction, with numerous peripheral outliers and elongated far-field artifacts radiating outward from the scene core.
+The gsplat raw reconstruction shows a clearly identifiable central outdoor structure. When visualized to encompass the full extent of the model, far-field background regions corresponding to environmental elements appear less spatially compact than in Inria, and a large number of long vertical streaks and floating clusters are visible near the scene core. In addition, both large-scale Gaussians Gaussians and thin streaks are present in upper regions of the reconstruction, corresponding to portions of the sky. 
 
-![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_00.png)
-![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_01.png)
+![gsplat raw view 1](../media/outdoor/gsplat/raw/gsplat_00.png)
+![gsplat raw view 2](../media/outdoor/gsplat/raw/gsplat_01.png)
 
 ---
 
 ### OpenSplat — Raw Output
 
-The OpenSplat model presents a well-defined central scene volume with most Gaussians concentrated near the interior region. The overall spatial extent is moderate, with peripheral outliers largely confined to the scene boundaries and fewer far-field artifacts than gsplat, resulting in a comparatively compact reconstruction similar to similar to that observed for Inria.
+The OpenSplat raw reconstruction shows a clearly identifiable central outdoor structure within a large reconstructed volume. When visualized to include the full model extent, the scene envelope appears more compact than that of gsplat, but pronounced peripheral streaks remain visible around the main reconstruction region, while far-field background geometry and floating clusters are less pervasive. Overall, the reconstruction retains noticeable far-field extensions prior to cleaning despite improved spatial containment.
 
-![OpenSplat raw view 1](../media/indoor/opensplat/raw/opensplat_00.png)
-![OpenSplat raw view 2](../media/indoor/opensplat/raw/opensplat_01.png)
+![OpenSplat raw view 1](../media/outdoor/opensplat/raw/opensplat_00.png)
+![OpenSplat raw view 2](../media/outdoor/opensplat/raw/opensplat_01.png)
 
 ---
 
 ### Nerfstudio — Raw Output
 
-Nerfstudio’s raw output displays a relatively sparse central scene volume and reduced Gaussian density. The overall spatial extent remains moderate compared to that observed for gsplat, although elongated artifacts are present and several isolated peripheral outliers and small far-field clusters are visible beyond the scene core, slightly degrading global compactness.
+The Nerfstudio raw reconstruction presents a relatively sparse central outdoor scene embedded within a very large reconstructed volume. When inspected at full spatial extent, far-field background regions occupy a substantial portion of the scene envelope, accompanied by numerous elongated peripheral streaks and several isolated floating clusters extending well beyond the scene core, resulting in limited global compactness prior to any cleaning operations.
 
-![Nerfstudio raw view 1](../media/indoor/nerfstudio/raw/nerfstudio_00.png)
-![Nerfstudio raw view 2](../media/indoor/nerfstudio/raw/nerfstudio_01.png)
+![Nerfstudio raw view 1](../media/outdoor/nerfstudio/raw/nerfstudio_00.png)
+![Nerfstudio raw view 2](../media/outdoor/nerfstudio/raw/nerfstudio_01.png)
 
 ---
   
 ### LichtFeld Studio — Raw Output
 
-The LichtFeld Studio reconstruction contains a very dense central scene volume coupled with a large overall spatial extent. Numerous peripheral outliers and far-field artifacts surround the main reconstruction region.
+The raw reconstruction produced by LichtFeld Studio shows a dense and visually continuous outdoor scene, with both the main structure and surrounding background regions reconstructed in a relatively cohesive manner. When visualized to include the full scene extent, the model occupies an extremely large spatial volume. Peripheral streak-like structures are still present, but most Gaussians remain spatially connected to the main reconstructed region. Overall, the reconstruction appears dense and globally extended prior to any cleaning operations.
 
-![Lichtfeld raw view 1](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
-![Lichtfeld raw view 2](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
+![Lichtfeld raw view 1](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
+![Lichtfeld raw view 2](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
+![Lichtfeld raw view 3](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_02.png)
 
 ---
 
@@ -184,7 +135,7 @@ The LichtFeld Studio reconstruction contains a very dense central scene volume c
 
 Across all raw reconstructions:
 
-- **Inria** and **OpenSplat** generated comparatively **more compact scene volumes**.
+- **gsplat** exhibits the most populated far-field regions, with pronounced radial streaks and numerous floating clusters contributing to the lowest global compactness among the evaluated methods.
 - **gsplat** and **LichtFeld Studio** exhibited **large spatial spread** and pronounced peripheral artifacts.
 - **Nerfstudio** produced the lightest model, but with **isolated distant clusters** affecting global compactness.
 - All pipelines benefit significantly from a dedicated cleaning stage prior to deployment in real-time or immersive applications.
