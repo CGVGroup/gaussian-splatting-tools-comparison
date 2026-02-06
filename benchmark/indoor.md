@@ -36,21 +36,20 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 | Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
 | Inria GS | 226.1 | 955,819 | 23.7 | 120 | 12.6 | Adaptive density control | [How-To](../tools/inria.md) |
-| gsplat | 225.1 | 1,000,000 | 22.5 | 50 | 5.0 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
+| gsplat | 284.8 | 1,265,239 | 22.5 | 50 | 4.0 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
 | OpenSplat | 120.8 | 510,870 | 23.6 | 60 | 11.8 | Native pruning | [How-To](../tools/opensplat.md) |
 | Nerfstudio | 40.2 | 170,150 | 23.6 | 30 | 17.6 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
 | LichtFeld Studio | 236.5 | 1,000,000 | 23.6 | 60 | 6.0 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
 
-## Observations
+### Observations
 
 - **Nerfstudio** produced the most compact representation in terms of output size and training time, with a relatively low Gaussian count compared to the other pipelines.
 
 - **OpenSplat** achieved a favorable compromise between output size and visual quality.
 
-- **gsplat** and **LichtFeld Studio** generated the densest models.
+- **gsplat** generated the densest model in terms of Gaussian count and the largest output file, while **LichtFeld Studio** also produced a very dense reconstruction with a correspondingly large output file.
 
 - The original **Inria GS** reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.
-
 
 </details>
 
@@ -182,21 +181,21 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 | Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
 |------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
-| Inria GS | 867,000 | 866,617 | −0.04% | 231 | 209.9 | −9.1% |
-| gsplat | 1,000,000 | 875,884 | −12.4% | 230 | 197.1 | −14.3% |
-| OpenSplat | 510,000 | 273,368 | −46.4% | 123 | 66.2 | −46.2% |
-| Nerfstudio | 170,000 | 126,841 | −25.4% | 43 | 30.7 | −28.6% |
-| LichtFeld Studio | 1,000,000 | 800,515 | −20.0% | 242 | 189.3 | −21.8% |
+| Inria GS | 955,819 | 518,140 | −45.8% | 226.1 | 122.6 | −45.8% |
+| gsplat | 1,265,239 | 574,463 | −54.6% | 284.8 | 155.5 | −45.4% |
+| OpenSplat | 510,870 | 402,531 | −21.2% | 120.8 | 95.2 | −21.2% |
+| Nerfstudio | 170,150 | 126,841 | −25.4% | 40.2 | 30.0 | −25.4% |
+| LichtFeld Studio | 1,000,000 | 800,515 | −20.0% | 236.5 | 189.3 | −20.0% |
 
 ## Observations
 
-- **OpenSplat** shows the largest reduction after cleaning (≈ −46 % in both Gaussian count and file size).
+- **gsplat** and **Inria GS** exhibit the largest absolute reductions after cleaning, with substantial decreases in both Gaussian count and file size.
 
-- **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining a compact representation, suggesting that its training pipeline already performs partial pruning but still benefits from post-processing.
+- **OpenSplat** shows a moderate reduction (≈ −21%), indicating more conservative cleaning operations compared to gsplat and Inria.
 
-- **gsplat** and **LichtFeld Studio** undergo moderate reductions after cleaning, with gsplat showing a smaller decrease than LichtFeld Studio, reflecting aggressive densification during training and the presence of removable background Gaussians in the raw outputs.
+- **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining a compact representation.
 
-- **Inria GS** remains nearly unchanged after cleaning, which indicates that its reference implementation already produces structurally conservative and stable reconstructions with limited far-field noise.
+- **LichtFeld Studio** undergoes limited but noticeable reductions (≈ −20%).
 
 </details>
 
