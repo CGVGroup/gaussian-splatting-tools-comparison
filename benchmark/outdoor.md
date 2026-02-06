@@ -1,6 +1,6 @@
 # Outdoor Dataset — Benchmark Results and Visual Inspection
 
-This section reports quantitative benchmarking results for several open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
+This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
 
 ---
 
@@ -35,23 +35,23 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 | Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria GS | 188 | 777,067 | 24.2 | 60 | 7.7 | Adaptive density control | [How-To](../tools/inria.md) |
-| gsplat | 238 | 1,031,707 | 23.0 | 45 | 4.4 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
-| OpenSplat | 143 | 589,291 | 24.3 | 50 | 8.5 | Native pruning | [How-To](../tools/opensplat.md) |
-| Nerfstudio | 48 | 197,545 | 24.3 | 25 | 12.7 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
-| LichtFeld Studio | 242 | 1,000,000 | 24.2 | 50 | 5.0 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
+| Inria GS | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](../tools/inria.md) |
+| gsplat | 232.2 | 1,031,707 | 22.5 | 45 | 4.4 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
+| OpenSplat | 139.4 | 589,291 | 23.7 | 50 | 8.5 | Native pruning | [How-To](../tools/opensplat.md) |
+| Nerfstudio | 46.7 | 197,545 | 23.6 | 25 | 12.7 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
+| LichtFeld Studio | 236.5 | 1,000,000 | 23.6 | 50 | 5.0 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
 
 ---
 
 ## Observations
 
-- **Nerfstudio** produced the smallest output files and shortest training time
+- **Nerfstudio** produced the smallest output file and shortest training time, with a relatively low Gaussian count compared to the other pipelines.
 
-- **OpenSplat** achieved a favorable compromise between reconstruction density and output size through aggressive pruning.
+- **OpenSplat** achieved a favorable compromise between reconstruction density and output size..
 
-- **gsplat** and **LichtFeld Studio** generated the densest reconstructions, with correspondingly larger output files.
+- **gsplat** and **LichtFeld Studio** generated the densest reconstructions. **gsplat** generated the largest output file, followed by **LichtFeld Studio**.
 
-- The original **Inria GS** reference implementation remained slower than the other pipelines, although it produced stable large-scale outdoor reconstructions.
+- The original **Inria GS** reference implementation is slower than the other pipelines, although it produced a stable reconstructions.
 
 </details>
 
