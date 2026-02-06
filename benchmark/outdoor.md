@@ -189,11 +189,11 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 | Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
 |------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
-| Inria GS | 777,067 | 369,432 | −52.5% | 188 | 87.4 | −53.5% |
-| gsplat | 1,031,707 | 556,464 | −46.1% | 238 | 125.2 | −47.4% |
-| OpenSplat | 589,291 | 463,802 | −21.3% | 143 | 109.7 | −23.3% |
-| Nerfstudio | 197,545 | 170,923 | −13.5% | 48 | 40.4 | −15.8% |
-| LichtFeld Studio | 1,000,000 | 416,479 | −58.4% | 242 | 98.5 | −59.3% |
+| Inria GS | 777,067 | 369,432 | −52.5% | 183.8 | 87.4 | −52.4% |
+| gsplat | 1,031,707 | 556,464 | −46.1% | 232.2 | 125.2 | −46.1% |
+| OpenSplat | 589,291 | 463,802 | −21.3% | 139.4 | 109.7 | −21.3% |
+| Nerfstudio | 197,545 | 170,923 | −13.5% | 46.7 | 40.4 | −13.5% |
+| LichtFeld Studio | 1,000,000 | 416,479 | −58.4% | 236.5 | 98.5 | −58.3% |
 
 ## Observations
 
@@ -204,8 +204,6 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 - **OpenSplat** exhibits more moderate reductions, suggesting that a larger fraction of its raw Gaussians already belonged to the retained scene envelope.
 
 - **Nerfstudio** shows comparatively smaller decreases in both Gaussian count and file size, indicating that its raw reconstruction was already relatively sparse before cleaning.
-
-</details>
 
 ---
 
