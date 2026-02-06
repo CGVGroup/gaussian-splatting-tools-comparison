@@ -35,21 +35,22 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 | Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria GS | 231 | 867,000 | 26.6 | 150 | 17.3 | Adaptive density control | [How-To](../tools/inria.md) |
-| gsplat | 230 | 1,000,000 | 23.0 | 50 | 5.0 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
-| OpenSplat | 123 | 510,000 | 24.1 | 60 | 11.7 | Native pruning | [How-To](../tools/opensplat.md) |
-| Nerfstudio | 43 | 170,000 | 25.3 | 30 | 17.6 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
-| LichtFeld Studio | 242 | 1,000,000 | 24.2 | 64 | 6.4 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
+| Inria GS | 226.1 | 955,819 | 23.7 | 150 | 15.7 | Adaptive density control | [How-To](../tools/inria.md) |
+| gsplat | 225.1 | 1,000,000 | 22.5 | 50 | 5.0 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
+| OpenSplat | 120.8 | 510,870 | 23.6 | 60 | 11.8 | Native pruning | [How-To](../tools/opensplat.md) |
+| Nerfstudio | 40.2 | 170,150 | 23.6 | 30 | 17.6 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
+| LichtFeld Studio | 236.5 | 1,000,000 | 23.6 | 64 | 6.4 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
 
 ## Observations
 
-- **Nerfstudio** produced the most compact representation, with the lowest Gaussian count and smallest output size, and shortest training time, at the cost of reduced Gaussian density.
+- **Nerfstudio** produced the most compact representation in terms of output size and training time, with a relatively low Gaussian count compared to the other pipelines.
 
-- **OpenSplat** achieved a favorable compromise between output size and visual quality through aggressive pruning.
+- **OpenSplat** achieved a favorable compromise between output size and visual quality.
 
 - **gsplat** and **LichtFeld Studio** generated the densest models, with correspondingly larger output files.
 
-- The original **Inria GS** reference implementation remained the slowest, although it produced structurally stable reconstructions.
+- The original **Inria GS** reference implementation is the slowest, although it produced a structurally stable reconstruction.
+
 
 </details>
 
