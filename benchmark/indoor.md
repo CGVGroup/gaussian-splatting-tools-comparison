@@ -47,9 +47,9 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 - **OpenSplat** achieved a favorable compromise between output size and visual quality.
 
-- **gsplat** and **LichtFeld Studio** generated the densest models, with correspondingly larger output files.
+- **gsplat** and **LichtFeld Studio** generated the densest models.
 
-- The original **Inria GS** reference implementation is the slowest, although it produced a structurally stable reconstruction.
+- The original **Inria GS** reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.
 
 
 </details>
