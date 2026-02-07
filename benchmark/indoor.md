@@ -230,7 +230,7 @@ The cleaned gsplat reconstruction exhibits a strongly compacted central scene vo
 ![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/gsplat_cleaned_00.png)
 ![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/gsplat_cleaned_01.png)
 
-https://github.com/user-attachments/assets/f2dfa455-ae07-4eae-80f2-072601882549
+https://github.com/user-attachments/assets/52903544-0081-4fda-bc09-5f5cf14f5438
 
 ---
 
@@ -241,7 +241,7 @@ The cleaned OpenSplat reconstruction presents a sharply delimited central scene 
 ![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/opensplat_cleaned_00.png)
 ![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/opensplat_cleaned_01.png)
 
-https://github.com/user-attachments/assets/3b4954fa-b950-46ec-b32b-728b1f27b378
+https://github.com/user-attachments/assets/b99ac571-9364-4af1-9bc2-538ebe8a8344
 
 ---
 
