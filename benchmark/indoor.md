@@ -26,6 +26,16 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ---
 
+## Quantitative Evaluation Protocol
+
+Quantitative benchmarking was conducted on the raw reconstructions produced by each pipeline prior to any post-processing or cleaning operations.
+
+For each method, the total output file size, the number of reconstructed Gaussians, and the corresponding storage cost normalized per 100k Gaussians are reported. Training time is provided both in absolute minutes and normalized per 100k Gaussians to facilitate cross-method comparison.
+
+All measurements were obtained using the same hardware platform and experimental setup described above.
+
+---
+
 ## Quantitative Results
 
 <details open>
@@ -88,7 +98,7 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 
 ### Inria Gaussian Splatting — Raw Output
 
-The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with only a small number of peripheral outliers and thin far-field artifacts surrounding the main reconstruction.
+The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with a small detached cluster visible on the left side of the scene and a few thin elongated Gaussians forming far-field artifacts around the core scene structure.
 
 ![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
 ![Inria raw view 2](../media/indoor/inria/raw/inria_00.png)
@@ -97,16 +107,16 @@ The raw reconstruction produced by Inria shows a compact central scene volume wi
 
 ### gsplat — Raw Output
 
-The gsplat reconstruction exhibits a dense central scene volume with high structural fidelity. However, its overall spatial extent is significantly larger than the one of the Inria recostruction, with numerous peripheral outliers and elongated far-field artifacts radiating outward from the scene core.
+The raw gsplat reconstruction presents a clearly defined central core, surrounded by a loose halo of elongated splats and semi-transparent structures, mainly in the upper and lateral regions. These artifacts remain close to the main scene rather than forming large detached clusters.
 
-![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_00.png)
-![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_01.png)
+![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_01.png)
+![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_00.png)
 
 ---
 
 ### OpenSplat — Raw Output
 
-The OpenSplat model presents a well-defined central scene volume with most Gaussians concentrated near the interior region. The overall spatial extent is moderate, with peripheral outliers largely confined to the scene boundaries and fewer far-field artifacts than gsplat, resulting in a comparatively compact reconstruction similar to similar to that observed for Inria.
+The OpenSplat reconstruction shows a compact central scene core with clearly recognizable geometry, but is surrounded by elongated streak artifacts and detached peripheral clusters that extend the spatial footprint around the main structure. 
 
 ![OpenSplat raw view 1](../media/indoor/opensplat/raw/opensplat_00.png)
 ![OpenSplat raw view 2](../media/indoor/opensplat/raw/opensplat_01.png)
@@ -115,7 +125,7 @@ The OpenSplat model presents a well-defined central scene volume with most Gauss
 
 ### Nerfstudio — Raw Output
 
-Nerfstudio’s raw output displays a relatively sparse central scene volume and reduced Gaussian density. The overall spatial extent remains moderate compared to that observed for gsplat, although elongated artifacts are present and several isolated peripheral outliers and small far-field clusters are visible beyond the scene core, slightly degrading global compactness.
+The Nerfstudio raw reconstruction exhibits a sparse central scene core surrounded by multiple elongated streak artifacts and isolated peripheral clusters. Thin far-field Gaussians extend well beyond the main interior structure, yielding a fragmented outer envelope and reduced overall compactness.
 
 ![Nerfstudio raw view 1](../media/indoor/nerfstudio/raw/nerfstudio_00.png)
 ![Nerfstudio raw view 2](../media/indoor/nerfstudio/raw/nerfstudio_01.png)
@@ -124,21 +134,27 @@ Nerfstudio’s raw output displays a relatively sparse central scene volume and 
   
 ### LichtFeld Studio — Raw Output
 
-The LichtFeld Studio reconstruction contains a very dense central scene volume coupled with a large overall spatial extent. Numerous peripheral outliers and far-field artifacts surround the main reconstruction region.
+The LichtFeld Studio reconstruction shows a very dense central scene core, but it is surrounded by a wide halo of peripheral outliers and far-field streak artifacts. These scattered Gaussians around the core significantly increase the overall spatial extent of the model compared to more compact pipelines.
 
 ![Lichtfeld raw view 1](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
 ![Lichtfeld raw view 2](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
+![Lichtfeld raw view 3](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_02.png)
 
 ---
 
 ### Summary of Visual Findings (Before Cleaning)
 
-Across all raw reconstructions:
+Across all raw reconstructions, clear differences emerge in how each pipeline distributes Gaussians around the central scene:
 
-- **Inria** and **OpenSplat** generated comparatively **more compact scene volumes**.
-- **gsplat** and **LichtFeld Studio** exhibited **large spatial spread** and pronounced peripheral artifacts.
-- **Nerfstudio** produced the lightest model, but with **isolated distant clusters** affecting global compactness.
-- All pipelines benefit significantly from a dedicated cleaning stage prior to deployment in real-time or immersive applications.
+- **Inria** produced one of the most compact raw models, with a clearly defined scene core and only limited peripheral outliers and thin far-field streaks.
+
+- **OpenSplat** retained a relatively concentrated scene core but exhibited larger elongated streak artifacts and scattered peripheral Gaussians around the core.
+
+- **gsplat** generated a dense reconstruction with a visible halo of peripheral Gaussians surrounding the scene core, comparable to Inria and OpenSplat, but without large detached background clusters.
+
+- **LichtFeld Studio** showed the strongest spatial dispersion, combining a very dense scene core with extensive far-field clutter and numerous floating clusters distributed around the core.
+
+- **Nerfstudio** produced the sparsest central reconstruction, but still displayed isolated distant clusters and streak-like artifacts that reduce overall compactness compared to Inria and OpenSplat.
 
 </details>
 
