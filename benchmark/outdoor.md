@@ -33,25 +33,30 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 <br>
 
-| Tool | Output Size (MB) | # Gaussians | MB / 100k | Training Time (min) | Min / 100k | Densification Strategy | Discussion |
+| Tool | Output Size (MB) | # Gaussians |Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
 | Inria GS | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](../tools/inria.md) |
 | gsplat | 232.2 | 1,031,707 | 22.5 | 45 | 4.4 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
 | OpenSplat | 139.4 | 589,291 | 23.7 | 50 | 8.5 | Native pruning | [How-To](../tools/opensplat.md) |
 | Nerfstudio | 46.7 | 197,545 | 23.6 | 25 | 12.7 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
-| LichtFeld Studio | 236.5 | 1,000,000 | 23.6 | 50 | 5.0 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
+| LichtFeld Studio | 236.5 | 1,000,000 | 23.7 | 50 | 5.0 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
+
+- **Storage / 100k Gaussians (MB)** measures storage cost normalized by Gaussian count.
+- **Training Time / 100k Gaussians (min)** measures training cost normalized by Gaussian count.
 
 ---
 
 ## Observations
 
-- **Nerfstudio** produced the smallest output file and shortest training time, with a relatively low Gaussian count compared to the other pipelines.
+- **Nerfstudio** produces the smallest output file and the shortest training time, with substantially fewer Gaussians than the other pipelines.
 
-- **OpenSplat** achieved a favorable compromise between reconstruction density and output size..
+- **OpenSplat** occupies an intermediate position in terms of Gaussian count and storage footprint.
 
-- **gsplat** and **LichtFeld Studio** generated the densest reconstructions. **gsplat** generated the largest output file, followed by **LichtFeld Studio**.
+- **LichtFeld Studio** produces the largest output file, followed by **gsplat**.
 
-- The original **Inria GS** reference implementation is slower than the other pipelines, although it produced a stable reconstructions.
+- Although **gsplat** contains more Gaussians than **LichtFeld Studio**, its output file is slightly smaller, indicating that storage cost is influenced not only by Gaussian count but also by the number and numerical precision of per-Gaussian attributes exported by each pipeline.
+
+- The original **Inria GS** reference implementation is slower than the other pipelines, while producing a structurally stable reconstruction.
 
 </details>
 
