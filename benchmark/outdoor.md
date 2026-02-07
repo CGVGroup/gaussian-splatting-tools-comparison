@@ -26,6 +26,16 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ---
 
+## Quantitative Evaluation Protocol
+
+Quantitative benchmarking was conducted on the raw reconstructions produced by each pipeline prior to any post-processing or cleaning operations.
+
+For each method, the total output file size, the number of reconstructed Gaussians, and the corresponding storage cost normalized per 100k Gaussians are reported. Training time is provided both in absolute minutes and normalized per 100k Gaussians to facilitate cross-method comparison.
+
+All measurements were obtained using the same hardware platform and experimental setup described above.
+
+---
+
 ## Quantitative Results
 
 <details open>
@@ -92,7 +102,7 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 
 ### Inria Gaussian Splatting — Raw Output
 
-The raw reconstruction produced by Inria shows a clearly identifiable central outdoor structure. When visualized to encompass the full extent of the model, Gaussians populate far-field background regions corresponding to distant environmental elements such as vegetation and sorrrounding context. The distribution remains relatively coherent, with streak-like artifacts visible near the central structure and within distant background regions. In addition, some large-scale Gaussians are present in upper regions of the reconstruction, corresponding to portions of the sky.
+The raw Inria reconstruction shows a clearly identifiable outdoor scene core centered on the main architectural structure. When visualized at full extent, Gaussians extend into far-field background regions corresponding to vegetation and surrounding context, forming peripheral structures branching from the core rather than fully detached clusters. Elongated streak artifacts are visible near the central area and in distant regions, while several large-scale Gaussians appear in the upper portion of the reconstruction, associated with sky regions.
 
 ![Inria raw view 1](../media/outdoor/inria/raw/inria_00.png)
 ![Inria raw view 2](../media/outdoor/inria/raw/inria_01.png)
