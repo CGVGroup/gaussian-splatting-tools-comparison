@@ -46,11 +46,11 @@ For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
 
 ### Observations
 
-- **Nerfstudio** produced the most compact representation in terms of output size and training time, with a relatively low Gaussian count compared to the other pipelines.
+- **Nerfstudio** produced the most compact representation in terms of output size and training time, with a substantially lower Gaussian count than the other pipelines.
 
-- **OpenSplat** achieved a compromise between output size and visual quality.
+- **OpenSplat** occupies an intermediate position in terms of Gaussian count and storage footprint.
 
-- **gsplat** generated the densest model in terms of Gaussian count and the largest output file, while **LichtFeld Studio** also produced a very dense reconstruction with a correspondingly large output file.
+- **gsplat** generated the densest model in terms of Gaussian count and the largest output file, followed by **LichtFeld Studio**.
 
 - The original **Inria GS** reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.
 
