@@ -109,8 +109,8 @@ The raw reconstruction produced by Inria shows a compact central scene volume wi
 
 The raw gsplat reconstruction presents a clearly defined central core, surrounded by a loose halo of elongated splats and semi-transparent structures, mainly in the upper and lateral regions. These artifacts remain close to the main scene rather than forming large detached clusters.
 
-![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_01.png)
-![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_00.png)
+![gsplat raw view 1](../media/indoor/gsplat/raw/gsplat_00.png)
+![gsplat raw view 2](../media/indoor/gsplat/raw/gsplat_01.png)
 
 ---
 
