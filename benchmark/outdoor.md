@@ -240,7 +240,7 @@ This section presents both screenshots and screen-recorded orbit videos captured
 
 ### Inria Gaussian Splatting — Cleaned Output
 
-After cleaning, the Inria reconstruction exhibits a noticeably reduced spatial extent while preserving a clearly identifiable and stable outdoor scene core. Most large-scale Gaussians in the upper regions associated with the sky are removed. Elongated streak artifacts are partially suppressed, although some thin residual structures persist around the scene envelope. Overall, the cleaned model appears significantly more spatially focused than the raw version, without visible degradation of the main architectural geometry.
+The cleaned Inria reconstruction exhibits a noticeably reduced spatial extent while preserving a clearly identifiable and stable outdoor scene core. Most large-scale Gaussians in the upper regions associated with the sky are removed. Elongated streak artifacts are partially suppressed, although some thin residual structures persist around the scene envelope. The cleaned model appears significantly more spatially focused than the raw version, without visible degradation of the main architectural geometry.
 
 ![Inria cleaned view 1](../media/outdoor/inria/cleaned/inria_cleaned_00.png)
 ![Inria cleaned view 2](../media/outdoor/inria/cleaned/inria_cleaned_01.png)
@@ -252,7 +252,7 @@ https://github.com/user-attachments/assets/ac54b131-a198-4f4f-83a0-157e8c58ab1c
 
 ### gsplat — Cleaned Output
 
-After cleaning, detached background clusters appear reduced and elongated streaks apeear mainly removed. The central structure is clearly isolated, while sky-related Gaussians appear more coherent than in the raw output. Overall clutter is substantially reduced, and the scene geometry is more readable and spatially focused.
+The cleaned gsplat reconstruction shows a reduction of detached background splats and far-field clutter. Several elongated streak artifacts visible in the raw output are attenuated, while others persist near the scene core and in sky-related regions. The central outdoor structure appears more clearly separated from surrounding artifacts, and the scene geometry is more spatially focused than in the raw reconstruction.
 
 ![gsplat cleaned view 1](../media/outdoor/gsplat/cleaned/gsplat_cleaned_00.png)
 ![gsplat cleaned view 2](../media/outdoor/gsplat/cleaned/gsplat_cleaned_01.png)
@@ -264,7 +264,7 @@ https://github.com/user-attachments/assets/99711339-8d17-40b5-8f44-c4c9c86b66c6
 
 ### OpenSplat — Cleaned Output
 
-After cleaning, the OpenSplat reconstruction shows a reduced scene envelope, with many peripheral streaks removed. The central structure becomes clearly isolated, while residual sky-related splats are thinner and more localized than in the raw output. Overall, the post-processed model appears easier to inspect, with the main outdoor geometry preserved and artifacts attenuated.
+The cleaned OpenSplat reconstruction shows a reduced spatial footprint, with many of the peripheral streak artifacts removed. The central outdoor structure is more clearly isolated, while residual sky-related splats appear thinner and more localized than in the raw output. Some elongated structures persist near the upper regions, but the scene envelope is narrower and the main geometry remains well preserved.
 
 ![OpenSplat cleaned view 1](../media/outdoor/opensplat/cleaned/opensplat_cleaned_00.png)
 ![OpenSplat cleaned view 2](../media/outdoor/opensplat/cleaned/opensplat_cleaned_01.png)
@@ -276,7 +276,7 @@ https://github.com/user-attachments/assets/5eee3615-8951-4d4e-a659-99d95364a8b3
 
 ### Nerfstudio — Cleaned Output
 
-After cleaning, the Nerfstudio reconstruction shows a tightly cropped central scene with most far-field clusters and elongated streak artifacts removed. The main architectural elements remain intact, while background Gaussians associated with the sky and surrounding vegetation are substantially reduced, yielding a visually clearer and more spatially constrained model compared to the raw output.
+The cleaned Nerfstudio reconstruction shows a tightly cropped central scene, with most far-field clusters and elongated streak artifacts removed. The main architectural elements remain intact, while background Gaussians associated with the sky and surrounding vegetation are substantially reduced, yielding a visually clearer and more spatially constrained model than the raw output.
 
 ![Nerfstudio cleaned view 1](../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_00.png)
 ![Nerfstudio cleaned view 2](../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_01.png)
@@ -288,7 +288,7 @@ https://github.com/user-attachments/assets/af5c8965-1e4b-4e24-ac9e-8b24d4b03e89
 
 ### LichtFeld Studio — Cleaned Output
 
-The cleaned LichtField Studio reconstruction shows a strongly centralized and well-bounded scene volume. The large far-field scatter and floating clusters visible in the raw output are largely removed. Architectural elements and vegetation are preserved with improved continuity, while background noise and elongated streak artifacts are substantially reduced. Overall, the result is a compact and visually coherent reconstruction, with only minor peripheral remnants remaining near the outer bounds of the scene.
+The cleaned LichtFeld Studio reconstruction shows a more centralized and better bounded scene volume than the raw version. Part of the far-field scatter and several floating clusters are removed, while the main architectural structure and vegetation remain clearly identifiable. Background streak artifacts are reduced, although thin residual halos and sparse peripheral splats persist near the scene boundaries. The cleaned model appears more spatially constrained while preserving the dense core of the reconstruction.
 
 ![LichtFeld Studio cleaned view 1](../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_00.png)
 ![LichtFeld Studio cleaned view 2](../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_01.png)
@@ -300,17 +300,17 @@ https://github.com/user-attachments/assets/06bb0135-ab14-46e6-a061-9a2e4565e2bc
 
 ## Summary of Visual Findings (After Cleaning)
 
-After cleaning, all pipelines exhibit a clear reduction in spatial extent and background clutter, while preserving the main outdoor structures.
+After cleaning, the five pipelines show different degrees of spatial compaction and artifact suppression while preserving the main outdoor structures:
 
-- **Inria GS** shows reduced overall spread, with very large upper-region Gaussians removed and streaks partially attenuated, while the core scene geometry remains visually stable.
+- **Inria GS**, which already produced a relatively controlled raw reconstruction, further reduces its spatial footprint after cleaning.
 
-- **gsplat** exhibits reduced detached background clusters and mostly removed streak artifacts, with the central structure more clearly isolated and sky-related Gaussians appearing more coherent.
+- **gsplat**, which initially exhibited detached background splats and streak artifacts around the core, shows a clearer separation between the central structure and surrounding clutter after cleaning.
 
-- **OpenSplat** presents a reduced scene envelope with many peripheral streaks removed, leaving thinner and more localized sky-related splats around a clearly isolated central structure.
+- **OpenSplat** presents a reduced scene envelope with many peripheral streaks removed, leaving thinner and more localized sky-related splats around a clearer isolated central structure.
 
-- **Nerfstudio** transitions to a tightly cropped reconstruction, with most far-field clusters and elongated streak artifacts removed while preserving the main architectural elements.
+- **Nerfstudio**, which originally displayed extensive halos and far-field clusters, transitions to a tightly cropped reconstruction after cleaning.
 
-- **LichtFeld Studio** shows a strongly centralized and well-bounded scene after cleaning, with far-field scatter and floating clusters largely removed and only minor peripheral remnants remaining.
+- **LichtFeld Studio**, previously characterized by a dense core surrounded by wide peripheral halos, shows a more centralized and bounded scene volume after cleaning
 
 </details>
 
