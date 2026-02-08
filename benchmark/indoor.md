@@ -144,7 +144,7 @@ The LichtFeld Studio reconstruction shows a very dense central scene core, but i
 
 ### Summary of Visual Findings (Before Cleaning)
 
-Across all raw reconstructions, clear differences emerge in how each pipeline distributes Gaussians around the central scene:
+Across all raw reconstructions, distinct patterns can be observed in how each pipeline distributes Gaussians around the central scene:
 
 - **Inria** produced one of the most compact raw models, with a clearly defined scene core and only limited peripheral outliers and thin far-field streaks.
 
