@@ -111,7 +111,7 @@ The raw Inria reconstruction shows a clearly identifiable outdoor scene core. Ga
 
 ### gsplat — Raw Output
 
-The gsplat raw reconstruction shows a clearly identifiable central outdoor structure. Far-field environmental Gaussians extend away from the scene core into surrounding background regions, with environmental elements appearing detached from the main volume. Elongated streak artifacts are visible both close to the scene core and in more distant regions. Streaks and some larger Gaussians associated with the sky are present in the upper portion of the reconstruction.
+The raw gsplat reconstruction shows a clearly identifiable central outdoor structure. Far-field environmental Gaussians extend away from the scene core into surrounding background regions, with environmental elements appearing detached from the main volume. Elongated streak artifacts are visible both close to the scene core and in more distant regions. Streaks and some larger Gaussians associated with the sky are present in the upper portion of the reconstruction.
 
 ![gsplat raw view 1](../media/outdoor/gsplat/raw/gsplat_00.png)
 ![gsplat raw view 2](../media/outdoor/gsplat/raw/gsplat_01.png)
@@ -120,7 +120,7 @@ The gsplat raw reconstruction shows a clearly identifiable central outdoor struc
 
 ### OpenSplat — Raw Output
 
-The OpenSplat raw reconstruction shows an identifiable outdoor scene core. Numerous elongated streak artifacts radiate outward from the central area, forming a broad and irregular halo around the scene. Prominent spike-like Gaussians extend vertically and diagonally toward upper regions associated with the sky. Additional far-field environmental splats corresponding to vegetation and surrounding context are present beyond the core, while a limited number of isolated floating clusters appear in distant regions.
+The raw OpenSplat reconstruction shows an identifiable outdoor scene core. Numerous elongated streak artifacts radiate outward from the central area, forming a broad and irregular halo around the scene. Prominent spike-like Gaussians extend vertically and diagonally toward upper regions associated with the sky. Additional far-field environmental splats corresponding to vegetation and surrounding context are present beyond the core, while a limited number of isolated floating clusters appear in distant regions.
 
 ![OpenSplat raw view 1](../media/outdoor/opensplat/raw/opensplat_00.png)
 ![OpenSplat raw view 2](../media/outdoor/opensplat/raw/opensplat_01.png)
