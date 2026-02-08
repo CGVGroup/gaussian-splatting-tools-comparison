@@ -240,7 +240,7 @@ This section presents both screenshots and screen-recorded orbit videos captured
 
 ### Inria Gaussian Splatting — Cleaned Output
 
-After cleaning, the Inria reconstruction shows a reduced overall spatial spread, while the main outdoor structure remains clearly defined and visually stable. Really large Gaussians in the upper area are removed. Streaks are partially removed, while some elongated structures persist. The cleaned model appears more spatially focused than the raw version, without noticeable degradation of the core scene geometry.
+After cleaning, the Inria reconstruction exhibits a noticeably reduced spatial extent while preserving a clearly identifiable and stable outdoor scene core. Most large-scale Gaussians in the upper regions associated with the sky are removed. Elongated streak artifacts are partially suppressed, although some thin residual structures persist around the scene envelope. Overall, the cleaned model appears significantly more spatially focused than the raw version, without visible degradation of the main architectural geometry.
 
 ![Inria cleaned view 1](../media/outdoor/inria/cleaned/inria_cleaned_00.png)
 ![Inria cleaned view 2](../media/outdoor/inria/cleaned/inria_cleaned_01.png)
