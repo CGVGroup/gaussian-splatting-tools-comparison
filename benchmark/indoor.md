@@ -116,7 +116,7 @@ The raw gsplat reconstruction presents a clearly defined central core, surrounde
 
 ### OpenSplat — Raw Output
 
-The OpenSplat reconstruction shows a compact central scene core with clearly recognizable geometry, but is surrounded by elongated streak artifacts and detached peripheral clusters that extend the spatial footprint around the main structure. 
+The raw OpenSplat reconstruction shows a compact central scene core with clearly recognizable geometry, but is surrounded by elongated streak artifacts and detached peripheral clusters that extend the spatial footprint around the main structure. 
 
 ![OpenSplat raw view 1](../media/indoor/opensplat/raw/opensplat_00.png)
 ![OpenSplat raw view 2](../media/indoor/opensplat/raw/opensplat_01.png)
@@ -125,7 +125,7 @@ The OpenSplat reconstruction shows a compact central scene core with clearly rec
 
 ### Nerfstudio — Raw Output
 
-The Nerfstudio raw reconstruction exhibits a sparse central scene core surrounded by multiple elongated streak artifacts and isolated peripheral clusters. Thin far-field Gaussians extend well beyond the main interior structure, yielding a fragmented outer envelope and reduced overall compactness.
+The raw Nerfstudio reconstruction exhibits a sparse central scene core surrounded by multiple elongated streak artifacts and isolated peripheral clusters. Thin far-field Gaussians extend well beyond the main interior structure, yielding a fragmented outer envelope and reduced overall compactness.
 
 ![Nerfstudio raw view 1](../media/indoor/nerfstudio/raw/nerfstudio_00.png)
 ![Nerfstudio raw view 2](../media/indoor/nerfstudio/raw/nerfstudio_01.png)
@@ -134,7 +134,7 @@ The Nerfstudio raw reconstruction exhibits a sparse central scene core surrounde
   
 ### LichtFeld Studio — Raw Output
 
-The LichtFeld Studio reconstruction shows a very dense central scene core, but it is surrounded by a wide halo of peripheral outliers and far-field streak artifacts. These scattered Gaussians around the core significantly increase the overall spatial extent of the model compared to more compact pipelines.
+The raw LichtFeld Studio reconstruction shows a very dense central scene core, surrounded by a broad halo of peripheral outliers and far-field streak artifacts, which markedly increase the overall spatial extent of the model.
 
 ![Lichtfeld raw view 1](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
 ![Lichtfeld raw view 2](../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
@@ -178,7 +178,7 @@ In particular, the following operations were applied:
 - **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats outside the room boundaries.
 - **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
 - **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
-- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate abnormally large primitives often corresponding, floor extrapolations, or reconstruction artifacts.
+- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate streaks and spike-like artfacts.
 - **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
 - **Manual inspection and refinement**, performed to ensure that walls, furniture, and major structural elements were preserved.
 7. **Export of the cleaned models** as new `.ply`.
@@ -205,6 +205,9 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 | OpenSplat | 510,870 | 402,531 | −21.2% | 120.8 | 95.2 | −21.2% |
 | Nerfstudio | 170,150 | 126,841 | −25.4% | 40.2 | 30.0 | −25.4% |
 | LichtFeld Studio | 1,000,000 | 800,515 | −20.0% | 236.5 | 189.3 | −20.0% |
+
+- Δ Gaussians (%) indicates the relative change in the number of Gaussians after cleaning with respect to the raw reconstruction.
+- Δ Size (%) reports the relative reduction in file size after cleaning, measured on the exported .ply models.
 
 ## Observations
 
@@ -233,7 +236,7 @@ This section presents both screenshots and screen-recorded orbit videos captured
 
 ### Inria Gaussian Splatting — Cleaned Output
 
-The cleaned Inria reconstruction displays a highly compact central scene volume tightly aligned with the indoor region of interest. The overall spatial extent is reduced, with most peripheral outliers and far-field artifacts removed.
+The cleaned Inria reconstruction preserves the compact central scene volume and clearly recognizable furniture geometry. The previously detached cluster on the left side is no longer visible, and the thin elongated Gaussians forming far-field artifacts around the core are largely removed. The overall spatial extent is further reduced, resulting in a tighter and more spatially focused reconstruction.
 
 ![Inria cleaned view 1](../media/indoor/inria/cleaned/inria_cleaned_00.png)
 ![Inria cleaned view 2](../media/indoor/inria/cleaned/inria_cleaned_01.png)
@@ -244,7 +247,7 @@ https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420
 
 ### gsplat — Cleaned Output
 
-The cleaned gsplat reconstruction exhibits a strongly compacted central scene volume and a markedly reduced overall spatial extent compared to the raw output. Most peripheral outliers and far-field artifacts have been removed, while dense interior regions and fine structural detail are preserved.
+The cleaned gsplat reconstruction shows a markedly more compact central scene volume. Most of the loose halo of elongated splats and semi-transparent structures has been removed, particularly in the upper and lateral regions. The remaining Gaussians are tightly clustered around the main furniture geometry, with only a few faint peripheral streaks persisting near the scene margins and no clearly detached background clusters visible.
 
 ![gsplat cleaned view 1](../media/indoor/gsplat/cleaned/gsplat_cleaned_00.png)
 ![gsplat cleaned view 2](../media/indoor/gsplat/cleaned/gsplat_cleaned_01.png)
@@ -255,7 +258,7 @@ https://github.com/user-attachments/assets/52903544-0081-4fda-bc09-5f5cf14f5438
 
 ### OpenSplat — Cleaned Output
 
-The cleaned OpenSplat reconstruction presents a sharply delimited central scene volume with Gaussians concentrated almost exclusively inside the true interior region. The overall spatial extent is substantially reduced, with only minor peripheral outliers remaining near the scene boundaries.
+The cleaned OpenSplat reconstruction shows a sharply delimited central scene core with Gaussians concentrated almost exclusively within the true interior region. The overall spatial extent is strongly reduced, with most elongated streak artifacts and detached peripheral clusters removed, leaving only minor residual outliers near the scene boundaries.
 
 ![OpenSplat cleaned view 1](../media/indoor/opensplat/cleaned/opensplat_cleaned_00.png)
 ![OpenSplat cleaned view 2](../media/indoor/opensplat/cleaned/opensplat_cleaned_01.png)
@@ -266,7 +269,7 @@ https://github.com/user-attachments/assets/b99ac571-9364-4af1-9bc2-538ebe8a8344
 
 ### Nerfstudio — Cleaned Output
 
-The cleaned Nerfstudio reconstruction shows an extremely compact central scene volume and a very limited overall spatial extent. Peripheral outliers and far-field clusters are almost entirely eliminated, yielding a tightly cropped reconstruction while preserving the main architectural elements of the scene.
+The cleaned Nerfstudio reconstruction presents a highly compact central scene core with a strongly reduced spatial footprint. Most elongated streak artifacts and detached far-field clusters visible in the raw output are removed, resulting in a tightly cropped volume that preserves the main architectural structures of the interior scene.
 
 ![Nerfstudio cleaned view 1](../media/indoor/nerfstudio/cleaned/nerfstudio_cleaned_00.png)
 ![Nerfstudio cleaned view 2](../media/indoor/nerfstudio/cleaned/nerfstudio_cleaned_01.png)
@@ -277,7 +280,7 @@ https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49
 
 ### LichtFeld Studio — Cleaned Output
 
-The cleaned LichtFeld Studio reconstruction now displays a compact central scene volume with a substantially reduced overall spatial extent. Most peripheral outliers and far-field artifacts have been removed, although faint residual halos remain visible near the scene boundaries, reflecting a conservative final pruning stage while maintaining dense interior structure.
+The cleaned LichtFeld Studio reconstruction presents a compact central scene volume with a strongly reduced spatial footprint. Most peripheral outliers and far-field streak artifacts are removed, although a faint residual halo remains near the scene boundaries, indicating conservative final pruning while preserving dense interior geometry.
 
 ![LichtFeld Studio cleaned view 1](../media/indoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_00.png)
 ![LichtFeld Studio cleaned view 2](../media/indoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_01.png)
@@ -292,10 +295,12 @@ After cleaning, the five pipelines exhibit different balances between noise remo
 
 - **Inria GS** and **OpenSplat**, which already produced relatively compact raw reconstructions, further reduce their overall spatial extent after cleaning, leaving only minor peripheral remnants near the scene boundaries.
 
-- **gsplat** and **LichtFeld Studio**, previously characterized by large spatial spread and extensive far-field clutter, now exhibit substantially tighter scene volumes, although dense interior regions and thin residual halos persist near the boundaries.
+- **gsplat**, which initially exhibited a moderate halo of peripheral splats, converges to a compact scene volume after cleaning.
 
-- **Nerfstudio**, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures.
+- **LichtFeld Studio**, previously characterized by very large spatial extent and heavy far-field clutter, now shows a substantially tighter reconstruction.
 
+- **Nerfstudio**, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures
+  
 </details>
 
 ---
