@@ -211,7 +211,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 ## Observations
 
-- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria** shows the largest percentage reduction (≈ −45.8%) across both metrics.
+- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria GS** shows the largest percentage reduction (≈ −45.8%) across both metrics.
 
 - **OpenSplat** sshows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria and gsplat.
 
