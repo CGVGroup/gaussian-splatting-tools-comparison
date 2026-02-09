@@ -100,8 +100,8 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 
 The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with a small detached cluster visible on the left side of the scene and a few thin elongated Gaussians forming far-field artifacts around the core scene structure.
 
-![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
-![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
+![Inria raw view 1](../media/indoor/inria/raw/inria_00.png)
+![Inria raw view 2](../media/indoor/inria/raw/inria_01.png)
 
 ---
 
