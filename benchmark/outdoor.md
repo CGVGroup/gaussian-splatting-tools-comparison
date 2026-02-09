@@ -224,6 +224,8 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 - **OpenSplat** hows more moderate decreases, suggesting that a larger fraction of its raw Gaussians already lay within the preserved scene envelope.
 
 - **Nerfstudio** experiences comparatively smaller reductions in both metrics, indicating that its raw reconstruction was already relatively sparse prior to cleaning.
+  
+</details>
 
 ---
 
