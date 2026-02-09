@@ -217,13 +217,13 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 ## Observations
 
-- **LichtFeld Studio** and **Inria GS** show the largest reductions after cleaning, with both Gaussian counts and file sizes decreasing by more than 50%.
+- **LichtFeld Studio** and **Inria GS** exhibit the largest impact from SuperSplat-based cleaning, with reductions exceeding 50% in both Gaussian count and file size.
 
 - **gsplat** also undergoes a substantial reduction in both metrics (≈ −46%), indicating a strong impact of post-processing on its dense raw reconstruction.
 
-- **OpenSplat** exhibits more moderate reductions, suggesting that a larger fraction of its raw Gaussians already belonged to the retained scene envelope.
+- **OpenSplat** hows more moderate decreases, suggesting that a larger fraction of its raw Gaussians already lay within the preserved scene envelope.
 
-- **Nerfstudio** shows comparatively smaller decreases in both Gaussian count and file size, indicating that its raw reconstruction was already relatively sparse before cleaning.
+- **Nerfstudio** experiences comparatively smaller reductions in both metrics, indicating that its raw reconstruction was already relatively sparse prior to cleaning.
 
 ---
 
