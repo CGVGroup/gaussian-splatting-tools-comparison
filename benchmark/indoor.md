@@ -101,7 +101,7 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with a small detached cluster visible on the left side of the scene and a few thin elongated Gaussians forming far-field artifacts around the core scene structure.
 
 ![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
-![Inria raw view 2](../media/indoor/inria/raw/inria_00.png)
+![Inria raw view 1](../media/indoor/inria/raw/inria_01.png)
 
 ---
 
@@ -201,7 +201,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 | Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
 |------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
 | Inria GS | 955,819 | 518,140 | −45.8% | 226.1 | 122.6 | −45.8% |
-| gsplat | 1,265,239 | 574,463 | −54.6% | 284.8 | 155.5 | −45.4% |
+| gsplat | 1,265,239 | 690,776 | −45.4% | 284.8 | 155.5 | −45.4% |
 | OpenSplat | 510,870 | 402,531 | −21.2% | 120.8 | 95.2 | −21.2% |
 | Nerfstudio | 170,150 | 126,841 | −25.4% | 40.2 | 30.0 | −25.4% |
 | LichtFeld Studio | 1,000,000 | 800,515 | −20.0% | 236.5 | 189.3 | −20.0% |
@@ -211,13 +211,13 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 ## Observations
 
-- **gsplat** and **Inria GS** exhibit the largest absolute reductions after cleaning, with substantial decreases in both Gaussian count and file size.
+- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria** shows the largest percentage reduction (≈ −45.8%) across both metrics.
 
-- **OpenSplat** shows a moderate reduction (≈ −21%), indicating more conservative cleaning operations compared to gsplat and Inria.
+- **OpenSplat** sshows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria and gsplat.
 
-- **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining a compact representation.
+- **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining the most compact absolute representation in terms of final file size.
 
-- **LichtFeld Studio** undergoes limited but noticeable reductions (≈ −20%).
+- **LichtFeld Studio** undergoes limited but noticeable reductions (≈ −20%) in both metrics, comparable to OpenSplat but starting from a substantially larger raw model.
 
 </details>
 
@@ -297,9 +297,9 @@ After cleaning, the five pipelines exhibit different balances between noise remo
 
 - **gsplat**, which initially exhibited a moderate halo of peripheral splats, converges to a compact scene volume after cleaning.
 
-- **LichtFeld Studio**, previously characterized by very large spatial extent and heavy far-field clutter, now shows a substantially tighter reconstruction.
-
 - **Nerfstudio**, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures
+
+- **LichtFeld Studio**, previously characterized by very large spatial extent and heavy far-field clutter, now shows a substantially tighter reconstruction.
   
 </details>
 
