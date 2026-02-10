@@ -234,4 +234,4 @@ In summary, **indoor reconstructions** tend to converge toward tightly bounded r
 - Quantitatively, **outdoor post-processing amplifies inter-method variability** (e.g., very large reductions for **LichtFeld Studio** and **Inria GS**, but limited reductions for **Nerfstudio**), while some pipelines (e.g., **OpenSplat**) show similar reduction rates across environments.
 - Combining indoor and outdoor benchmarks highlights tool behaviors that would not be visible when evaluating a single scene category.
 
-
+---
