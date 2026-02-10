@@ -22,10 +22,11 @@ For both scenarios:
 
 - training was executed on the **same hardware platform**,
 - reconstructions were **exported** to `.ply` format,
+- a **quantitative benchmarking analysis** was conducted,
 - **qualitative inspection** and **post-processing** were performed using **SuperSplat**,
 - similar **cleaning principles** were applied, with parameters adapted to each scene.
 
-The objective of this comparison is to highlight how each pipeline behaves when confronted with markedly different spatial layouts and background characteristics.
+The objective of this comparison is to highlight how each pipeline behaves when confronted with markedly different spatial layouts.
 
 ---
 
@@ -46,15 +47,15 @@ The objective of this comparison is to highlight how each pipeline behaves when 
 
 ### Observations
 
-- **Inria GS** produces fewer Gaussians and and a smaller model for the outdoor scenario, together with a substantially shorter training time.
+- **Inria GS** produces fewer Gaussians and a smaller model for the outdoor scenario, together with a substantially shorter training time.
 
 - **gsplat** remains the densest pipeline in both scenarios, with consistently large models and only limited differences between indoor and outdoor.
 
 - **OpenSplat** increases both Gaussian count and file size for the outdoor scenario.
 
-- **Nerfstudio** remains the most compact pipeline in both settings, although outdoor scenes lead to slightly larger models.
+- **Nerfstudio** remains the most compact pipeline in both settings, although the outdoor scene leads to a slightly larger model.
 
-- **LichtFeld Studio** reaches the same Gaussian budget in both scenarios, but trains faster outdoors.
+- **LichtFeld Studio** reaches the same Gaussian budget in both scenarios, but trains faster on the outdoor one.
 
 </details>
 
@@ -79,7 +80,7 @@ Indoor scenes are characterized by:
 - peripheral Gaussians not associated with interior geometry,
 - streak artifacts mostly concentrated near the main structure.
 
-Across pipelines, raw indoor reconstructions tend to occupy **relatively constrained volumes**, making background clusters easier to identify.
+Across pipelines, raw indoor reconstructions tend to occupy **relatively constrained volumes**, making spurious splats clusters easier to identify.
 
 ### Outdoor
 
@@ -91,7 +92,7 @@ Outdoor scenes present fundamentally different challenges:
 - elongated streak artifacts extending from the core,
 - detached background elements that may still represent valid scene content.
 
-Compared to indoor cases, outdoor raw reconstructions consistently exhibit **wider spatial footprints** and **more complex background distributions**.
+Compared to indoor cases, outdoor raw reconstructions consistently exhibit **wider spatial footprints** and **more complex splats distributions**.
 
 </details>
 
@@ -108,7 +109,7 @@ The qualitative differences between indoor and outdoor scenes are reflected dire
 
 ### Indoor Cleaning
 
-Indoor cleaning operations were generally straightforward:
+Indoor cleaning operations were **generally straightforward**:
 
 - the scene core was easy to localize,
 - bounding volumes could be tightly defined,
@@ -116,11 +117,11 @@ Indoor cleaning operations were generally straightforward:
 - many peripheral Gaussians could be removed without damaging structural elements,
 - manual refinement was limited and primarily used for final inspection.
 
-As a result, large portions of removable background geometry could be pruned confidently.
+As a result, large portions of removable geometry could be pruned confidently.
 
 ### Outdoor Cleaning
 
-Outdoor cleaning proved substantially more challenging:
+Outdoor cleaning proved substantially **more challenging**:
 
 - far-field Gaussians frequently corresponded to valid environmental elements,
 - background geometry often formed detached clusters rather than continuous shells,
@@ -153,31 +154,31 @@ Cleaning strategies therefore remained conservative, prioritizing preservation o
 
 The numerical effect of post-processing differs markedly between indoor and outdoor settings.
 
-In **indoor scenes**:
+In **indoor reconstructions**:
 
 - **Inria GS** and **gsplat** experience the largest reductions in Gaussian count and file size (≈ −45%),
 - **OpenSplat** and **LichtFeld Studio** show more moderate decreases (≈ −21% and ≈ −20%),
-- **Nerfstudio** occupies an intermediate regime.
+- **Nerfstudio** occupies an intermediate regime (≈ −25%).
 
-In **outdoor scenes**:
+In **outdoor reconstructions**:
 
 - reductions are more variable across pipelines, ranging from limited (**Nerfstudio**, ≈ −13%) to very large (**LichtFeld Studio**, ≈ −58%),
 - **Inria GS** exhibits a substantial reduction after cleaning (≈ −52%),
 - **gsplat** also undergoes a strong reduction (≈ −46%),
-- **OpenSplat** again shows moderate reductions.
+- **OpenSplat** again shows a moderate reduction (≈ −21%).
 
 These results confirm that post-processing efficiency depends strongly on the spatial organization of the raw reconstruction.
 
-Across environments, **LichtFeld Studio** and **Inria GS** are pruned more aggressively in outdoor scenes than indoors, while **gsplat** and **OpenSplat** show smaller cross-scenario differences.
+Across environments, **LichtFeld Studio** and **Inria GS** are pruned more aggressively in outdoor reconstructions than in the indoor reconstructions, while **gsplat** and **OpenSplat** show smaller cross-scenario differences.
 
-**Nerfstudio** behaves differently across settings: it undergoes moderate pruning indoors but only limited reductions outdoors, suggesting that a larger fraction of its outdoor Gaussians contribute to retained background geometry and cannot be safely removed without degrading scene completeness.
+**Nerfstudio** behaves differently across settings: it undergoes moderate pruning in the indoor scene but only limited reductions in the outdoor scene, suggesting that a larger fraction of its outdoor Gaussians contribute to retained background geometry and cannot be safely removed without degrading scene completeness.
 
 
 </details>
 
 ---
 
-## Qualitative Comparison
+## Qualitative Impact of Cleaning
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
@@ -188,7 +189,7 @@ Visual inspection across the two scenarios reveals systematic differences in how
 
 ### Raw Reconstructions
 
-Across tools, the indoor scenes generally producde more spatially constrained raw outputs than outdoor scene:
+Across tools, the indoor scenes generally produced more spatially constrained raw outputs than outdoor scenes:
 
 - **Inria GS** remains relatively compact in both environments, but the outdoor reconstruction contains more detached peripheral elements and streak artifacts than indoors.
 
@@ -208,17 +209,17 @@ Overall, outdoor raw reconstructions systematically contain larger far-field reg
 
 Post-processing reduces clutter in both scenarios, but different residual patterns remain:
 
-- **Inria GS** converges to a compact reconstruction in both environments, though the outdoor scene retains more peripheral streaks than indoor scene.
+- **Inria GS** converges to a compact reconstruction in both environments, though the outdoor scene retains more peripheral streaks than the indoor scene.
 
-- **gsplat** becomes tightly focused after cleaning in the indoor scene, whereas the outdoor reconstructions still preserves some streak artifacts near the core and in sky-related regions.
+- **gsplat** becomes tightly focused after cleaning in the indoor scene, whereas the outdoor reconstruction still preserves some streak artifacts near the core and in sky-related regions.
 
-- **OpenSplat** achieves strong spatial compaction in both cases, but the outdoor scenes continues to show residual elongated structures near upper regions more frequently than the indoor one.
+- **OpenSplat** achieves strong spatial compaction in both cases, but the outdoor scene continues to show more significant residual elongated structures than the indoor one.
 
-- **Nerfstudio** transitions to very tightly cropped reconstructions in both environments, with the outdoor scene still retaining slightly more background splats and peripheral remnants.
+- **Nerfstudio** transitions to very tightly cropped reconstructions in both environments, with the outdoor scene still retaining peripheral remnants and streaks.
 
-- **LichtFeld Studio** shows the largest qualitative contrast: while the indoor scene becomes compact with only faint residual halos, the outdoor scene preserves a dense core surrounded by thin but persistent peripheral halos and background splats.
+- **LichtFeld Studio** shows the largest qualitative contrast: while the indoor scene becomes compact with only faint residual halos, the outdoor scene preserves a dense core surrounded by thin but persistent peripheral halos.
 
-In summary, indoor reconstructions tend to converge toward tightly bounded reconstructions after cleaning across pipelines, whereas outdoor reconstructions consistently preserve larger envelopes and residual background structures, reflecting the increased complexity of environmental geometry and sky regions.
+In summary, **indoor reconstructions** tend to converge toward tightly bounded reconstructions after cleaning across pipelines, whereas **outdoor reconstructions** consistently preserve larger envelopes and detached structures, reflecting the increased complexity of environmental geometry and sky regions.
 
 </details>
 
@@ -227,10 +228,10 @@ In summary, indoor reconstructions tend to converge toward tightly bounded recon
 
 ## Summary
 
-- Outdoor reconstructions show larger far-field regions and more complex background distributions than indoor reconstructions.
-- Indoor cleaning is generally more straightforward due to clearer scene boundaries and a more localized scene core.
-- Outdoor cleaning requires more cautious and selective pruning, since far-field Gaussians may correspond to valid environmental elements (e.g., sky and vegetation).
-- Quantitatively, outdoor post-processing amplifies inter-method variability (e.g., very large reductions for **LichtFeld Studio** and **Inria GS**, but limited reductions for **Nerfstudio**), while some pipelines (e.g., **OpenSplat**) show similar reduction rates across environments.
+- **Outdoor reconstructions** show **larger far-field regions** and **more complex splats distributions** than indoor reconstructions.
+- **Indoor cleaning** is generally **more straightforward** due to clearer scene boundaries and a more localized scene core.
+- **Outdoor cleaning** requires **more cautious and selective pruning**, since far-field Gaussians may correspond to **valid environmental elements** (e.g., sky and vegetation).
+- Quantitatively, **outdoor post-processing amplifies inter-method variability** (e.g., very large reductions for **LichtFeld Studio** and **Inria GS**, but limited reductions for **Nerfstudio**), while some pipelines (e.g., **OpenSplat**) show similar reduction rates across environments.
 - Combining indoor and outdoor benchmarks highlights tool behaviors that would not be visible when evaluating a single scene category.
 
 
