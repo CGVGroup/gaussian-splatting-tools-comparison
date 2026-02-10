@@ -45,6 +45,25 @@ The objective of this comparison is to highlight how each pipeline behaves when 
 | Nerfstudio | 170,150 | 197,545 | 40.2 | 46.7 | 30 | 25 |
 | LichtFeld Studio | 1,000,000 | 1,000,000 | 236.5 | 236.5 | 60 | 50 |
 
+## Quantitative Visualizations
+
+```mermaid
+xychart-beta
+    title "Indoor vs Outdoor — Raw Gaussian Count"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "Gaussians" 0 --> 1400000
+    bar [955819,1265239,510870,170150,1000000]
+    bar [777067,1031707,589291,197545,1000000]
+```
+```mermaid
+xychart-beta
+    title "Indoor vs Outdoor — Training Time"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "minutes" 0 --> 140
+    bar [120,50,60,30,60]
+    bar [60,45,50,25,50]
+```
+
 ### Observations
 
 - **Inria GS** produces fewer Gaussians and a smaller model for the outdoor scenario, together with a substantially shorter training time.
@@ -149,6 +168,18 @@ Cleaning strategies therefore remained conservative, prioritizing preservation o
 | OpenSplat | −21.2 | −21.2 | −21.3 | −21.3 |
 | Nerfstudio | −25.4 | −25.4 | −13.5 | −13.5 |
 | LichtFeld Studio | −20.0 | −20.0 | −58.4 | −58.3 |
+
+## Quantitative Visualizations
+
+```mermaid
+xychart-beta
+    title "Indoor vs Outdoor — Cleaning Impact (Δ Gaussians %)"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "% removed" 0 --> 65
+    bar [45.8,45.4,21.2,25.4,20.0]
+    bar [52.5,46.1,21.3,13.5,58.4]
+```
+
 
 ## Observations
 
