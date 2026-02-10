@@ -52,17 +52,22 @@ xychart-beta
     title "Indoor vs Outdoor — Raw Gaussian Count"
     x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
     y-axis "Gaussians" 0 --> 1400000
-    bar [955819,1265239,510870,170150,1000000]
-    bar [777067,1031707,589291,197545,1000000]
+    line [955819,1265239,510870,170150,1000000]
+    line [777067,1031707,589291,197545,1000000]
 ```
+
+**Legend:** lighter line = indoor, darker line = outdoor
+
 ```mermaid
 xychart-beta
     title "Indoor vs Outdoor — Training Time"
     x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
     y-axis "minutes" 0 --> 140
-    bar [120,50,60,30,60]
-    bar [60,45,50,25,50]
+    line [120,50,60,30,60]
+    line [60,45,50,25,50]
 ```
+
+**Legend:** lighter line = indoor, darker line = outdoor
 
 ### Observations
 
@@ -176,10 +181,11 @@ xychart-beta
     title "Indoor vs Outdoor — Cleaning Impact (Δ Gaussians %)"
     x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
     y-axis "% removed" 0 --> 65
-    bar [45.8,45.4,21.2,25.4,20.0]
-    bar [52.5,46.1,21.3,13.5,58.4]
+    line [45.8,45.4,21.2,25.4,20.0]
+    line [52.5,46.1,21.3,13.5,58.4]
 ```
 
+**Legend:** lighter line = indoor, darker line = outdoor
 
 ## Observations
 
