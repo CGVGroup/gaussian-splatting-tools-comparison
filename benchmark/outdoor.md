@@ -1,6 +1,6 @@
 # Outdoor Dataset — Benchmark Results and Visual Inspection
 
-This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
+This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
 
 ---
 
@@ -19,7 +19,7 @@ All implementations were trained under the following conditions:
 - **30,000 optimization iterations**
 - Same image set (151 frames)
 - Training executed on a **single NVIDIA RTX 4060 GPU**
-- Default hyper-parameters were used unless explicitly modified for reproducibility
+- Default hyperparameters were used unless explicitly modified for reproducibility
 - Exported models were converted to `.ply` format 
 
 For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
@@ -43,7 +43,7 @@ All measurements were obtained using the same hardware platform and experimental
 
 <br>
 
-| Tool | Output Size (MB) | # Gaussians |Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
+| Tool | Output Size (MB) | # Gaussians | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
 | Inria GS | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](../tools/inria.md) |
 | gsplat | 232.2 | 1,031,707 | 22.5 | 45 | 4.4 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
@@ -102,7 +102,7 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 
 ### Inria Gaussian Splatting — Raw Output
 
-The raw Inria reconstruction shows a clearly identifiable outdoor scene core. Gaussians extend into far-field background regions corresponding to vegetation and surrounding context, forming peripheral structures detatched from the core. Elongated streak artifacts are visible near the central area and in distant regions, while large-scale Gaussians appear in the upper portion of the reconstruction, associated with sky regions.
+The raw Inria reconstruction shows a clearly identifiable outdoor scene core. Gaussians extend into far-field background regions corresponding to vegetation and surrounding context, forming peripheral structures detached from the core. Elongated streak artifacts are visible near the central area and in distant regions, while large-scale Gaussians appear in the upper portion of the reconstruction, associated with sky regions.
 
 ![Inria raw view 1](../media/outdoor/inria/raw/inria_00.png)
 ![Inria raw view 2](../media/outdoor/inria/raw/inria_01.png)
@@ -173,9 +173,9 @@ Across all raw reconstructions, distinct patterns can be observed in how each pi
 
 After inspecting the raw reconstructions, all outdoor scenes were cleaned using **SuperSplat** with the goal of reducing removable Gaussians while preserving both the main scene structure and relevant environmental context.
 
-The cleaning process was applied consistently across all five pipelines but proved inherently challenging due to the characteristics of the outdoor reconstructions. In all cases, Gaussians representing environmental background elements (such as vegetation, sky regions, and ground reflections) were detatched from the central scene core. As a result, a straightforward spatial restriction of the scene volume was not always feasible without risking the removal of valid scene content.
+The cleaning process was applied consistently across all five pipelines but proved inherently challenging due to the characteristics of the outdoor reconstructions. In all cases, Gaussians representing environmental background elements (such as vegetation, sky regions, and ground reflections) were detached from the central scene core. As a result, a straightforward spatial restriction of the scene volume was not always feasible without risking the removal of valid scene content.
 
-In reconstructions with very large spatial extents, such as **LichtFeld Studio**, and with well defined clusters of spurious Gaussians, such as **Nerfstudio**,  an initial coarse spatial restriction was possible to reduce the recontruction volume or eliminate extreme outliers. However, subsequent refinement stages required careful, localized filtering, as many Gaussians located far from the central structure still corresponded to legitimate background geometry.
+In reconstructions with very large spatial extents, such as **LichtFeld Studio**, and with well defined clusters of spurious Gaussians, such as **Nerfstudio**,  an initial coarse spatial restriction was possible to reduce the reconstruction volume or eliminate extreme outliers. However, subsequent refinement stages required careful, localized filtering, as many Gaussians located far from the central structure still corresponded to legitimate background geometry.
 
 Furthermore, several Gaussians that visually appeared removable (such as elongated streaks, thin spike-like structures, or large-scale primitives) were found to contribute to meaningful elements of the scene, including portions of the sky, background vegetation, or ground reflections. This ambiguity made aggressive pruning unsuitable and necessitated a conservative and selective cleaning strategy.
 
@@ -221,7 +221,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 - **gsplat** also undergoes a substantial reduction in both metrics (≈ −46%), indicating a strong impact of post-processing on its dense raw reconstruction.
 
-- **OpenSplat** hows more moderate decreases, suggesting that a larger fraction of its raw Gaussians already lay within the preserved scene envelope.
+- **OpenSplat** shows more moderate decreases, suggesting that a larger fraction of its raw Gaussians already lay within the preserved scene envelope.
 
 - **Nerfstudio** experiences comparatively smaller reductions in both metrics, indicating that its raw reconstruction was already relatively sparse prior to cleaning.
   
@@ -238,7 +238,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 This section focuses exclusively on the **post-cleaning appearance** of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.
 
-This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure
+This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure.
 
 ### Inria Gaussian Splatting — Cleaned Output
 
@@ -312,9 +312,28 @@ After cleaning, the five pipelines show different degrees of spatial compaction 
 
 - **Nerfstudio**, which originally displayed extensive halos and far-field clusters, transitions to a tightly cropped reconstruction after cleaning.
 
-- **LichtFeld Studio**, previously characterized by a dense core surrounded by wide peripheral halos, shows a more centralized and bounded scene volume after cleaning
+- **LichtFeld Studio**, previously characterized by a dense core surrounded by wide peripheral halos, shows a more centralized and bounded scene volume after cleaning.
 
 </details>
 
 ---
 
+## Summary
+
+- The outdoor scene produces **raw reconstructions with wide spatial footprints**, characterized by far-field Gaussians associated with sky, vegetation, and surrounding environmental context.
+
+- **Scene cleaning is inherently challenging**, as many Gaussians located far from the central structure correspond to valid background elements and cannot be safely removed through aggressive spatial pruning.
+
+- Quantitatively, **LichtFeld Studio** and **Inria GS** undergo the largest relative reductions after cleaning (≈ −58% and ≈ −52%, respectively), indicating the presence of substantial removable peripheral structure in their raw outputs.
+
+- **gsplat** also experiences strong pruning (≈ −46%), reflecting its dense raw reconstruction.
+
+- **OpenSplat** shows more moderate reductions (≈ −21%), suggesting a more balanced distribution between central structure and retained environmental geometry.
+
+- **Nerfstudio** exhibits the smallest relative reduction (≈ −13%), indicating that a large fraction of its raw Gaussians already contributes to the preserved outdoor scene content.
+
+- After post-processing, all pipelines retain **thin residual halos and sky-related splats persisting around the central structure**, reflecting the intrinsic complexity of outdoor environments.
+
+- Overall, the outdoor benchmark highlights **strong inter-method variability in background modeling and pruning effectiveness**, emphasizing the importance of environment-aware post-processing strategies when dealing with unconstrained scenes.
+
+---
