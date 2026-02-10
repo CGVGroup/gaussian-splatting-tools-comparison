@@ -1,6 +1,6 @@
 # Indoor Dataset — Benchmark Results and Visual Inspection
 
-This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria, gsplat, OpenSplat, nerfstudio and Lichtfeld Studio.
+This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
 
 ---
 
@@ -19,7 +19,7 @@ All implementations were trained under the following conditions:
 - **30,000 optimization iterations**
 - Same image set (151 frames)
 - Training executed on a **single NVIDIA RTX 4060 GPU**
-- Default hyper-parameters were used unless explicitly modified for reproducibility
+- Default hyperparameters were used unless explicitly modified for reproducibility
 - Exported models were converted to `.ply` format 
 
 For LichtFeld Studio, the **MCMC densification pipeline** was enabled.
@@ -178,7 +178,7 @@ In particular, the following operations were applied:
 - **Spatial restriction of the scene volume**, by isolating the main indoor region and removing distant background splats outside the room boundaries.
 - **Distance-based pruning**, aimed at deleting Gaussians located far from the main reconstructed volume.
 - **Opacity-based filtering**, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.
-- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate streaks and spike-like artfacts.
+- **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate streaks and spike-like artifacts.
 - **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
 - **Manual inspection and refinement**, performed to ensure that walls, furniture, and major structural elements were preserved.
 7. **Export of the cleaned models** as new `.ply`.
@@ -211,9 +211,9 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 ## Observations
 
-- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria GS** shows the largest percentage reduction (≈ −45.8%) across both metrics.
+- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria GS** shows the largest percentage reduction (≈ −45%) across both metrics.
 
-- **OpenSplat** sshows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria and gsplat.
+- **OpenSplat** shows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria and gsplat.
 
 - **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining the most compact absolute representation in terms of final file size.
 
@@ -232,7 +232,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 This section focuses exclusively on the **post-cleaning appearance** of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.
 
-This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure
+This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure.
 
 ### Inria Gaussian Splatting — Cleaned Output
 
@@ -297,10 +297,28 @@ After cleaning, the five pipelines exhibit different balances between noise remo
 
 - **gsplat**, which initially exhibited a moderate halo of peripheral splats, converges to a compact scene volume after cleaning.
 
-- **Nerfstudio**, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures
+- **Nerfstudio**, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures.
 
 - **LichtFeld Studio**, previously characterized by very large spatial extent and heavy far-field clutter, now shows a substantially tighter reconstruction.
   
 </details>
+
+---
+
+## Summary
+
+- The indoor scene yields **spatially compact raw reconstructions** across most pipelines.
+
+- **Scene cleaning is generally straightforward**, thanks to well-defined spatial limits.
+
+- Quantitatively, **Inria GS** and **gsplat** experience the largest relative reductions after cleaning (≈ −45%), reflecting the presence of removable peripheral splats in their raw outputs.
+
+- **OpenSplat** and **LichtFeld Studio** undergo more moderate pruning (≈ −21% and ≈ −20%), suggesting that a larger fraction of their Gaussians already contributes to the retained interior structure.
+
+- **Nerfstudio** remains the most compact pipeline both before and after cleaning, with limited absolute size and a moderate relative reduction.
+
+- After post-processing, all methods converge toward **tightly bounded reconstructions focused on the interior volume**, with only minor residual artifacts near scene boundaries.
+
+- Overall, the indoor benchmark highlights **differences in raw artifact distributions** while demonstrating that confined environments strongly facilitate aggressive and reliable post-processing.
 
 ---
