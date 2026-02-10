@@ -181,7 +181,7 @@ In particular, the following operations were applied:
 - **Scale-based filtering** on the Gaussian axes (scale *x*, *y*, *z*), used to eliminate streaks and spike-like artifacts.
 - **Surface-area filtering**, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.
 - **Manual inspection and refinement**, performed to ensure that walls, furniture, and major structural elements were preserved.
-7. **Export of the cleaned models** as new `.ply`.
+- **Export of the cleaned models** as new `.ply`.
 
 This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
 
