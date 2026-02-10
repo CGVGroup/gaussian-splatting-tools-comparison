@@ -54,6 +54,29 @@ All measurements were obtained using the same hardware platform and experimental
 - **Storage / 100k Gaussians (MB)** measures storage cost normalized by Gaussian count.
 - **Training Time / 100k Gaussians (min)** measures training cost normalized by Gaussian count.
 
+## Quantitative Visualizations
+
+```mermaid
+xychart-beta
+    title "Outdoor — Raw Gaussian Count"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "Gaussians" 0 --> 1100000
+    bar [777067,1031707,589291,197545,1000000]
+```
+```mermaid
+xychart-beta
+    title "Outdoor — Raw Output Size (.ply)"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "MB" 0 --> 260
+    bar [183.8,232.2,139.4,46.7,236.5]
+```
+```mermaid
+xychart-beta
+    title "Outdoor — Training Time"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "minutes" 0 --> 70
+    bar [60,45,50,25,50]
+```
 ---
 
 ## Observations
@@ -214,6 +237,16 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 - Δ Gaussians (%) indicates the relative change in the number of Gaussians after cleaning with respect to the raw reconstruction.
 - Δ Size (%) reports the relative reduction in file size after cleaning, measured on the exported .ply models.
+
+## Quantitative Visualizations
+
+```mermaid
+xychart-beta
+    title "Outdoor — Cleaning Impact (Δ Gaussians %)"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "% removed" 0 --> 65
+    bar [52.5,46.1,21.3,13.5,58.4]
+```
 
 ## Observations
 
