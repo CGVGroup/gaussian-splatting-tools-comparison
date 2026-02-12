@@ -17,7 +17,8 @@ This document describes the workflow used for the **Inria Gaussian Splatting** i
 - **Windows-oriented fork + install guide**: https://github.com/jonstephens85/gaussian-splatting-Windows  
 - **Windows tutorial video**: https://www.youtube.com/watch?v=UXtuigy_wYc  
 
-For this work, the Windows-oriented fork was used and the Windows tutorial video was followed.
+For this work, the Windows-oriented fork was used as installation reference and the tutorial video was followed for the complete setup workflow.  
+Both resources are maintained by the same author.
 
 ---
 
