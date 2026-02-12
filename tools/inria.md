@@ -2,7 +2,7 @@
 
 This document describes the workflow used for the **Inria Gaussian Splatting** implementation, including:
 
-- environment setup  
+- environment setup and installation (Windows)
 - dataset preparation from video  
 - dataset conversion  
 - training  
@@ -35,7 +35,7 @@ The Windows fork and the tutorial video provide step-by-step guidance for:
 
 - installing the CUDA toolkit  
 - ensuring CUDA + PyTorch compatibility  
-- Visual Studio setup (VS2019)  
+- Visual Studio setup (VS2019 for compatibility with CUDA 11.8)  
 - installing COLMAP  
 - installing ImageMagick for image preparation  
 - installing FFmpeg to extract images from videos  
