@@ -13,9 +13,14 @@ This document describes the workflow used for the **Inria Gaussian Splatting** i
 
 ## References
 
-- **Official Inria implementation**: https://github.com/graphdeco-inria/gaussian-splatting  
-- **Windows-oriented fork + install guide**: https://github.com/jonstephens85/gaussian-splatting-Windows  
-- **Windows tutorial video**: https://www.youtube.com/watch?v=UXtuigy_wYc  
+- **Official Inria implementation**:  
+  [https://github.com/graphdeco-inria/gaussian-splatting](https://github.com/graphdeco-inria/gaussian-splatting)
+
+- **Windows-oriented fork + install guide**:  
+  [https://github.com/jonstephens85/gaussian-splatting-Windows](https://github.com/jonstephens85/gaussian-splatting-Windows)
+
+- **Windows tutorial video**:  
+  [https://www.youtube.com/watch?v=UXtuigy_wYc](https://www.youtube.com/watch?v=UXtuigy_wYc)
 
 For this work, the Windows-oriented fork was used as installation reference and the tutorial video was followed for the complete setup workflow.  
 Both resources are maintained by the same author.
@@ -25,7 +30,7 @@ Both resources are maintained by the same author.
 ## 1. Prerequisites
 
 - NVIDIA GPU with **CUDA** support  
-- CUDA Toolkit compatible with your PyTorch build (tested with Cuda 11.8 and PyTorch 1.12.1)
+- CUDA Toolkit compatible with your PyTorch build (tested with CUDA 11.8 and PyTorch 1.12.1)
 - Python 3.8+ (Conda/Miniconda recommended) (tested with Python 3.8.20)
 - Git  
 
@@ -33,7 +38,7 @@ Both resources are maintained by the same author.
 
 The Windows fork and the tutorial video provide step-by-step guidance for:
 
-- installing the CUDA toolkit  
+- installing the CUDA toolkit (CUDA 11.8)
 - ensuring CUDA + PyTorch compatibility  
 - Visual Studio setup (VS2019 for compatibility with CUDA 11.8)  
 - installing COLMAP  
@@ -51,11 +56,12 @@ Always clone the official repository **with submodules**:
 
 ```bash
 git clone https://github.com/graphdeco-inria/gaussian-splatting.git --recursive
+cd gaussian-splatting
 ```
 
 ---
 
-## 3. Create the Python Environment
+## 3. Create the Environment
 
 Using Conda:
 
@@ -69,7 +75,8 @@ conda activate gaussian_splatting
 
 ## 4. Dataset Preparation from Video (ffmpeg)
 
-Frames were extracted from input videos using `ffmpeg`, following the procedure shown in the Windows tutorial video.
+If the dataset is provided as a video rather than a set of images, frames must first be extracted.  
+This can be done using `ffmpeg`, as shown in the Windows tutorial video.
 
 Run the following command from the directory containing the input video:
 
@@ -77,11 +84,18 @@ Run the following command from the directory containing the input video:
 ffmpeg -i {video} -qscale:v 1 -qmin 1 -vf fps={fps} %04d.jpg
 ```
 
+Where:
+
+- `{video}` should be replaced with the filename or full path to the input video file  
+- `{fps}` should be replaced with the desired frame extraction rate  
+
+The extracted frames will be saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
+
 ---
 
 ### 4.1 FPS Selection Heuristic
 
-The extraction FPS was chosen so as to obtain **approximately 150 frames per scene**  (**151 frames in the final benchmark datasets**).
+The extraction FPS was chosen so as to obtain **approximately 150 frames per scene** (**151 frames in the final benchmark datasets**).
 
 ---
 
@@ -89,7 +103,7 @@ The extraction FPS was chosen so as to obtain **approximately 150 frames per sce
 
 The COLMAP loaders expect the following dataset structure at the source path:
 
-```bash
+```text
 <location>
 |---images
 |   |---<image 0>
@@ -142,7 +156,7 @@ Training outputs and checkpoints are written under the `output/` directory.
 
 The Inria implementation provides a real-time OpenGL viewer called **SIBR**.
 
-After downloading the pre-compiled Windows build as shown in the tutorial video, the SIBR viewer binaries were copied into the root directory of the `gaussian-splatting` repository.
+After downloading the pre-compiled Windows build as shown in the tutorial video, the SIBR viewer binaries were copied into the root directory of the `gaussian-splatting` repository.  
 The resulting executable path is:
 
 ```text
