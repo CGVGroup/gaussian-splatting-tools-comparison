@@ -163,7 +163,7 @@ Although the repository also provides an `mcmc` configuration (demonstrated in t
 
 ### 7.1 Default Configuration (Used in Benchmark)
 
-The following command was used:
+Example:
 
 ```bash
 python examples/simple_trainer.py default \
