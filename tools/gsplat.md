@@ -208,3 +208,5 @@ However, it was **not used in the benchmark experiments**.
 ## 8. Export
 
 By using `--save-ply` in the training command, the final reconstruction is exported as a `.ply` file.
+
+---
