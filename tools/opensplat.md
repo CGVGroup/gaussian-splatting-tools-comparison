@@ -2,78 +2,111 @@
 
 This document describes the workflow used for the **OpenSplat** implementation, including:
 
-- environment setup and installation (Windows)  
-- required dependencies (LibTorch + OpenCV)  
-- dataset preparation (images + COLMAP)  
-- training  
-- export for downstream inspection and cleaning  
+- environment setup (Windows)
+- native dependencies
+- dataset preparation
+- training
+- export for downstream inspection and cleaning
 
 ---
 
 ## References
 
-- **Official OpenSplat repository**:  
-  https://github.com/pierotofy/OpenSplat
+- **OpenSplat repository**: https://github.com/pierotofy/OpenSplat
+
+Build requirements are documented in the official OpenSplat repository through dependency specifications and CMake configuration files.
 
 ---
 
 ## 1. Prerequisites
 
-OpenSplat is a C++/CUDA project and requires the following dependencies:
+- NVIDIA GPU with **CUDA** support
+- CUDA Toolkit (tested with CUDA 11.8)
+- CMake
+- LibTorch (C++ PyTorch distribution) (tested with LibTorch 2.1.2)
+- OpenCV (tested with OpenCV 4.9.0)
 
-- NVIDIA GPU with **CUDA** support  
-- CUDA Toolkit installed  
-- **LibTorch (C++ distribution of PyTorch)**  
-- **OpenCV**  
-- Visual Studio (recommended: VS2019 for CUDA 11.x compatibility)  
-- CMake  
+### 1.1 Windows-specific notes
 
----
+- Visual Studio (tested with VS2019)
 
-## 2. Installation Order (Windows Setup Used)
+OpenSplat is a native C++/CUDA application and does not rely on a Python environment.
 
-In this setup, dependencies were installed in the following order:
-
-1. Install **CUDA Toolkit**
-2. Download and extract **LibTorch**
-3. Download and build/install **OpenCV**
-4. Clone and build **OpenSplat**
-
-LibTorch and OpenCV must be available before compiling OpenSplat, as described in the official repository.
+The build requires a compatible Visual Studio and CUDA toolchain.  
+In this setup, Visual Studio 2019 was used together with CUDA 11.8.
 
 ---
 
-## 3. Windows Project Structure (Used in This Setup)
+## 2. Clone the Repository
 
-The working directory was structured as follows:
+Download the OpenSplat repository:
 
-```text
-C:\Users\ernes\OpenSplat_Project\
-│
-├── libtorch
-├── opencv
-└── OpenSplat
+```bash
+git clone https://github.com/pierotofy/OpenSplat.git
+cd OpenSplat
 ```
 
-- `libtorch` → extracted LibTorch distribution  
-- `opencv` → OpenCV installation/build  
-- `OpenSplat` → compiled OpenSplat project (contains `opensplat.exe`)  
+---
 
-The executable `opensplat.exe` was run from inside the `OpenSplat` directory.
+## 3. Setup
+
+The project was compiled locally using CMake and Visual Studio.
+
+The OpenSplat repository provides dependency requirements and CMake configuration files describing the build procedure.
+
+The environment was prepared in the following order:
+
+1. OpenSplat repository download
+2. CUDA Toolkit installation
+3. LibTorch download and extraction
+4. OpenCV installation/build
+5. CMake configuration and Visual Studio build
+
+The compilation produced the `opensplat.exe` executable used in the benchmark experiments.
 
 ---
 
-## 4. Dataset Requirements
+## 4. Dataset
 
-OpenSplat expects a dataset folder containing:
+OpenSplat requires an existing reconstruction project (e.g., COLMAP, OpenSfM, ODM, or Nerfstudio).
 
-- input images  
-- COLMAP reconstruction data  
+The dataset was generated using **COLMAP** from extracted video frames.  
+The expected folder structure is described in **Section 5.2 (Dataset Structure)**.
 
-Expected structure:
+---
+
+## 5. Dataset Preparation from Video (ffmpeg)
+
+If the dataset is provided as a video rather than a set of images, frames must first be extracted.
+This can be done using `ffmpeg`, as shown in the **Inria GS Windows tutorial video**:
+
+https://www.youtube.com/watch?v=UXtuigy_wYc
+
+Run the following command from the directory containing the input video:
+
+```bash
+ffmpeg -i {video} -qscale:v 1 -qmin 1 -vf fps={fps} %04d.jpg
+```
+
+Where:
+
+- `{video}` should be replaced with the filename or full path to the input video file
+- `{fps}` should be replaced with the desired frame extraction rate
+
+The extracted frames will be saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
+
+### 5.1 FPS Selection Heuristic
+
+The extraction FPS was chosen so as to obtain **approximately 150 frames per scene** (**151 frames in the final benchmark datasets**).
+
+### 5.2 Dataset Structure
+
+**COLMAP** was used to generate the sparse reconstruction from the extracted frames.
+
+Therefore the reconstruction project had the following structure:
 
 ```text
-<dataset_folder>
+<location>
 |---images
 |   |---<image 0>
 |   |---<image 1>
@@ -87,57 +120,39 @@ Expected structure:
 
 ---
 
-## 5. Training (Used in Benchmark)
+## 6. Training
 
-Training was executed directly via the OpenSplat executable.
+Training is performed directly through the OpenSplat executable.
 
-The following command was used:
+Example:
 
 ```bash
-opensplat.exe -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSplat\results\video-interno-1.ply" "C:\Users\ernes\OpenSplat_Project\OpenSplat\data\video-interno-1-Copia"
+opensplat.exe -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSplat\results\video-interno.ply" "C:\Users\ernes\OpenSplat_Project\OpenSplat\data\video-interno"
 ```
 
 ### Parameter description
 
-- `-n 30000` → number of optimization iterations (30,000 steps)  
-- `-s 5000` → checkpoint / save interval (every 5,000 steps)  
-- `-d 2` → image downsampling factor  
-- `-o <output.ply>` → output path for exported `.ply` file  
-- `<dataset_folder>` → input dataset directory (images + COLMAP data)  
+- `-n 30000` → number of optimization iterations (30k steps)
+- `-s 5000` → checkpoint interval
+- `-d 2` → image downsampling factor
+- `-o` → output `.ply` file
+- final argument → dataset directory
 
 ---
 
-### 5.1 Downsampling Factor
+### 6.1 Downsampling Factor
 
-The `-d` parameter controls image downsampling.
+The `-d` parameter controls image resolution during training:
 
-Example values:
-
-- `-d 1` → original resolution  
-- `-d 2` → resolution divided by 2 per dimension (1/4 total pixels)  
-- `-d 4` → resolution divided by 4 per dimension  
-- `-d 8` → resolution divided by 8 per dimension  
-
-In this benchmark, `-d 2` was used to reduce GPU memory usage while preserving sufficient detail.
+- `-d 1` → original resolution
+- `-d 2` → half resolution per dimension (¼ total pixels)
+- `-d 4` → quarter resolution
+- `-d 8` → eighth resolution
 
 ---
 
-## 6. Export
+## 7. Export
 
-The final reconstruction was exported directly as a `.ply` file using the `-o` flag.
-
-The exported `.ply` files were later inspected and cleaned using **SuperSplat** for qualitative evaluation and post-processing analysis.
+The reconstruction is exported directly as a `.ply` file using the `-o` flag.
 
 ---
-
-## 7. Tested Configuration (To Be Completed)
-
-The following software stack was used (exact versions to be documented):
-
-- CUDA Toolkit: ______  
-- LibTorch: ______  
-- OpenCV: ______  
-- Visual Studio: ______  
-
-These versions will be specified for full reproducibility.
-
