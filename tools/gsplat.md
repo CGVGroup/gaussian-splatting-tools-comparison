@@ -11,7 +11,7 @@ This document describes the workflow used for the **gsplat** implementation, inc
 
 ## References
 
-- **Official gsplat repository**:  
+- **gsplat repository**:  
   https://github.com/nerfstudio-project/gsplat  
 
 - **Windows installation guide**:  
