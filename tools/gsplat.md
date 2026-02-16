@@ -124,25 +124,6 @@ The extraction FPS was chosen so as to obtain **approximately 150 frames per sce
 
 ---
 
-### 5.2 Dataset Structure
-
-The COLMAP loaders expect the following dataset structure at the source path:
-
-```text
-<location>
-|---images
-|   |---<image 0>
-|   |---<image 1>
-|   |---...
-|---sparse
-    |---0
-        |---cameras.bin
-        |---images.bin
-        |---points3D.bin
-```
-
----
-
 ## 6. COLMAP
 
 COLMAP is software used to perform SfM (Structure-from-Motion).  
