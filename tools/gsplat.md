@@ -28,7 +28,7 @@ Both resources are maintained by the same author.
 
 ---
 
-### 1. Overview
+## 1. Overview
 
 The `gsplat` project is a research implementation providing CUDA-accelerated Gaussian Splatting operators and example training pipelines.
 
