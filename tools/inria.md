@@ -14,27 +14,50 @@ This document describes the workflow used for the **Inria Gaussian Splatting** i
 ## References
 
 - **Official Inria implementation**:  
-  [https://github.com/graphdeco-inria/gaussian-splatting](https://github.com/graphdeco-inria/gaussian-splatting)
+  https://github.com/graphdeco-inria/gaussian-splatting
 
 - **Windows-oriented fork + install guide**:  
-  [https://github.com/jonstephens85/gaussian-splatting-Windows](https://github.com/jonstephens85/gaussian-splatting-Windows)
+  https://github.com/jonstephens85/gaussian-splatting-Windows
+
+- **Website**:  
+  https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
 
 - **Windows tutorial video**:  
-  [https://www.youtube.com/watch?v=UXtuigy_wYc](https://www.youtube.com/watch?v=UXtuigy_wYc)
+  https://www.youtube.com/watch?v=UXtuigy_wYc
 
 For this work, the Windows-oriented fork was used as installation reference and the tutorial video was followed for the complete setup workflow.  
 Both resources are maintained by the same author.
 
 ---
 
-## 1. Prerequisites
+## 1. Overview
+
+The Inria Gaussian Splatting implementation is the reference research implementation of 3D Gaussian Splatting.
+
+The pipeline operates on calibrated camera poses.  
+If they are not provided, the `convert.py` script automatically runs a Structure-from-Motion reconstruction using COLMAP and prepares the dataset for training.
+
+The workflow is composed of two main stages:
+
+1. Dataset preparation (`convert.py`)
+   - runs SfM reconstruction when starting from images
+   - extracts undistorted images and SfM information required by the training pipeline
+
+2. Optimization (`train.py`)
+   - runs the Gaussian Splatting optimization
+
+The SIBR viewer is a separate real-time renderer used only for visualization.
+
+---
+
+## 2. Prerequisites
 
 - NVIDIA GPU with **CUDA** support  
 - CUDA Toolkit compatible with your PyTorch build (tested with CUDA 11.8 and PyTorch 1.12.1)
 - Python 3.8+ (Conda/Miniconda recommended) (tested with Python 3.8.20)
 - Git  
 
-### 1.1 Windows-specific notes
+### 2.1 Windows-specific notes
 
 The Windows fork and the tutorial video provide step-by-step guidance for:
 
@@ -50,7 +73,7 @@ The Windows fork and the tutorial video provide step-by-step guidance for:
 
 ---
 
-## 2. Clone the Repository
+## 3. Clone the Repository
 
 Always clone the official repository **with submodules**:
 
@@ -61,7 +84,7 @@ cd gaussian-splatting
 
 ---
 
-## 3. Create the Environment
+## 4. Create the Environment
 
 Using Conda:
 
@@ -73,7 +96,7 @@ conda activate gaussian_splatting
 
 ---
 
-## 4. Dataset Preparation from Video (ffmpeg)
+## 5. Optional Dataset Preparation from Video (ffmpeg)
 
 If the dataset is provided as a video rather than a set of images, frames must first be extracted.  
 This can be done using `ffmpeg`, as shown in the Windows tutorial video.
@@ -91,24 +114,25 @@ Where:
 
 The extracted frames will be saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
 
----
-
-### 4.1 FPS Selection Heuristic
+### 5.1 FPS Selection Heuristic
 
 The extraction FPS was chosen so as to obtain **approximately 150 frames per scene** (**151 frames in the final benchmark datasets**).
 
 ---
 
-### 4.2 Dataset Structure
+## 6. Input Dataset
 
-The COLMAP loaders expect the following dataset structure at the source path:
+The Inria implementation supports two dataset preparation modes.
+
+### 6.1 Precalibrated Dataset
+
+The training pipeline can directly consume an existing SfM reconstruction.
+
+Expected structure:
 
 ```text
 <location>
 |---images
-|   |---<image 0>
-|   |---<image 1>
-|   |---...
 |---sparse
     |---0
         |---cameras.bin
@@ -116,14 +140,28 @@ The COLMAP loaders expect the following dataset structure at the source path:
         |---points3D.bin
 ```
 
+In this mode, camera poses and intrinsics are already known and the Gaussian Splatting optimization runs directly on the calibrated dataset.
+
 ---
 
-## 5. Convert the Dataset (Inria Format)
+### 6.2 Automatic Reconstruction from Images
 
-From the root of the `gaussian-splatting` repository:
+If only images are available, the `convert.py` script can automatically run COLMAP and prepare the dataset.
+
+Place images inside:
+
+```text
+<location>
+|---input
+    |---<image 0>
+    |---<image 1>
+    |---...
+```
+
+Then run:
 
 ```bash
-python convert.py -s {folder}
+python convert.py -s <location> [--resize]
 ```
 
 Example:
@@ -132,9 +170,15 @@ Example:
 python convert.py -s data\video-interno
 ```
 
+The script will:
+
+- run COLMAP reconstruction
+- extract undistorted images
+- optionally generates images at 1/2, 1/4 and 1/8 resolution when using `--resize`
+
 ---
 
-## 6. Training
+## 7. Training
 
 From the repository root:
 
@@ -152,7 +196,7 @@ Training outputs and checkpoints are written under the `output/` directory.
 
 ---
 
-## 7. Visualization with SIBR (Windows)
+## 8. Visualization with SIBR (Windows)
 
 The Inria implementation provides a real-time OpenGL viewer called **SIBR**.
 
@@ -179,7 +223,7 @@ SIBR_gaussianViewer_app -m output\video-interno
 
 ---
 
-## 8. Export
+## 9. Export
 
 The exported `.ply` file can be found in the output directory of the training run.
 
