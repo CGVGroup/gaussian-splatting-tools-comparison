@@ -25,6 +25,7 @@ Build requirements are documented in the official OpenSplat repository through d
 - CMake
 - LibTorch (C++ PyTorch distribution) (tested with LibTorch 2.1.2)
 - OpenCV (tested with OpenCV 4.9.0)
+- Git
 
 ### 1.1 Windows-specific notes
 
