@@ -28,14 +28,29 @@ Both resources are maintained by the same author.
 
 ---
 
-## 1. Prerequisites
+### 1. Overview
+
+The `gsplat` project is a research implementation providing CUDA-accelerated Gaussian Splatting operators and example training pipelines.
+
+The library does not estimate camera poses.  
+The provided training examples expect a calibrated multi-view dataset with known camera parameters.
+
+The typical workflow consists of:
+
+1. Provide a calibrated dataset (images + camera parameters)
+2. Run a training script (e.g., `examples/simple_trainer.py`)
+3. Export the trained reconstruction
+
+---
+
+## 2. Prerequisites
 
 - NVIDIA GPU with **CUDA** support  
 - CUDA Toolkit compatible with the installed PyTorch version (tested with CUDA 11.8 and PyTorch 2.7.1)  
 - Python 3.8+ (Conda/Miniconda recommended) (tested with Python 3.10.19)  
 - Git  
 
-### 1.1 Windows-specific notes
+### 2.1 Windows-specific notes
 
 The Windows fork and the tutorial video provide guidance for:
 
@@ -43,11 +58,11 @@ The Windows fork and the tutorial video provide guidance for:
 - ensuring CUDA + PyTorch compatibility  
 - Visual Studio setup (VS2019 for compatibility with CUDA 11.8)
 - installing COLMAP  
-- installing ImageMagick for image preparation      
+- installing ImageMagick for optional image downsampling   
 
 ---
 
-## 2. Create the Environment
+## 3. Create the Environment
 
 Using Conda:
 
@@ -68,7 +83,7 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 
 ---
 
-## 3. Install gsplat and Requirements
+## 4. Install gsplat and Requirements
 
 From the repository root:
 
@@ -79,7 +94,7 @@ pip install -r examples/requirements.txt
 
 ---
 
-## 4. Replace scene_manager.py File
+## 5. Replace scene_manager.py File
 
 In order to use gsplat on Windows, it is required to replace the `scene_manager.py` file.  
 It can be downloaded here:
@@ -94,7 +109,7 @@ C:\Users\<username>\anaconda3\envs\gsplat\Lib\site-packages\pycolmap
 
 ---
 
-## 5. Dataset Preparation from Video (ffmpeg)
+## 6. Optional Dataset Preparation from Video (ffmpeg)
 
 If the dataset is provided as a video rather than a set of images, frames must first be extracted.  
 This can be done using `ffmpeg`, as shown in the **Inria GS Windows tutorial video**:
@@ -118,13 +133,30 @@ The extracted frames will be saved as sequentially numbered `.jpg` images (e.g.,
 
 ---
 
-### 5.1 FPS Selection Heuristic
+### 6.1 FPS Selection Heuristic
 
 The extraction FPS was chosen so as to obtain **approximately 150 frames per scene** (**151 frames in the final benchmark datasets**).
 
 ---
 
-## 6. COLMAP
+## 7. COLMAP
+
+The training scripts require a calibrated dataset with known camera parameters.
+
+Typical structure:
+
+```text
+<dataset>
+|---images
+|---sparse
+    |---0
+        |---cameras.bin
+        |---images.bin
+        |---points3D.bin
+```
+
+The dataset can be generated using any photogrammetry software (e.g., COLMAP).  
+Camera estimation is not part of the gsplat training pipeline.
 
 COLMAP is software used to perform SfM (Structure-from-Motion).  
 It can be used either via the terminal or with its GUI.
@@ -134,7 +166,15 @@ Usage with the GUI is explained both in the Windows-oriented fork and shown in t
 
 ---
 
-## 7. Training
+## 8. Training
+
+Training is performed using the example trainer script.
+
+Generic command:
+
+```bash
+python examples/simple_trainer.py <config> --data-dir <dataset> --result-dir <output>
+```
 
 Training was performed using the `examples/simple_trainer.py` script provided in the gsplat repository.
 
@@ -162,7 +202,7 @@ python examples/simple_trainer.py default \
 - `--data-dir` → path to the dataset directory  
 - `--data-factor` → image downsampling factor (typically 1, 2, 4, or 8). The image resolution is divided by this factor per dimension (e.g., `2` → 1/2 width and height; `4` → 1/4 width and height).
 - `--result-dir` → output directory  
-- `--camera-model pinhole` → camera model used for reconstruction  
+- `--camera-model pinhole` → --camera-model → projection model used during training and rendering 
 - `--max-steps 30000` → number of optimization steps  
 - `--save-ply` → exports the final reconstruction as a `.ply` file
 
@@ -173,9 +213,9 @@ The `--camera-model` parameter can be set to:
 - `pinhole` → standard perspective camera model (regular camera)  
 - `fisheye` → fisheye lens model for wide-angle cameras  
 
-In this benchmark, `pinhole` was used, as the datasets were reconstructed using a standard perspective camera model.
+In this benchmark, `pinhole` was used to match the projection model of the dataset cameras.
 
-This configuration was selected to maintain a fixed number of optimization steps (30,000), ensuring comparability with the other evaluated Gaussian Splatting pipelines.
+This configuration was selected to maintain a fixed number of optimization steps (30,000).
 
 ---
 
