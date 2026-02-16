@@ -18,7 +18,26 @@ Build requirements are documented in the official OpenSplat repository through d
 
 ---
 
-## 1. Prerequisites
+## 1. Overview
+
+## Overview
+
+OpenSplat is a native C++/CUDA implementation of 3D Gaussian Splatting.
+
+The program takes a calibrated reconstruction containing camera poses and sparse points (e.g., COLMAP, OpenSfM, ODM, OpenMVG or nerfstudio format) and computes a scene representation (`.ply` or `.splat`).
+
+It does not perform Structure-from-Motion.  
+It optimizes Gaussian primitives from existing camera parameters.
+
+The workflow consists of:
+
+1. Provide a calibrated reconstruction
+2. Run the `opensplat` executable
+3. Export the reconstructed scene
+
+---
+
+## 2. Prerequisites
 
 - NVIDIA GPU with **CUDA** support
 - CUDA Toolkit (tested with CUDA 11.8)
@@ -27,7 +46,7 @@ Build requirements are documented in the official OpenSplat repository through d
 - OpenCV (tested with OpenCV 4.9.0)
 - Git
 
-### 1.1 Windows-specific notes
+### 2.1 Windows-specific notes
 
 - Visual Studio (tested with VS2019)
 
@@ -38,7 +57,7 @@ In this setup, Visual Studio 2019 was used together with CUDA 11.8.
 
 ---
 
-## 2. Clone the Repository
+## 3. Clone the Repository
 
 Download the OpenSplat repository:
 
@@ -49,7 +68,7 @@ cd OpenSplat
 
 ---
 
-## 3. Setup
+## 4. Setup
 
 The project was compiled locally using CMake and Visual Studio.
 
@@ -67,16 +86,14 @@ The compilation produced the `opensplat.exe` executable used in the benchmark ex
 
 ---
 
-## 4. Dataset
+## 5. Dataset
 
 OpenSplat requires an existing reconstruction project (e.g., COLMAP, OpenSfM, ODM, or Nerfstudio).
 
-The dataset was generated using **COLMAP** from extracted video frames.  
+The dataset used in the benchmark was provided in **COLMAP** format.
 The expected folder structure is described in **Section 5.2 (Dataset Structure)**.
 
----
-
-## 5. Dataset Preparation from Video (ffmpeg)
+### 5.1 Optional Dataset Preparation from Video (ffmpeg)
 
 If the dataset is provided as a video rather than a set of images, frames must first be extracted.
 This can be done using `ffmpeg`, as shown in the **Inria GS Windows tutorial video**:
@@ -96,11 +113,11 @@ Where:
 
 The extracted frames will be saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
 
-### 5.1 FPS Selection Heuristic
+### 5.2 FPS Selection Heuristic
 
 The extraction FPS was chosen so as to obtain **approximately 150 frames per scene** (**151 frames in the final benchmark datasets**).
 
-### 5.2 Dataset Structure
+### 5.3 Dataset Structure
 
 **COLMAP** was used to generate the sparse reconstruction from the extracted frames.
 
@@ -125,6 +142,10 @@ Therefore the reconstruction project had the following structure:
 
 Training is performed directly through the OpenSplat executable.
 
+```bash
+opensplat <options> <dataset_path>
+```
+
 Example:
 
 ```bash
@@ -138,8 +159,6 @@ opensplat.exe -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSpl
 - `-d 2` → image downsampling factor
 - `-o` → output `.ply` file
 - final argument → dataset directory
-
----
 
 ### 6.1 Downsampling Factor
 
