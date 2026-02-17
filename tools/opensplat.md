@@ -20,8 +20,6 @@ Build requirements are documented in the official OpenSplat repository through d
 
 ## 1. Overview
 
-## Overview
-
 OpenSplat is a native C++/CUDA implementation of 3D Gaussian Splatting.
 
 The program takes a calibrated reconstruction containing camera poses and sparse points (e.g., COLMAP, OpenSfM, ODM, OpenMVG or nerfstudio format) and computes a scene representation (`.ply` or `.splat`).
@@ -152,7 +150,7 @@ Example:
 opensplat.exe -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSplat\results\video-interno.ply" "C:\Users\ernes\OpenSplat_Project\OpenSplat\data\video-interno"
 ```
 
-### Parameter description
+#### Parameter description
 
 - `-n 30000` → number of optimization iterations (30k steps)
 - `-s 5000` → checkpoint interval
