@@ -20,12 +20,9 @@ Build requirements are documented in the official OpenSplat repository through d
 
 ## 1. Overview
 
-OpenSplat is a native C++/CUDA implementation of 3D Gaussian Splatting.
+OpenSplat is a native C++ implementation of 3D Gaussian Splatting.
 
 The program takes a calibrated reconstruction containing camera poses and sparse points (e.g., COLMAP, OpenSfM, ODM, OpenMVG or nerfstudio format) and computes a scene representation (`.ply` or `.splat`).
-
-It does not perform Structure-from-Motion.  
-It optimizes Gaussian primitives from existing camera parameters.
 
 The workflow consists of:
 
@@ -48,10 +45,7 @@ The workflow consists of:
 
 - Visual Studio (tested with VS2019)
 
-OpenSplat is a native C++/CUDA application and does not rely on a Python environment.
-
-The build requires a compatible Visual Studio and CUDA toolchain.  
-In this setup, Visual Studio 2019 was used together with CUDA 11.8.
+On Windows, the project is built using CMake with the MSVC toolchain and CUDA.
 
 ---
 
@@ -68,9 +62,9 @@ cd OpenSplat
 
 ## 4. Setup
 
-The project was compiled locally using CMake and Visual Studio.
+The project was compiled locally using CMake with the Visual Studio 2019 (MSVC) toolchain.
 
-The OpenSplat repository provides dependency requirements and CMake configuration files describing the build procedure.
+Within the OpenSplat repository, dependency requirements are listed in the README build section, and the build configuration is defined in the root `CMakeLists.txt` file.
 
 The environment was prepared in the following order:
 
@@ -101,13 +95,13 @@ https://www.youtube.com/watch?v=UXtuigy_wYc
 Run the following command from the directory containing the input video:
 
 ```bash
-ffmpeg -i {video} -qscale:v 1 -qmin 1 -vf fps={fps} %04d.jpg
+ffmpeg -i {VIDEO} -qscale:v 1 -qmin 1 -vf fps={FPS} %04d.jpg
 ```
 
 Where:
 
-- `{video}` should be replaced with the filename or full path to the input video file
-- `{fps}` should be replaced with the desired frame extraction rate
+- `{VIDEO}` should be replaced with the filename or full path to the input video file
+- `{FPS}` should be replaced with the desired frame extraction rate
 
 The extracted frames will be saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
 
@@ -140,14 +134,18 @@ Therefore the reconstruction project had the following structure:
 
 Training is performed directly through the OpenSplat executable.
 
+After compilation, the executable is located in the build output directory (e.g., `build/Release` on Windows).
+
+Generic command:
+
 ```bash
-opensplat <options> <dataset_path>
+opensplat {DATA_PATH} [options]
 ```
 
 Example:
 
 ```bash
-opensplat.exe -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSplat\results\video-interno.ply" "C:\Users\ernes\OpenSplat_Project\OpenSplat\data\video-interno"
+opensplat.exe "C:\Users\ernes\OpenSplat_Project\OpenSplat\data\video-interno" -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSplat\results\video-interno.ply"
 ```
 
 #### Parameter description
@@ -158,7 +156,7 @@ opensplat.exe -n 30000 -s 5000 -d 2 -o "C:\Users\ernes\OpenSplat_Project\OpenSpl
 - `-o` → output `.ply` file
 - final argument → dataset directory
 
-### 6.1 Downsampling Factor
+#### Downsampling Factor
 
 The `-d` parameter controls image resolution during training:
 
