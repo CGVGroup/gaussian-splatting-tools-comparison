@@ -12,7 +12,8 @@ This document describes the workflow used for the **OpenSplat** implementation, 
 
 ## References
 
-- **OpenSplat repository**: https://github.com/pierotofy/OpenSplat
+- **OpenSplat repository**
+  https://github.com/pierotofy/OpenSplat
 
 Build requirements are documented in the official OpenSplat repository through dependency specifications and CMake configuration files.
 
