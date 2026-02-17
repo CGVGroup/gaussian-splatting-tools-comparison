@@ -11,16 +11,19 @@ This document describes the workflow used for the **gsplat** implementation, inc
 
 ## References
 
-- **gsplat repository**:  
+- **gsplat repository**  
   https://github.com/nerfstudio-project/gsplat  
 
-- **Windows installation guide**:  
-  https://github.com/nerfstudio-project/gsplat/blob/main/docs/INSTALL_WIN.md  
+- **Windows installation guide**  
+  https://github.com/nerfstudio-project/gsplat/blob/main/docs/INSTALL_WIN.md
 
-- **Windows-oriented fork**:  
+- **Official documentation**  
+ https://docs.gsplat.studio/main/ 
+
+- **Windows-oriented fork**  
   https://github.com/jonstephens85/gsplat_3dgut  
 
-- **Windows tutorial video**:  
+- **Windows tutorial video**  
   https://www.youtube.com/watch?v=ACPTiP98Pf8  
 
 For this work, the Windows-oriented fork was used as an installation reference and the tutorial video was followed for the complete setup workflow.  
@@ -30,12 +33,12 @@ Both resources are maintained by the same author.
 
 ## 1. Overview
 
-The `gsplat` project is a research implementation providing CUDA-accelerated Gaussian Splatting operators and example training pipelines.
+The `gsplat` project is a research implementation providing CUDA-accelerated Gaussian Splatting operators.
 
 The library does not estimate camera poses.  
 The provided training examples expect a calibrated multi-view dataset with known camera parameters.
 
-The typical workflow consists of:
+The workflow consists of:
 
 1. Provide a calibrated dataset (images + camera parameters)
 2. Run a training script (e.g., `examples/simple_trainer.py`)
@@ -121,13 +124,13 @@ Frames were extracted from input videos using `ffmpeg`.
 Run the following command from the directory containing the input video:
 
 ```bash
-ffmpeg -i {video} -qscale:v 1 -qmin 1 -vf fps={fps} %04d.jpg
+ffmpeg -i {VIDEO} -qscale:v 1 -qmin 1 -vf fps={FPS} %04d.jpg
 ```
 
 Where:
 
-- `{video}` should be replaced with the filename or full path to the input video file  
-- `{fps}` should be replaced with the desired frame extraction rate  
+- `{VIDEO}` should be replaced with the filename or full path to the input video file  
+- `{FPS}` should be replaced with the desired frame extraction rate  
 
 The extracted frames will be saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
 
@@ -173,7 +176,7 @@ Training is performed using the example trainer script.
 Generic command:
 
 ```bash
-python examples/simple_trainer.py <config> --data-dir <dataset> --result-dir <output>
+python examples/simple_trainer.py {CONFIG} --data-dir {DATA_PATH} --result-dir {OUTPUT_DIR}
 ```
 
 Training was performed using the `examples/simple_trainer.py` script provided in the gsplat repository.
@@ -182,7 +185,7 @@ Although the repository also provides an `mcmc` configuration (demonstrated in t
 
 ---
 
-### 7.1 Default Configuration (Used in Benchmark)
+### 8.1 Default Configuration (Used in Benchmark)
 
 Example:
 
@@ -206,8 +209,6 @@ python examples/simple_trainer.py default \
 - `--max-steps 30000` → number of optimization steps  
 - `--save-ply` → exports the final reconstruction as a `.ply` file
 
-**Note:** When using `--data-factor`, image downsampling is handled internally during training.  
-
 The `--camera-model` parameter can be set to:
 
 - `pinhole` → standard perspective camera model (regular camera)  
@@ -215,11 +216,9 @@ The `--camera-model` parameter can be set to:
 
 In this benchmark, `pinhole` was used to match the projection model of the dataset cameras.
 
-This configuration was selected to maintain a fixed number of optimization steps (30,000).
-
 ---
 
-### 7.2 Note on MCMC Configuration
+### 8.2 Note on MCMC Configuration
 
 The `mcmc` configuration is also available in the repository and is demonstrated in the tutorial resources.  
 However, it was **not used in the benchmark experiments**.
