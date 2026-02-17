@@ -11,13 +11,13 @@ This document describes the workflow used for the **nerfstudio (splatfacto)** im
 
 ## References
 
-- **nerfstudio repository**  
+- **nerfstudio repository**:  
   https://github.com/nerfstudio-project/nerfstudio
 
-- **Official documentation**  
+- **Official documentation**:  
   https://docs.nerf.studio/
 
-- **Tutorial videos**
+- **Tutorial videos**:
   - https://www.youtube.com/watch?v=3JIpZd5XNAc
   - https://www.youtube.com/watch?v=LhAa1B9CFeY
   - https://www.youtube.com/watch?v=A1Gbycj0bWw
