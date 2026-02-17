@@ -38,26 +38,57 @@ The installation guide described below follows the official documentation for re
 
 ---
 
-## 1. Prerequisites
+## 1. Overview
+
+nerfstudio is a neural rendering framework providing tools for data preparation, training and visualization.
+
+The Gaussian Splatting pipeline (`splatfacto`) requires known camera poses and intrinsics.
+
+nerfstudio provides the command `ns-process-data` to process the data into the nerfstudio format.
+
+The workflow therefore consists of two stages:
+
+1. Dataset preparation (`ns-process-data` or existing data with `ns-download-data`)
+2. Gaussian Splatting optimization (`ns-train`)
+
+In this work, `ns-process-data` was used.
+
+---
+
+## 2. Prerequisites
 
 - NVIDIA GPU with **CUDA** support
-- PyTorch with CUDA support (tested runtime: CUDA 11.8)
-- Python 3.8+ (Conda/Miniconda recommended) (tested: Python 3.10.19)
+- PyTorch with CUDA support (tested runtime with CUDA 11.8)
+- Python 3.8+ (Conda/Miniconda recommended) (tested with Python 3.10.19)
 - Git
 
 ---
 
-## 2. Create the Environment
+## 3. Create the Environment
+
+Using Conda:
 
 ```bash
 conda create -n nerfstudio python=3.8 -y
 conda activate nerfstudio
+python -m pip install --upgrade pip
 ```
 
 Install PyTorch compatible with CUDA 11.8:
 
 ```bash
 pip install torch==2.1.2+cu118 torchvision==0.16.2+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
+```
+Install the cuda-toolkit:
+
+```bash
+conda install -c "nvidia/label/cuda-11.8.0" cuda-toolkit
+```
+
+Install the torch bindings for tiny-cuda-nn:
+
+```bash
+pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 ```
 
 Install nerfstudio from pip:
@@ -77,62 +108,18 @@ pip install -e .
 
 ---
 
-## 3. Dataset Preparation from Video (ffmpeg)
+## 4. Dataset Processing
 
-If the dataset is provided as a video rather than a set of images, frames must first be extracted.
-
-```bash
-ffmpeg -i {video} -qscale:v 1 -qmin 1 -vf fps={fps} %04d.jpg
-```
-
-Where:
-
-- `{video}` → filename or full path to the input video file
-- `{fps}` → desired frame extraction rate
-
-The extracted frames are saved as sequentially numbered `.jpg` images (e.g., `0001.jpg`, `0002.jpg`, ...).
-
-### 3.1 FPS Selection Heuristic
-
-The extraction FPS was selected to obtain approximately **150 frames per scene** (151 frames in the benchmark datasets).
-
----
-
-## 4. Dataset Processing (Automatic COLMAP)
-
-Input directory structure:
-
-```
-<dataset>
-└── images
-    ├── frame_0001.jpg
-    ├── frame_0002.jpg
-    └── ...
-```
-
-Run preprocessing:
+In order to run the preprocessing, the command **ns-process-data** is used. The data can be a video or images.
 
 ```bash
-ns-process-data images \
-  --data <path_to_images> \
-  --output-dir <processed_output>
+ns-process-data {images, video} --data {DATA_PATH} --output-dir {PROCESSED_DATA_DIR}
 ```
 
-This step automatically performs:
+Example (images):
 
-- Feature extraction
-- Feature matching
-- Bundle adjustment
-- Intrinsics refinement
-- Dataset formatting
-
-Output structure:
-
-```
-<processed_output>
-├── images
-├── sparse
-└── transforms.json
+```bash
+ns-process-data images --data C:\Users\ernes\nerfstudio\data\video-interno\input --output-dir C:\Users\ernes\nerfstudio\data\video-interno-processed
 ```
 
 ---
@@ -142,42 +129,49 @@ Output structure:
 The pipeline used in the benchmark is **splatfacto**.
 
 ```bash
-ns-train splatfacto \
-  --data <processed_output> \
-  --output-dir <results> \
-  --pipeline.model.stop-split-at 20000 \
-  --max-num-iterations 30000
+ns-train splatfacto --data {DATA_PATH} --output-dir {OUTPUT_DIR}
+```
+
+Example:
+
+```bash
+ns-train splatfacto --data C:\Users\ernes\nerfstudio\data\video-interno-processed --output-dir C:\Users\ernes\nerfstudio\results\video-interno --pipeline.model.stop-split-at 20000 --max-num-iterations 30000
 ```
 
 #### Parameter description
 
 - `splatfacto` → Gaussian Splatting training pipeline implemented in nerfstudio  
-- `--data` → path to the processed dataset (output of `ns-process-data` or a COLMAP dataset)
-- `--output-dir` → directory where checkpoints, logs and config files are stored
-- `--pipeline.model.stop-split-at 20000` → stops Gaussian densification (splitting) after 20k iterations to stabilize training and reduce artifacts
+- `--data` → path to the processed dataset
+- `--output-dir` → directory where the output is stored
+- `--pipeline.model.stop-split-at 20000` → stops Gaussian densification after 20k iterations
 - `--max-num-iterations 30000` → total number of optimization iterations
 
-After training, the folder will contain:
+At the end of the terminal is present a link that loads the webviewer.
+
+After training, the folder contains:
 
 ```
 <results>
 └── splatfacto
     └── <experiment_name>
         ├── config.yml
-        ├── nerfstudio_models
-        └── viewer
+        └── ...
 ```
-
-The `config.yml` file is required for exporting the reconstruction.
 
 ---
 
 ## 6. Export
 
+The command **ns-export** is used for exporting `.ply` from the `config.yml` file.
+
 ```bash
-ns-export gaussian-splat \
-  --load-config <config.yml> \
-  --output-dir <export_folder>
+ns-export gaussian-splat --load-config {config.yml} --output-dir {OUTPUT_DIR}
+```
+
+Example:
+
+```bash
+ns-export gaussian-splat --load-config C:\Users\ernes\nerfstudio\results\video-interno\splatfacto\2026-01-20_131913\config.yml --output-dir C:\Users\ernes\nerfstudio\results\video-interno\exported
 ```
 
 #### Parameter description
@@ -185,11 +179,5 @@ ns-export gaussian-splat \
 - `gaussian-splat` → export format for 3D Gaussian Splatting reconstruction
 - `--load-config` → path to the `config.yml` generated after training (contains dataset path, model parameters and checkpoint reference)
 - `--output-dir` → directory where the exported reconstruction will be saved
-
-Output:
-
-```
-point_cloud.ply
-```
 
 ---
