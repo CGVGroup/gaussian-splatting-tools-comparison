@@ -11,19 +11,19 @@ This document describes the workflow used for the **gsplat** implementation, inc
 
 ## References
 
-- **gsplat repository**  
+- **gsplat repository**:  
   https://github.com/nerfstudio-project/gsplat  
 
-- **Windows installation guide**  
+- **Windows installation guide**:  
   https://github.com/nerfstudio-project/gsplat/blob/main/docs/INSTALL_WIN.md
 
-- **Official documentation**  
+- **Official documentation**:  
  https://docs.gsplat.studio/main/ 
 
-- **Windows-oriented fork**  
+- **Windows-oriented fork**:  
   https://github.com/jonstephens85/gsplat_3dgut  
 
-- **Windows tutorial video**  
+- **Windows tutorial video**:  
   https://www.youtube.com/watch?v=ACPTiP98Pf8  
 
 For this work, the Windows-oriented fork was used as an installation reference and the tutorial video was followed for the complete setup workflow.  
