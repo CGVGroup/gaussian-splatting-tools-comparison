@@ -7,7 +7,7 @@ Qualitative labels such as *Low*, *Medium*, and *High* reflect empirical observa
 
 ---
 
-## 📦 Commercial Trainers
+## Commercial Trainers
 
 <details open>
 <summary><strong>Show / Hide Commercial Trainers</strong></summary>
@@ -26,7 +26,7 @@ Qualitative labels such as *Low*, *Medium*, and *High* reflect empirical observa
 
 ---
 
-## 🧪 Open-Source Trainers
+## Open-Source Trainers
 
 <details open>
 <summary><strong>Show / Hide Open-Source Trainers</strong></summary>
@@ -45,7 +45,7 @@ Qualitative labels such as *Low*, *Medium*, and *High* reflect empirical observa
 
 ---
 
-# Notes on the Trainers Table
+# Notes on the Trainers Tables
 
 ## Luma AI
 - The training pipeline is fully automated and cloud-based. No user-accessible training parameters are exposed.
