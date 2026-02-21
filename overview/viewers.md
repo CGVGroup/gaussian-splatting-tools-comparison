@@ -1,5 +1,7 @@
 # Gaussian Splatting Viewers Overview
 
+This document provides a qualitative overview of Gaussian Splatting viewers.
+
 ## Overview Table
 
 | Name | Tags | Platform type | Execution environment | Role | Model access | Sources |
