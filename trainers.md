@@ -102,5 +102,5 @@ Qualitative labels such as *Low*, *Medium*, and *High* reflect empirical observa
 
 ## LichtFeld Studio
 - A high-performance, **standalone C++ Gaussian Splatting suite** that integrates training and real-time visualization in a single desktop application.
-- It is the reference implementation for **MCMC (Markov Chain Monte Carlo)** densification strategies, which allow for more efficient point distribution and cleaner reconstructions.
+- Implements the **MCMC (Markov Chain Monte Carlo)** densification strategy.
 - Designed as a **portable application** with minimal dependencies, providing a specialized GUI for monitoring training metrics and real-time rendering quality.
