@@ -1,6 +1,6 @@
 # Outdoor Dataset — Benchmark Results and Visual Inspection
 
-This section reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
+This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
 
 ---
 
