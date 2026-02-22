@@ -1,6 +1,6 @@
 # Indoor Dataset — Benchmark Results and Visual Inspection
 
-This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
+This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria GS, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
 
 ---
 
