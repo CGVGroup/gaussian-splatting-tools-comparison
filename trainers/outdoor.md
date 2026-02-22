@@ -18,7 +18,7 @@ All implementations were trained under the following conditions:
 
 - **30,000 optimization iterations**
 - Same image set (151 frames)
-- Training executed on a **single NVIDIA RTX 4060 GPU**
+- Training executed on a system running **Windows 11** equipped with a **single NVIDIA RTX 4060 GPU**
 - Default hyperparameters were used unless explicitly modified for reproducibility
 - Exported models were converted to `.ply` format 
 
