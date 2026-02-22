@@ -1,6 +1,6 @@
 # Indoor vs Outdoor — Comparative Analysis
 
-This section compares the behavior of the evaluated Gaussian Splatting pipelines across two different scene categories: an indoor and an outdoor setting.
+This document compares the behavior of the evaluated Gaussian Splatting pipelines across two different scene categories: an indoor and an outdoor setting.
 The comparison focuses on differences in:
 
 - raw reconstruction structure,
