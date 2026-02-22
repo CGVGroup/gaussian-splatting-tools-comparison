@@ -1,4 +1,4 @@
-# Benchmark Overview
+# Gaussian Splatting Trainers — Technical Benchmark and Visual Analysis
 
 This directory contains the full benchmarking material used to compare multiple open-source Gaussian Splatting implementations under controlled and reproducible conditions.
 
