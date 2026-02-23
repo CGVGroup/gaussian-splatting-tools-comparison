@@ -17,27 +17,22 @@ This document provides a qualitative overview of Gaussian Splatting viewers.
 
 ## Observations
 
-### 1. The listed tools cover multiple stages of the Gaussian Splatting workflow
-They do not represent a single software category but different operational phases:
+- The tools can be grouped by stage of the Gaussian Splatting workflow:
+  - **Inspection / Editing**: SuperSplat enables browser-based splat inspection and editing.
+  - **Training monitoring**: Nerfstudio Viewer and the remote SIBR viewer connect to a running optimization process.
+  - **Model visualization**: SIBR real-time viewer and Unity-based tools display already trained models.
+  - **Rendering integration**: UnityGaussianSplatting (aras-p) and Unity-VR-Gaussian-Splatting (ninjamode) provide rendering packages designed for integration into Unity projects.
+  - **Immersive visualization**: Unity-VR-Gaussian-Splatting (ninjamode) and GaussianSplattingVRViewerUnity (clarte53) enable visualization inside XR environments.
 
-- **Inspection/Editing**: **SuperSplat** allows editing and inspecting splats directly in the browser.
-- **Training monitoring**: **Nerfstudio Viewer** and the remote mode of **SIBR** connect to a running optimization process.
-- **Model visualization**: **SIBR** real-time viewer and **Unity-based tools** display already trained models.
-- **Rendering integration**: ***UnityGaussianSplatting  (aras-p)** and **Unity-VR-Gaussian-Splatting (ninjamode)** provide a rendering package intended to be integrated into projects.
-- **Immersive visualization**: **Unity-VR-Gaussian-Splatting (ninjamode)** and **GaussianSplattingVRViewerUnity (clarte53)** enable visualization inside XR environments.
+- Training viewers (**Nerfstudio Viewer** and remote **SIBR**) rely on live streaming from the optimization pipeline rather than loading saved model files.
 
-### 2. Training viewers rely on streaming rather than saved models
-**Nerfstudio Viewer** and the remote **SIBR** viewer connect to the optimization process and receive continuous updates instead of loading a trained model from disk. **Playback viewers** instead operate on exported model files. 
+- Playback viewers operate on exported model files and do not require a running training process.
 
-### 3. SIBR uniquely supports both training monitoring and model playback
-SIBR provides two distinct viewers: one connected to the optimizer and another for viewing trained models. 
+- **SIBR** uniquely supports both training monitoring (remote mode) and trained-model playback (real-time viewer).
 
-### 4. **Unity-VR-Gaussian-Splatting (ninjamode)** is a fork of **UnityGaussianSplatting (aras-p)**
-While **UnityGaussianSplatting (aras-p)** is a rendering package integrated into Unity projects, **Unity-VR-Gaussian-Splatting (ninjamode)** extends its functionalities to VR rendering support.
+- **Unity-VR-Gaussian-Splatting (ninjamode)** is a fork of **UnityGaussianSplatting (aras-p)**, extending the original rendering package with VR support.
 
-### 5. GaussianSplattingVRViewerUnity (clarte53) provides a VR viewer
-Unlike the other Unity-based tools, which are distributed as development projects, **GaussianSplattingVRViewerUnity (clarte53)** provides an executable VR viewer application.
-
+- **GaussianSplattingVRViewerUnity (clarte53)** provides a VR viewer application.
 ---
 
 ## Sources
