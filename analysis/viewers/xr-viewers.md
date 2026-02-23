@@ -7,6 +7,7 @@ This document presents a comparative analysis of two XR Gaussian Splatting viewe
 ## Dataset and Reconstructions
 
 **Five different reconstructions** of the same indoor environment were used for this analysis.  
+
 They were generated from the same dataset of **151 frames** using the following open-source Gaussian Splatting trainers: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio, LichtFeld Studio.
 
 All reconstructions were cleaned prior to evaluation to ensure consistency across viewers.
