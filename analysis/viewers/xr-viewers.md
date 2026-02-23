@@ -25,7 +25,8 @@ In summary:
 
 ## Visual Inspection Protocol
 
-A qualitative visual inspection was conducted to compare the rendering behavior of **Unity-VR-Gaussian-Splatting (ninjamode)** and **GaussianSplattingVRViewerUnity (clarte53)** on a system running **Windows 11** equipped with a **single NVIDIA RTX 4060 GPU**.
+A qualitative visual inspection was conducted to compare the rendering behavior of **Unity-VR-Gaussian-Splatting (ninjamode)** and **GaussianSplattingVRViewerUnity (clarte53)**.
+The inspection was conducted on a system running **Windows 11** equipped with a **single NVIDIA RTX 4060 GPU** and a **Meta Quest 3** headset.
 
 All assessments were performed using a 5-point ordinal scale (1–5), where:
 
