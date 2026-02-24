@@ -6,27 +6,22 @@ This document presents a comparative analysis of two XR Gaussian Splatting viewe
 
 ## Dataset and Reconstructions
 
-**Five different reconstructions** of the same indoor environment were used for this analysis.  
+**Five different reconstructions** of the same **indoor environment** were used for this analysis.  
 
 They were generated from the same dataset of **151 frames** using the following open-source Gaussian Splatting trainers: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio, LichtFeld Studio.
 
+The decision to use an indoor environment for viewer analysis is based on the comparative observations reported in: [analysis/trainers/indoor-vs-outdoor.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/analysis/trainers/indoor-vs-outdoor.md)
+
 All reconstructions were cleaned prior to evaluation to ensure consistency across viewers.
 
-Detailed information about the recontructions, the cleaning procedures applied and their impact on the exported `.ply` files  can be found in the following document: [trainers/indoor.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/trainers/indoor.md)
-
-The decision to use an **indoor environment** for viewer analysis is based on the comparative observations reported in: [trainers/indoor-vs-outdoor.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/trainers/indoor-vs-outdoor.md)
-
-In summary:
-
-- more stable reconstruction results across different trainers,
-- more consistent visual outputs,
-- fewer large-scale structural inconsistencies compared to the outdoor case.
+Detailed information about the reconstructions, the cleaning procedures applied and their impact on the exported `.ply` files  can be found in the following document: [analysis/trainers/indoor.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/analysis/trainers/indoor.md)
 
 ---
 
 ## Visual Inspection Protocol
 
 A qualitative visual inspection was conducted to compare the rendering behavior of **Unity-VR-Gaussian-Splatting (ninjamode)** and **GaussianSplattingVRViewerUnity (clarte53)**.
+
 The inspection was conducted on a system running **Windows 11** equipped with a **single NVIDIA RTX 4060 GPU** and a **Meta Quest 3** headset.
 
 All assessments were performed using a 5-point ordinal scale (1–5), where:
@@ -52,39 +47,35 @@ The evaluation focused on the following criteria:
 
 <br>
 
+The following section reports the results of the visual inspection conducted on Unity-VR-Gaussian-Splatting (ninjamode).
+
 ### Inria gaussian-splatting
 
-Surfaces appear solid and structurally coherent across walls, furniture, and floors, with no visible holes or fragmentation. Black spike-like artifacts are observed on the table during head rotation.  
-When inspecting objects at extremely close range, slight surface compression is observed. Overall, Inria provides the most stable reconstruction in Ninjamode, with only minor depth ordering artifacts during rotation.
+Surfaces appear solid and structurally coherent across walls, furniture, and floors, with no visible holes or fragmentation. Black spike-like artifacts are observed on the table during head rotation.  When inspecting objects at extremely close range, slight surface compression is observed. 
 
 ---
 
 ### gsplat
 
-Surfaces remain stable but appear slightly more fluid compared to Inria, and similar spike-like artifacts occasionally appear during movement. Close-range inspection reveals visible splats at extreme proximity.  
-gsplat behaves similarly to Inria but with slightly reduced surface rigidity.
+Surfaces remain stable but appear slightly more fluid compared to Inria, and similar spike-like artifacts appear during movement. Close-range inspection reveals visible splats at extreme proximity. 
 
 ---
 
 ### OpenSplat
 
-Surfaces appear moderately fluid, and colored splats located behind walls become slightly visible during movement. Contours remain generally stable, and near-object inspection behaves slightly better than in Inria and gsplat.  
-The main limitation of OpenSplat in Ninjamode is layering instability during motion.
+Surfaces appear moderately fluid, and colored splats located behind walls become slightly visible during movement. Contours remain generally stable, and near-object inspection behaves slightly better than in Inria and gsplat. 
 
 ---
 
 ### Nerfstudio
 
-There are visible holes in walls and structural discontinuities, while the floor exhibits transparency artifacts. Splats are more visible on near objects than in the previously evaluated pipelines.  
-Nerfstudio shows reduced geometric solidity and transparency consistency compared to the other trainers.
+There are visible holes in walls and structural discontinuities, while the floor exhibits transparency artifacts. Splats are more visible on near objects than in the previously evaluated pipelines.
 
 ---
 
 ### LichtFeld Studio
 
-Brown splats from foreground objects occasionally appear projected onto background walls. Diffuse vibration is visible across the entire scene during movement and rotation. The scene appears to slide or drag during head motion.  
-Contours may vibrate, possibly related to global motion instability.  
-LichtFeld Studio exhibits global motion instability and depth ordering issues not observed in the other trainers.
+Some brown splats and other artifacts appear projected onto background walls. Diffuse vibration is visible across the entire scene during movement and rotation. The scene appears to slide or drag during head motion. Contours may vibrate, possibly related to global motion instability. 
 
 ---
 
@@ -116,46 +107,44 @@ LichtFeld Studio exhibits global motion instability and depth ordering issues no
 
 ---
 
-## Visual Inspection -  GaussianSplattingVRViewerUnity (clarte53)
+## Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)
 
 <details open>
 <summary><strong>Show / Hide Section</strong></summary>
 
 <br>
 
+The following section reports the results of the visual inspection conducted on GaussianSplattingVRViewerUnity (clarte53).
+
 ### Inria gaussian-splatting
 
-Surfaces appear solid and structurally coherent across walls, furniture, and floors. The scene exhibits slownes during head movement and rotation, producing a dragging effect and visual artifacts that seem related to view stability rather than splat noise.  
+Surfaces appear solid and structurally coherent across walls, furniture, and floors. The scene exhibits slowness during head movement and rotation, producing a dragging effect and visual artifacts that seem related to view stability rather than splat noise.  
 Contours appear slightly vibratory, and the entire scene gives the impression of vibrating during motion. A sensation of parallax instability is perceived during movement, and a very slight transparency is noticeable in some areas.  
-Inria maintains strong geometric solidity but exhibits perceptible motion instability and minor transparency artifacts.
 
 ---
 
 ### gsplat
 
 Surfaces are generally stable but appear slightly fluid during movement and head rotation. Walls exhibit slight but visible transparency. A sensation of parallax instability is perceived during movement, as observed in Inria.  
-gsplat presents surface solidity but shows noticeable motion instability and transparency artifacts.
+
 
 ---
 
 ### OpenSplat
 
 Surfaces appear moderately fluid, and transparency artifacts are visible during movement. The scene exhibits slowness during head motion, as observed in Inria and gsplat, affecting visual coherence. Contours remain generally stable.  
-OpenSplat presents acceptable geometric solidity but shows recurring transparency artifacts and motion-related instability.
 
 ---
 
 ### Nerfstudio
 
-Walls appear perforated, with visible holes and structural discontinuities. The floor exhibits transparency artifacts, and splats are clearly visible on near objects. The overall reconstruction appears geometrically degraded.  
-Nerfstudio exhibits strong structural instability and reduced surface coherence, while providing better motion stability than the previously evaluated trainers.
+Walls appear perforated, with visible holes and structural discontinuities. The floor exhibits transparency artifacts, and splats are clearly visible on near objects. The overall reconstruction appears geometrically degraded, while it provides better motion stability than the previously evaluated trainers.
 
 ---
 
 ### LichtFeld Studio
 
-The scene runs extremely slowly, although the static visual quality appears high. Brown artifacts are present, and contours appear well defined. The scene drags noticeably during head motion.  
-LichtFeld Studio provides high static detail but suffers from severe motion instability and usability limitations.
+The scene runs extremely slowly, although the static visual quality appears high. Brown artifacts are present, while contours appear well defined. The scene drags noticeably during head motion, leading to severe motion instability and usability limitations.
 
 ---
 
@@ -175,7 +164,7 @@ LichtFeld Studio provides high static detail but suffers from severe motion inst
 
 - **Inria gaussian-splatting** presents strong geometric solidity but exhibits motion slowness, dragging effects, slight contour vibration, perceived parallax instability, and minor transparency artifacts during movement.
 
-- **gsplat** presents generally stable surfaces but shows noticeable motion instability and slight wall transparency, with parallax instability perceived during head movement similarly to Inria.
+- **gsplat** presents generally stable surfaces but shows noticeable motion instability and slight wall transparency in some areas, with parallax instability perceived during head movement similarly to Inria.
 
 - **OpenSplat** presents acceptable geometric solidity and generally stable contours, yet displays recurring transparency artifacts and motion-related instability similar to Inria and gsplat.
 
@@ -203,23 +192,23 @@ The following section directly compares the rendering behavior of the two XR vie
   - For **LichtFeld Studio**, instability appears in both viewers. Unity-VR-Gaussian-Splatting (ninjamode) shows diffuse vibration and depth ordering issues, whereas GaussianSplattingVRViewerUnity (clarte53) is dominated by extreme slowness and dragging.
 
 - **Motion Behavior and Parallax Stability**:
-  - Unity-VR-Gaussian-Splatting (ninjamode) generally maintains stable motion across trainers, with artifacts mostly localized to specific reconstructions.
-  - GaussianSplattingVRViewerUnity (clarte53) consistently exhibits motion slowness, dragging, and visual instability. Perceived parallax inconsistency and slight contour vibration recurrently reduce visual coherence during head movement.
+  - **Unity-VR-Gaussian-Splatting (ninjamode)** generally maintains stable motion across trainers, with artifacts mostly localized to specific reconstructions.
+  - **GaussianSplattingVRViewerUnity (clarte53)** consistently exhibits motion slowness, dragging, and visual instability. Perceived parallax inconsistency and slight contour vibration recurrently reduce visual coherence during head movement.
 
 - **Visual Artifacts**:
-  - In Unity-VR-Gaussian-Splatting (ninjamode), artifacts are primarily related to spike-like splats, layering instability, and brown splats projected onto walls.
-  - In GaussianSplattingVRViewerUnity (clarte53), artifacts are more strongly associated with motion instability, dragging, parallax inconsistency, transparency, and overall scene slowness.
+  - In **Unity-VR-Gaussian-Splatting (ninjamode)**, artifacts are primarily related to spike-like splats and layering instability.
+  - In **GaussianSplattingVRViewerUnity (clarte53)**, artifacts are more strongly associated with motion instability, dragging, parallax inconsistency, transparency, and overall scene slowness.
 
 - **Usability and Comfort**:
-  - GaussianSplattingVRViewerUnity (clarte53) proved more difficult to use overall due to visual instability, dragging, and non-stable parallax, resulting in a less comfortable immersive experience, while Unity-VR-Gaussian-Splatting (ninjamode) provided a more stable and comfortable overall experience.
+  - **GaussianSplattingVRViewerUnity (clarte53)** proved more difficult to use overall due to visual instability, dragging, and non-stable parallax, resulting in a less comfortable immersive experience, while **Unity-VR-Gaussian-Splatting (ninjamode)** provided a more stable and comfortable overall experience.
 
 </details>
 
 ---
 
-## Trainer Performance Analysis - Unity-VR-Gaussian-Splatting (ninjamode)
+## Trainer Performance Analysis Protocol - Unity-VR-Gaussian-Splatting (ninjamode)
 
-After completing the comparative evaluation of the two XR viewers, Unity-VR-Gaussian-Splatting (ninjamode) was selected for further performance analysis due to its more stable runtime behavior and overall more comfortable immersive experience.  
+After completing the comparative evaluation of the two XR viewers, **Unity-VR-Gaussian-Splatting (ninjamode)** was selected for further performance analysis due to its more stable runtime behavior and overall more comfortable immersive experience.  
 
 Quantitative measurements were therefore conducted to evaluate the runtime performance of the different training pipelines when rendered within this viewer.
 
@@ -234,41 +223,68 @@ The values reported in the following table correspond to the average of two acqu
 
 <br>
 
-| Trainer | Avg FPS | Avg Frame Time (ms) | Avg Max Frame Time (ms) | Avg Memory (MB) |
-|----------|--------:|--------------------:|------------------------:|----------------:|
-| Inria gaussian-splatting | 34.5 | 29.00 | 52.92 | 653 |
-| gsplat | 32.0 | 31.30 | 56.88 | 655 |
-| OpenSplat | 37.8 | 26.62 | 51.43 | 656 |
-| Nerfstudio | 65.0 | 15.39 | 30.89 | 657 |
-| LichtFeld Studio | 17.2 | 58.35 | 82.62 | 660 |
+| Trainer | Avg FPS | Avg Frame Time (ms) | Avg Max Frame Time (ms) |
+|----------|--------:|--------------------:|------------------------:|
+| Inria gaussian-splatting | 34.5 | 29.00 | 52.92 |
+| gsplat | 32.0 | 31.30 | 56.88 |
+| OpenSplat | 37.8 | 26.62 | 51.43 |
+| Nerfstudio | 65.0 | 15.39 | 30.89 |
+| LichtFeld Studio | 17.2 | 58.35 | 82.62 |
 
+- **Avg FPS** indicates average frames per second measured during the 30 s acquisition window
+- **Avg Frame Time (ms)** indicates the mean frame rendering time
+- **Avg Max Frame Time (ms)** indicates the mean peak frame time observed during acquisition
+
+---
+
+## Quantitative Visualizations
+
+```mermaid
+xychart-beta
+    title "Unity-VR-GS (ninjamode) - Average FPS"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "FPS" 0 --> 70
+    bar [34.5,32.0,37.8,65.0,17.2]
+```
+
+```mermaid
+xychart-beta
+    title "Unity-VR-GS (ninjamode) - Frame Time"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "Milliseconds" 0 --> 90
+    bar [29.00,31.30,26.62,15.39,58.35]
+    bar [52.92,56.88,51.43,30.89,82.62]
+```
+
+**Legend:**
+- First line = Avg Frame Time (ms)
+- Second line = Avg Max Frame Time (ms)
+
+Legend: lighter line = Avg Frame Time (ms), darker line = Avg Max Frame Time (ms)
+    
 ---
 
 ## Observations
 
 - **Nerfstudio** achieves the highest average FPS (65.0) and the lowest average frame time (15.39 ms), indicating the strongest real-time performance among the evaluated trainers.
 
-- **LichtFeld Studio** records the lowest average FPS (17.2) and the highest average frame time (58.35 ms), along with the highest maximum frame time peaks (82.62 ms), indicating the weakest runtime performance.
+- **LichtFeld Studio** records the lowest average FPS (17.2) and the highest average frame time (58.35 ms), along with the highest maximum frame time (82.62 ms), indicating the weakest runtime performance.
 
 - **OpenSplat** provides the second-highest average FPS (37.8) and the second-lowest frame time (26.62 ms), outperforming Inria and gsplat in rendering speed.
 
 - **Inria gaussian-splatting** and **gsplat** show comparable performance, with Inria achieving slightly higher FPS and lower maximum frame time peaks.
 
-- Memory usage remains relatively stable across trainers (653–660 MB), with **LichtFeld Studio** using the most memory and **Inria** the least.
+</details>
 
 ---
 
 ## Conclusions
 
-Based on the quantitative results reported in this table and the qualitative scores presented in the **Visual Inspection Evaluation — Unity-VR-Gaussian-Splatting (ninjamode)** table, the overall selection falls on **Inria gaussian-splatting** as the most balanced solution in terms of visual stability and runtime performance.
-
-</details>
+Based on the quantitative results reported in the previous table and the qualitative scores presented in the **Visual Inspection Evaluation — Unity-VR-Gaussian-Splatting (ninjamode)** table, the overall selection falls on **Inria gaussian-splatting** as the most balanced solution in terms of visual stability and runtime performance.
 
 ---
 
 ## Summary 
-
-- Both XR viewers preserve the structural characteristics of the trained reconstructions, with differences emerging mainly in motion behavior and visual stability.
 
 - **Unity-VR-Gaussian-Splatting (ninjamode)** provides more stable motion handling and a more comfortable immersive experience, with artifacts generally limited to reconstruction-specific limitations.
 
