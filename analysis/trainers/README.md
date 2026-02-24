@@ -36,7 +36,7 @@ Both **raw reconstructions** and **cleaned outputs** are analyzed to assess:
 
 ---
 
-## Implementations Evaluated
+## Trainers Evaluated
 
 The following open-source pipelines are benchmarked in both scenarios:
 
@@ -50,13 +50,21 @@ Run instructions are linked in the tables inside `indoor.md` and `outdoor.md`.
 
 ---
 
+## Hardware Configuration
+
+All tests were conducted on:
+
+- **Windows 11**
+- **Single NVIDIA RTX 4060 GPU**
+
+---
+
 ## Experimental Protocol
 
 All methods were trained with:
 
 - **30,000 optimization iterations**
 - the same **151-frame** image set per scenario
-- training executed on a **single NVIDIA RTX 4060 GPU**
 - default hyperparameters 
 - exported reconstructions converted to **`.ply`** for inspection and downstream processing
 
@@ -132,10 +140,23 @@ This section discusses:
 
 ---
 
+## Relation to XR Viewer Evaluation
+
+This directory is complemented by the material in `analysis/viewers/`.
+
+This section evaluates reconstructions structure, density and post-processing impact, while the XR viewer analysis evaluates how the cleaned reconstructions behave when rendered in immersive environments.
+
+Together, both directories provide a full pipeline perspective:
+
+Training → Cleaning → XR Visualization → Runtime Behavior
+
+---
+
 ## How to Navigate the Results
 
 - Indoor reconstructions → `indoor.md`
 - Outdoor reconstructions → `outdoor.md`
 - Cross-scenario comparison → `indoor-vs-outdoor.md`
+- Viewer evaluations → `analysis/viewers/`
 
 ---
