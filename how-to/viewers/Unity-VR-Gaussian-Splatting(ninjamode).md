@@ -59,7 +59,7 @@ In a Unity scene properly configured for XR (including an XR Origin for headset 
 
 ---
 
-## 5. Using Gaussian Splats inside the Unity Project
+## 5. Using Gaussian Splatting Reconstructions inside the Unity Project
 
 After completing the steps above, the imported Gaussian Splatting Asset can be rendered directly inside the Unity scene through the **Gaussian Splat Renderer** component and behaves as a scene object.
 
