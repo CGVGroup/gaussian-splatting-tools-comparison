@@ -24,6 +24,8 @@ This document provides a qualitative overview of Gaussian Splatting viewers.
   - **Rendering integration**: UnityGaussianSplatting (aras-p) and Unity-VR-Gaussian-Splatting (ninjamode) provide rendering packages designed for integration into Unity projects.
   - **Immersive visualization**: Unity-VR-Gaussian-Splatting (ninjamode) and GaussianSplattingVRViewerUnity (clarte53) enable visualization inside XR environments.
 
+- **SIBR Viewer** is distributed as part of the official Inria / GraphDeco gaussian-splatting repository and represents the reference visualization tool for models trained with the original Inria implementation.
+
 - Training viewers (**Nerfstudio Viewer** and remote **SIBR**) rely on live streaming from the optimization pipeline rather than loading saved model files.
 
 - Playback viewers operate on exported model files and do not require a running training process.
@@ -33,6 +35,7 @@ This document provides a qualitative overview of Gaussian Splatting viewers.
 - **Unity-VR-Gaussian-Splatting (ninjamode)** is a fork of **UnityGaussianSplatting (aras-p)**, extending the original rendering package with VR support.
 
 - **GaussianSplattingVRViewerUnity (clarte53)** provides a VR viewer application.
+
 ---
 
 ## Sources
@@ -55,3 +58,5 @@ This document provides a qualitative overview of Gaussian Splatting viewers.
 ## GaussianSplattingVRViewerUnity (Clarte53)
 - https://github.com/clarte53/GaussianSplattingVRViewerUnity
 - https://github.com/clarte53/GaussianSplattingVRViewerUnity/blob/master/GaussianSplattingVRViewer/README.md
+
+---
