@@ -53,7 +53,16 @@ The workflow consists of:
  
 ---
 
-## 2. Installation (Prebuilt Version Used)
+## 2. Requirements
+
+Hardware requirements:
+
+- NVIDIA GPU (Compute Capability ≥ 7.5)
+- Recommended VRAM ≥ 8GB
+
+---
+
+## 3. Installation (Prebuilt Version Used)
 
 For the experiments a **precompiled Windows binary** was used.
 
@@ -66,15 +75,6 @@ After download:
 1. Extract the archive
 2. Open the `bin` folder
 3. Run the executable
-
----
-
-## 3. Requirements
-
-Hardware requirements:
-
-- NVIDIA GPU (Compute Capability ≥ 7.5)
-- Recommended VRAM ≥ 8GB
 
 ---
 
