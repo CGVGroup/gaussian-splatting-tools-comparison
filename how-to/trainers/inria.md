@@ -1,4 +1,4 @@
-# Inria Gaussian Splatting — How-To (Training, Export, and Visualization)
+# Inria gaussian-splatting — How-To (Training, Export, and Visualization)
 
 This document describes the workflow used for the **Inria Gaussian Splatting** implementation, including:
 
@@ -13,7 +13,7 @@ This document describes the workflow used for the **Inria Gaussian Splatting** i
 
 ## References
 
-- **Official Inria implementation**:  
+- **Official Inria gaussian-splatting implementation**:  
   https://github.com/graphdeco-inria/gaussian-splatting
 
 - **Website**:  
@@ -35,7 +35,7 @@ Both resources are maintained by the same author.
 
 ## 1. Overview
 
-The Inria Gaussian Splatting implementation is the **reference research implementation of 3D Gaussian Splatting**.
+The Inria gaussian-splatting implementation is the **reference research implementation of 3D Gaussian Splatting**.
 
 The pipeline operates on calibrated camera poses.  
 If they are not provided, the `convert.py` script can be used to automatically run a Structure-from-Motion reconstruction using COLMAP.
