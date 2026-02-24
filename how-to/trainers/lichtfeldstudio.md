@@ -14,6 +14,9 @@ This document describes the workflow used for the **LichtFeld Studio** implement
 
 - **LichtFeld Studio Repository**:                                                         
   https://github.com/MrNeRF/LichtFeld-Studio
+
+ - **Pre-built releases**:                                                                  
+   https://github.com/MrNeRF/LichtFeld-Studio/releases
   
 - **Documentation**:                                            
   https://github.com/MrNeRF/LichtFeld-Studio/wiki
