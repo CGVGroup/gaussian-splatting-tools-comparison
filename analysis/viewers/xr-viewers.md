@@ -59,13 +59,13 @@ Surfaces appear solid and structurally coherent across walls, furniture, and flo
 
 ### gsplat
 
-Surfaces remain stable but appear slightly more fluid compared to Inria, and similar spike-like artifacts appear during movement. Close-range inspection reveals visible splats at extreme proximity. 
+Surfaces remain stable but appear slightly more fluid compared to Inria gaussian-splatting, and similar spike-like artifacts appear during movement. Close-range inspection reveals visible splats at extreme proximity. 
 
 ---
 
 ### OpenSplat
 
-Surfaces appear moderately fluid, and colored splats located behind walls become slightly visible during movement. Contours remain generally stable, and near-object inspection behaves slightly better than in Inria and gsplat. 
+Surfaces appear moderately fluid, and colored splats located behind walls become slightly visible during movement. Contours remain generally stable, and near-object inspection behaves slightly better than in Inria gaussian-splatting and gsplat. 
 
 ---
 
@@ -97,9 +97,9 @@ Some brown splats and other artifacts appear projected onto background walls. Di
 
 - **Inria gaussian-splatting** provides the most stable reconstruction in Unity-VR-Gaussian-Splatting (ninjamode), outperforming the other trainers in terms of surface solidity and overall coherence, with only minor spike-like artifacts during rotation.
 
-- **gsplat** performs similarly to Inria but with slightly reduced surface rigidity and occasional spike-like artifacts during movement, positioning it just below Inria in overall structural stability.
+- **gsplat** performs similarly to Inria gaussian-splatting but with slightly reduced surface rigidity and occasional spike-like artifacts during movement, positioning it just below Inria gaussian-splatting in overall structural stability.
 
-- **OpenSplat** maintains stable contours and good near-object robustness comparable to Inria and gsplat, but differs in showing clearer layering instability during motion, with colored splats becoming slightly visible behind walls.
+- **OpenSplat** maintains stable contours and good near-object robustness comparable to Inria gaussian-splatting and gsplat, but differs in showing clearer layering instability during motion, with colored splats becoming slightly visible behind walls.
 
 - **Nerfstudio** departs more significantly from the previous trainers, exhibiting visible holes, structural discontinuities, and floor transparency artifacts, resulting in notably reduced geometric solidity and transparency consistency.
 
@@ -129,14 +129,14 @@ Contours appear slightly vibratory, and the entire scene gives the impression of
 
 ### gsplat
 
-Surfaces are generally stable but appear slightly fluid during movement and head rotation. Walls exhibit slight but visible transparency. A sensation of parallax instability is perceived during movement, as observed in Inria.  
+Surfaces are generally stable but appear slightly fluid during movement and head rotation. Walls exhibit slight but visible transparency. A sensation of parallax instability is perceived during movement, as observed in Inria gaussian-splatting.  
 
 
 ---
 
 ### OpenSplat
 
-Surfaces appear moderately fluid, and transparency artifacts are visible during movement. The scene exhibits slowness during head motion, as observed in Inria and gsplat, affecting visual coherence. Contours remain generally stable.  
+Surfaces appear moderately fluid, and transparency artifacts are visible during movement. The scene exhibits slowness during head motion, as observed in Inria gaussian-splatting and gsplat, affecting visual coherence. Contours remain generally stable.  
 
 ---
 
@@ -168,9 +168,9 @@ The scene runs extremely slowly, although the static visual quality appears high
 
 - **Inria gaussian-splatting** presents strong geometric solidity but exhibits motion slowness, dragging effects, slight contour vibration, perceived parallax instability, and minor transparency artifacts during movement.
 
-- **gsplat** presents generally stable surfaces but shows noticeable motion instability and slight wall transparency in some areas, with parallax instability perceived during head movement similarly to Inria.
+- **gsplat** presents generally stable surfaces but shows noticeable motion instability and slight wall transparency in some areas, with parallax instability perceived during head movement similarly to Inria gaussian-splatting.
 
-- **OpenSplat** presents acceptable geometric solidity and generally stable contours, yet displays recurring transparency artifacts and motion-related instability similar to Inria and gsplat.
+- **OpenSplat** presents acceptable geometric solidity and generally stable contours, yet displays recurring transparency artifacts and motion-related instability similar to Inria gaussian-splatting and gsplat.
 
 - **Nerfstudio** exhibits perforated walls, structural discontinuities, and floor transparency artifacts, resulting in strong structural degradation despite relatively better motion stability compared to the other trainers.
 
@@ -270,9 +270,9 @@ xychart-beta
 
 - **LichtFeld Studio** records the lowest average FPS (17.2) and the highest average frame time (58.35 ms), along with the highest maximum frame time (82.62 ms), indicating the weakest runtime performance.
 
-- **OpenSplat** provides the second-highest average FPS (37.8) and the second-lowest frame time (26.62 ms), outperforming Inria and gsplat in rendering speed.
+- **OpenSplat** provides the second-highest average FPS (37.8) and the second-lowest frame time (26.62 ms), outperforming Inria gaussian-splatting and gsplat in rendering speed.
 
-- **Inria gaussian-splatting** and **gsplat** show comparable performance, with Inria achieving slightly higher FPS and lower maximum frame time peaks.
+- **Inria gaussian-splatting** and **gsplat** show comparable performance, with Inria gaussian-splatting achieving slightly higher FPS and lower maximum frame time peaks.
 
 </details>
 
