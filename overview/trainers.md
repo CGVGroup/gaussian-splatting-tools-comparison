@@ -37,7 +37,7 @@ They are comparative assessments derived from practical experimentation and docu
 
 | Tool Type | Name | Tags | Open Source | Platform | Input | Output Format | Output Size | Processing Time | Entry Guide | Notes |
 |----------|------|------|-------------|----------|-------|---------------|-------------|-----------------|-------------|------|
-| Trainer | **Inria Gaussian Splatting** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | High | Advanced | Medium | Reference open-source implementation |
+| Trainer | **Inria gaussian-splatting** | trainer, desktop, open-source | Yes | Windows / Linux | Images | `.ply` | High | Advanced | Medium | Reference open-source implementation |
 | Trainer | **gsplat** | trainer backend, desktop, open-source, library | Yes | Windows / Linux | Images | `.ply` | High | Medium | Advanced | High-performance PyTorch library for GS |
 | Trainer + Viewer | **Nerfstudio** | trainer, desktop, open-source, framework | Yes | Windows / Linux | Images / Video / COLMAP | `.ply` | Low | Low | Advanced | Modular framework |
 | Trainer | **OpenSplat** | trainer, desktop, open-source | Yes | Windows / Linux | Images (COLMAP / Nerfstudio) | `.ply` | Medium | Medium | Medium | C++ native GS implementation based on LibTorch |
@@ -76,7 +76,7 @@ They are comparative assessments derived from practical experimentation and docu
 - On-device Gaussian Splatting training performed locally on mobile device.
 - Scenes can be interactively explored on mobile and in VR applications.
 
-## Inria Gaussian Splatting
+## Inria gaussian-splatting
 - Reference research implementation of the original method.
 
 ## gsplat
@@ -120,7 +120,7 @@ They are comparative assessments derived from practical experimentation and docu
 - https://scaniverse.com/news/intro-gaussian-splats
 - https://scaniverse.com/news/scaniverse-introduces-support-for-3d-gaussian-splatting
 
-## Inria Gaussian Splatting
+## Inria gaussian-splatting
 - https://github.com/graphdeco-inria/gaussian-splatting
 
 ## gsplat
