@@ -1,6 +1,6 @@
 # Indoor Dataset — Benchmark Results and Visual Inspection
 
-This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria GS, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
+This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
 
 ---
 
@@ -45,7 +45,7 @@ All measurements were obtained using the same hardware platform and experimental
 
 | Tool | Output Size (MB) | # Gaussians | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria GS | 226.1 | 955,819 | 23.7 | 120 | 12.6 | Adaptive density control | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
+| Inria gaussian-splatting | 226.1 | 955,819 | 23.7 | 120 | 12.6 | Adaptive density control | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
 | gsplat | 284.8 | 1,265,239 | 22.5 | 50 | 4.0 | CUDA-optimized default | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
 | OpenSplat | 120.8 | 510,870 | 23.6 | 60 | 11.7 | Native pruning | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
 | Nerfstudio | 40.2 | 170,150 | 23.6 | 30 | 17.6 | Adaptive culling + gsplat backend | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
@@ -87,7 +87,7 @@ xychart-beta
 
 - **gsplat** generated the densest model in terms of Gaussian count and the largest output file, followed by **LichtFeld Studio**.
 
-- The original **Inria GS** reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.
+- The original **Inria gaussian-splatting** reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.
 
 </details>
 
@@ -121,9 +121,9 @@ The goal of this inspection was:
 
 All figures in this section correspond to screenshots captured in SuperSplat.
 
-### Inria Gaussian Splatting — Raw Output
+### Inria gaussian-splatting — Raw Output
 
-The raw reconstruction produced by Inria shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with a small detached cluster visible on the left side of the scene and a few thin elongated Gaussians forming far-field artifacts around the core scene structure.
+The raw reconstruction produced by Inria gaussian-splatting shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with a small detached cluster visible on the left side of the scene and a few thin elongated Gaussians forming far-field artifacts around the core scene structure.
 
 ![Inria raw view 1](../../media/indoor/inria/raw/inria_00.png)
 ![Inria raw view 2](../../media/indoor/inria/raw/inria_01.png)
@@ -171,15 +171,15 @@ The raw LichtFeld Studio reconstruction shows a very dense central scene core, s
 
 Across all raw reconstructions, distinct patterns can be observed in how each pipeline distributes Gaussians around the central scene:
 
-- **Inria** produced one of the most compact raw models, with a clearly defined scene core and only limited peripheral outliers and thin far-field streaks.
+- **Inria gaussian-splatting** produced one of the most compact raw models, with a clearly defined scene core and only limited peripheral outliers and thin far-field streaks.
 
 - **OpenSplat** retained a relatively concentrated scene core but exhibited larger elongated streak artifacts and scattered peripheral Gaussians around the core.
 
-- **gsplat** generated a dense reconstruction with a visible halo of peripheral Gaussians surrounding the scene core, comparable to Inria and OpenSplat, but without large detached background clusters.
+- **gsplat** generated a dense reconstruction with a visible halo of peripheral Gaussians surrounding the scene core, comparable to Inria gaussian-splatting and OpenSplat, but without large detached background clusters.
 
 - **LichtFeld Studio** showed the strongest spatial dispersion, combining a very dense scene core with extensive far-field clutter and numerous floating clusters distributed around the core.
 
-- **Nerfstudio** produced the sparsest central reconstruction, but still displayed isolated distant clusters and streak-like artifacts that reduce overall compactness compared to Inria and OpenSplat.
+- **Nerfstudio** produced the sparsest central reconstruction, but still displayed isolated distant clusters and streak-like artifacts that reduce overall compactness compared to Inria gaussian-splatting and OpenSplat.
 
 </details>
 
@@ -225,7 +225,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 | Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
 |------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
-| Inria GS | 955,819 | 518,140 | −45.8% | 226.1 | 122.6 | −45.8% |
+| Inria gaussian-splatting | 955,819 | 518,140 | −45.8% | 226.1 | 122.6 | −45.8% |
 | gsplat | 1,265,239 | 690,776 | −45.4% | 284.8 | 155.5 | −45.4% |
 | OpenSplat | 510,870 | 402,531 | −21.2% | 120.8 | 95.2 | −21.2% |
 | Nerfstudio | 170,150 | 126,841 | −25.4% | 40.2 | 30.0 | −25.4% |
@@ -246,9 +246,9 @@ xychart-beta
 
 ## Observations
 
-- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria GS** shows the largest percentage reduction (≈ −45%) across both metrics.
+- **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria gaussian-splatting** shows the largest percentage reduction (≈ −45%) across both metrics.
 
-- **OpenSplat** shows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria and gsplat.
+- **OpenSplat** shows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria gaussian-splatting and gsplat.
 
 - **Nerfstudio** exhibits a consistent decrease in both metrics while maintaining the most compact absolute representation in terms of final file size.
 
@@ -269,9 +269,9 @@ This section focuses exclusively on the **post-cleaning appearance** of each mod
 
 This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure.
 
-### Inria Gaussian Splatting — Cleaned Output
+### Inria gaussian-splatting — Cleaned Output
 
-The cleaned Inria reconstruction preserves the compact central scene volume and clearly recognizable furniture geometry. The previously detached cluster on the left side is no longer visible, and the thin elongated Gaussians forming far-field artifacts around the core are largely removed. The overall spatial extent is further reduced, resulting in a tighter and more spatially focused reconstruction.
+The cleaned Inria gaussian-splatting reconstruction preserves the compact central scene volume and clearly recognizable furniture geometry. The previously detached cluster on the left side is no longer visible, and the thin elongated Gaussians forming far-field artifacts around the core are largely removed. The overall spatial extent is further reduced, resulting in a tighter and more spatially focused reconstruction.
 
 ![Inria cleaned view 1](../../media/indoor/inria/cleaned/inria_cleaned_00.png)
 ![Inria cleaned view 2](../../media/indoor/inria/cleaned/inria_cleaned_01.png)
@@ -328,7 +328,7 @@ https://github.com/user-attachments/assets/0363dd17-6705-4a65-b7c4-8bd875d3a325
 
 After cleaning, the five pipelines exhibit different balances between noise removal, spatial compactness, and reconstruction density:
 
-- **Inria GS** and **OpenSplat**, which already produced relatively compact raw reconstructions, further reduce their overall spatial extent after cleaning, leaving only minor peripheral remnants near the scene boundaries.
+- **Inria gaussian-splatting** and **OpenSplat**, which already produced relatively compact raw reconstructions, further reduce their overall spatial extent after cleaning, leaving only minor peripheral remnants near the scene boundaries.
 
 - **gsplat**, which initially exhibited a moderate halo of peripheral splats, converges to a compact scene volume after cleaning.
 
@@ -346,7 +346,7 @@ After cleaning, the five pipelines exhibit different balances between noise remo
 
 - **Scene cleaning is generally straightforward**, thanks to well-defined spatial limits.
 
-- Quantitatively, **Inria GS** and **gsplat** experience the largest relative reductions after cleaning (≈ −45%), reflecting the presence of removable peripheral splats in their raw outputs.
+- Quantitatively, **Inria gaussian-splatting** and **gsplat** experience the largest relative reductions after cleaning (≈ −45%), reflecting the presence of removable peripheral splats in their raw outputs.
 
 - **OpenSplat** and **LichtFeld Studio** undergo more moderate pruning (≈ −21% and ≈ −20%), suggesting that a larger fraction of their Gaussians already contributes to the retained interior structure.
 
