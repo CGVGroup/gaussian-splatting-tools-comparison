@@ -45,11 +45,11 @@ All measurements were obtained using the same hardware platform and experimental
 
 | Tool | Output Size (MB) | # Gaussians | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria GS | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](../tools/inria.md) |
-| gsplat | 232.2 | 1,031,707 | 22.5 | 45 | 4.4 | CUDA-optimized default | [How-To](../tools/gsplat.md) |
-| OpenSplat | 139.4 | 589,291 | 23.7 | 50 | 8.5 | Native pruning | [How-To](../tools/opensplat.md) |
-| Nerfstudio | 46.7 | 197,545 | 23.6 | 25 | 12.7 | Adaptive culling + gsplat backend | [How-To](../tools/nerfstudio.md) |
-| LichtFeld Studio | 236.5 | 1,000,000 | 23.7 | 50 | 5.0 | MCMC pipeline | [How-To](../tools/lichtfeld.md) |
+| Inria GS | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
+| gsplat | 232.2 | 1,031,707 | 22.5 | 45 | 4.4 | CUDA-optimized default | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
+| OpenSplat | 139.4 | 589,291 | 23.7 | 50 | 8.5 | Native pruning | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
+| Nerfstudio | 46.7 | 197,545 | 23.6 | 25 | 12.7 | Adaptive culling + gsplat backend | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
+| LichtFeld Studio | 236.5 | 1,000,000 | 23.7 | 50 | 5.0 | MCMC pipeline | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/lichtfeldstudio.md) |
 
 - **Storage / 100k Gaussians (MB)** measures storage cost normalized by Gaussian count.
 - **Training Time / 100k Gaussians (min)** measures training cost normalized by Gaussian count.
@@ -127,8 +127,8 @@ All figures in this section correspond to screenshots captured in SuperSplat.
 
 The raw Inria reconstruction shows a clearly identifiable outdoor scene core. Gaussians extend into far-field background regions corresponding to vegetation and surrounding context, forming peripheral structures detached from the core. Elongated streak artifacts are visible near the central area and in distant regions, while large-scale Gaussians appear in the upper portion of the reconstruction, associated with sky regions.
 
-![Inria raw view 1](../media/outdoor/inria/raw/inria_00.png)
-![Inria raw view 2](../media/outdoor/inria/raw/inria_01.png)
+![Inria raw view 1](../../media/outdoor/inria/raw/inria_00.png)
+![Inria raw view 2](../../media/outdoor/inria/raw/inria_01.png)
 
 ---
 
@@ -136,8 +136,8 @@ The raw Inria reconstruction shows a clearly identifiable outdoor scene core. Ga
 
 The raw gsplat reconstruction shows a clearly identifiable central outdoor structure. Far-field environmental Gaussians extend away from the scene core into surrounding background regions, with environmental elements appearing detached from the main volume. Elongated streak artifacts are visible both close to the scene core and in more distant regions. Streaks and some larger Gaussians associated with the sky are present in the upper portion of the reconstruction.
 
-![gsplat raw view 1](../media/outdoor/gsplat/raw/gsplat_00.png)
-![gsplat raw view 2](../media/outdoor/gsplat/raw/gsplat_01.png)
+![gsplat raw view 1](../../media/outdoor/gsplat/raw/gsplat_00.png)
+![gsplat raw view 2](../../media/outdoor/gsplat/raw/gsplat_01.png)
 
 ---
 
@@ -145,8 +145,8 @@ The raw gsplat reconstruction shows a clearly identifiable central outdoor struc
 
 The raw OpenSplat reconstruction shows an identifiable outdoor scene core. Numerous elongated streak artifacts radiate outward from the central area, forming a broad and irregular halo around the scene. Prominent spike-like Gaussians extend vertically and diagonally toward upper regions associated with the sky. Additional far-field environmental splats corresponding to vegetation and surrounding context are present beyond the core, while a limited number of isolated floating clusters appear in distant regions.
 
-![OpenSplat raw view 1](../media/outdoor/opensplat/raw/opensplat_00.png)
-![OpenSplat raw view 2](../media/outdoor/opensplat/raw/opensplat_01.png)
+![OpenSplat raw view 1](../../media/outdoor/opensplat/raw/opensplat_00.png)
+![OpenSplat raw view 2](../../media/outdoor/opensplat/raw/opensplat_01.png)
 
 ---
 
@@ -154,8 +154,8 @@ The raw OpenSplat reconstruction shows an identifiable outdoor scene core. Numer
 
 The raw Nerfstudio reconstruction exhibits a compact central scene core surrounded by numerous elongated streaks radiating outward in multiple directions. Several thin spike-like structures extend far from the main structure forming a wide halo, together with sparse floating splats dispersed throughout the surrounding volume. Large vertical streaks are also visible above the core, corresponding to sky-related geometry.
 
-![Nerfstudio raw view 1](../media/outdoor/nerfstudio/raw/nerfstudio_00.png)
-![Nerfstudio raw view 2](../media/outdoor/nerfstudio/raw/nerfstudio_01.png)
+![Nerfstudio raw view 1](../../media/outdoor/nerfstudio/raw/nerfstudio_00.png)
+![Nerfstudio raw view 2](../../media/outdoor/nerfstudio/raw/nerfstudio_01.png)
 
 ---
   
@@ -163,9 +163,9 @@ The raw Nerfstudio reconstruction exhibits a compact central scene core surround
 
 The raw LichtFeld Studio reconstruction shows a very dense outdoor scene core with the main architectural structure clearly identifiable. Both structural Gaussians and removable components remain spatially concentrated around the scene core rather than dispersing into distant clusters. A halo of peripheral Gaussians surrounds the central area. Streaks corresponding to portions of the sky are visible in the upper region, together with larger surface Gaussians located further above.  
 
-![Lichtfeld raw view 1](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
-![Lichtfeld raw view 2](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
-![Lichtfeld raw view 3](../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_02.png)
+![Lichtfeld raw view 1](../../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_00.png)
+![Lichtfeld raw view 2](../../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_01.png)
+![Lichtfeld raw view 3](../../media/outdoor/lichtfeldstudio/raw/lichtfeldstudio_02.png)
 
 ---
 
@@ -277,9 +277,9 @@ This section presents both screenshots and screen-recorded orbit videos captured
 
 The cleaned Inria reconstruction exhibits a noticeably reduced spatial extent while preserving a clearly identifiable and stable outdoor scene core. Most large-scale Gaussians in the upper regions associated with the sky are removed. Elongated streak artifacts are partially suppressed, although some thin residual structures persist around the scene envelope. The cleaned model appears significantly more spatially focused than the raw version, without visible degradation of the main architectural geometry.
 
-![Inria cleaned view 1](../media/outdoor/inria/cleaned/inria_cleaned_00.png)
-![Inria cleaned view 2](../media/outdoor/inria/cleaned/inria_cleaned_01.png)
-![Inria cleaned view 2](../media/outdoor/inria/cleaned/inria_cleaned_02.png)
+![Inria cleaned view 1](../../media/outdoor/inria/cleaned/inria_cleaned_00.png)
+![Inria cleaned view 2](../../media/outdoor/inria/cleaned/inria_cleaned_01.png)
+![Inria cleaned view 2](../../media/outdoor/inria/cleaned/inria_cleaned_02.png)
 
 https://github.com/user-attachments/assets/ac54b131-a198-4f4f-83a0-157e8c58ab1c
 
@@ -289,9 +289,9 @@ https://github.com/user-attachments/assets/ac54b131-a198-4f4f-83a0-157e8c58ab1c
 
 The cleaned gsplat reconstruction shows a reduction of detached background splats and far-field clutter. Several elongated streak artifacts visible in the raw output are attenuated, while others persist near the scene core and in sky-related regions. The central outdoor structure appears more clearly separated from surrounding artifacts, and the scene geometry is more spatially focused than in the raw reconstruction.
 
-![gsplat cleaned view 1](../media/outdoor/gsplat/cleaned/gsplat_cleaned_00.png)
-![gsplat cleaned view 2](../media/outdoor/gsplat/cleaned/gsplat_cleaned_01.png)
-![gsplat cleaned view 2](../media/outdoor/gsplat/cleaned/gsplat_cleaned_02.png)
+![gsplat cleaned view 1](../../media/outdoor/gsplat/cleaned/gsplat_cleaned_00.png)
+![gsplat cleaned view 2](../../media/outdoor/gsplat/cleaned/gsplat_cleaned_01.png)
+![gsplat cleaned view 2](../../media/outdoor/gsplat/cleaned/gsplat_cleaned_02.png)
 
 https://github.com/user-attachments/assets/99711339-8d17-40b5-8f44-c4c9c86b66c6
 
@@ -301,9 +301,9 @@ https://github.com/user-attachments/assets/99711339-8d17-40b5-8f44-c4c9c86b66c6
 
 The cleaned OpenSplat reconstruction shows a reduced spatial footprint, with many of the peripheral streak artifacts removed. The central outdoor structure is more clearly isolated, while residual sky-related splats appear thinner and more localized than in the raw output. Some elongated structures persist near the upper regions, but the scene envelope is narrower and the main geometry remains well preserved.
 
-![OpenSplat cleaned view 1](../media/outdoor/opensplat/cleaned/opensplat_cleaned_00.png)
-![OpenSplat cleaned view 2](../media/outdoor/opensplat/cleaned/opensplat_cleaned_01.png)
-![OpenSplat cleaned view 2](../media/outdoor/opensplat/cleaned/opensplat_cleaned_02.png)
+![OpenSplat cleaned view 1](../../media/outdoor/opensplat/cleaned/opensplat_cleaned_00.png)
+![OpenSplat cleaned view 2](../../media/outdoor/opensplat/cleaned/opensplat_cleaned_01.png)
+![OpenSplat cleaned view 2](../../media/outdoor/opensplat/cleaned/opensplat_cleaned_02.png)
 
 https://github.com/user-attachments/assets/5eee3615-8951-4d4e-a659-99d95364a8b3
 
@@ -325,9 +325,9 @@ https://github.com/user-attachments/assets/af5c8965-1e4b-4e24-ac9e-8b24d4b03e89
 
 The cleaned LichtFeld Studio reconstruction shows a more centralized and better bounded scene volume than the raw version. Part of the far-field scatter and several floating clusters are removed, while the main architectural structure and vegetation remain clearly identifiable. Background streak artifacts are reduced, although thin residual halos and sparse peripheral splats persist near the scene boundaries. The cleaned model appears more spatially constrained while preserving the dense core of the reconstruction.
 
-![LichtFeld Studio cleaned view 1](../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_00.png)
-![LichtFeld Studio cleaned view 2](../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_01.png)
-![LichtFeld Studio cleaned view 2](../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_02.png)
+![LichtFeld Studio cleaned view 1](../../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_00.png)
+![LichtFeld Studio cleaned view 2](../../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_01.png)
+![LichtFeld Studio cleaned view 2](../../media/outdoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_02.png)
 
 https://github.com/user-attachments/assets/06bb0135-ab14-46e6-a061-9a2e4565e2bc
 
