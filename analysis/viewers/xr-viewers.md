@@ -49,6 +49,8 @@ The evaluation focused on the following criteria:
 
 The following section reports the results of the visual inspection conducted on Unity-VR-Gaussian-Splatting (ninjamode).
 
+Detailed setup and execution instructions for Unity-VR-Gaussian-Splatting (ninjamode) can be found in: [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/viewers/Unity-VR-Gaussian-Splatting(ninjamode).md)
+
 ### Inria gaussian-splatting
 
 Surfaces appear solid and structurally coherent across walls, furniture, and floors, with no visible holes or fragmentation. Black spike-like artifacts are observed on the table during head rotation.  When inspecting objects at extremely close range, slight surface compression is observed. 
@@ -115,6 +117,8 @@ Some brown splats and other artifacts appear projected onto background walls. Di
 <br>
 
 The following section reports the results of the visual inspection conducted on GaussianSplattingVRViewerUnity (clarte53).
+
+Detailed setup and execution instructions for GaussianSplattingVRViewerUnity (clarte53) can be found in: [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/viewers/GaussianSplattingVRViewerUnity(clarte53).md)
 
 ### Inria gaussian-splatting
 
@@ -256,11 +260,7 @@ xychart-beta
     line [52.92,56.88,51.43,30.89,82.62]
 ```
 
-**Legend:**
-- First line = Avg Frame Time (ms)
-- Second line = Avg Max Frame Time (ms)
-
-Legend: lighter line = Avg Frame Time (ms), darker line = Avg Max Frame Time (ms)
+**Legend**: lighter line = Avg Frame Time (ms), darker line = Avg Max Frame Time (ms)
     
 ---
 
