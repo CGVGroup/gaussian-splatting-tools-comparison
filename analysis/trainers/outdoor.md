@@ -1,6 +1,6 @@
 # Outdoor Dataset — Benchmark Results and Visual Inspection
 
-This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria GS, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
+This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same outdoor dataset: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.
 
 ---
 
@@ -45,7 +45,7 @@ All measurements were obtained using the same hardware platform and experimental
 
 | Tool | Output Size (MB) | # Gaussians | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
 |------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria GS | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
+| Inria gaussian-splatting | 183.8 | 777,067 | 23.7 | 60 | 7.7 | Adaptive density control | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
 | gsplat | 232.2 | 1,031,707 | 22.5 | 45 | 4.4 | CUDA-optimized default | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
 | OpenSplat | 139.4 | 589,291 | 23.7 | 50 | 8.5 | Native pruning | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
 | Nerfstudio | 46.7 | 197,545 | 23.6 | 25 | 12.7 | Adaptive culling + gsplat backend | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
@@ -89,7 +89,7 @@ xychart-beta
 
 - Although **gsplat** contains more Gaussians than **LichtFeld Studio**, its output file is slightly smaller, indicating that storage cost is influenced not only by Gaussian count but also by the number and numerical precision of per-Gaussian attributes exported by each pipeline.
 
-- The original **Inria GS** reference implementation is slower than the other pipelines, while producing a structurally stable reconstruction.
+- The original **Inria gaussian-splatting** reference implementation is slower than the other pipelines, while producing a structurally stable reconstruction.
 
 </details>
 
@@ -123,9 +123,9 @@ The goal of this inspection was:
 
 All figures in this section correspond to screenshots captured in SuperSplat.
 
-### Inria Gaussian Splatting — Raw Output
+### Inria gaussian-splatting — Raw Output
 
-The raw Inria reconstruction shows a clearly identifiable outdoor scene core. Gaussians extend into far-field background regions corresponding to vegetation and surrounding context, forming peripheral structures detached from the core. Elongated streak artifacts are visible near the central area and in distant regions, while large-scale Gaussians appear in the upper portion of the reconstruction, associated with sky regions.
+The raw Inria gaussian-splatting reconstruction shows a clearly identifiable outdoor scene core. Gaussians extend into far-field background regions corresponding to vegetation and surrounding context, forming peripheral structures detached from the core. Elongated streak artifacts are visible near the central area and in distant regions, while large-scale Gaussians appear in the upper portion of the reconstruction, associated with sky regions.
 
 ![Inria raw view 1](../../media/outdoor/inria/raw/inria_00.png)
 ![Inria raw view 2](../../media/outdoor/inria/raw/inria_01.png)
@@ -173,9 +173,9 @@ The raw LichtFeld Studio reconstruction shows a very dense outdoor scene core wi
 
 Across all raw reconstructions, distinct patterns can be observed in how each pipeline distributes Gaussians around the central scene:
 
-- **Inria** reconstructed a well-defined outdoor scene core, but with peripheral environmental structures detached from the main volume.
+- **Inria gaussian-splatting** reconstructed a well-defined outdoor scene core, but with peripheral environmental structures detached from the main volume.
 
-- **gsplat** produced more environmental elements detached from the main volume than Inria.
+- **gsplat** produced more environmental elements detached from the main volume than Inria gaussian-splatting.
 
 - **OpenSplat** preserved a recognizable central structure but exhibites a pronounced irregular halo formed by elongated streaks radiating outward.
   
@@ -229,7 +229,7 @@ This table quantifies the impact of SuperSplat-based cleaning by comparing each 
 
 | Tool | Raw Gaussians | Cleaned Gaussians | Δ Gaussians (%) | Raw Size (MB) | Cleaned Size (MB) | Δ Size (%) |
 |------|-------------:|------------------:|----------------:|--------------:|------------------:|-----------:|
-| Inria GS | 777,067 | 369,432 | −52.5% | 183.8 | 87.4 | −52.4% |
+| Inria gaussian-splatting | 777,067 | 369,432 | −52.5% | 183.8 | 87.4 | −52.4% |
 | gsplat | 1,031,707 | 556,464 | −46.1% | 232.2 | 125.2 | −46.1% |
 | OpenSplat | 589,291 | 463,802 | −21.3% | 139.4 | 109.7 | −21.3% |
 | Nerfstudio | 197,545 | 170,923 | −13.5% | 46.7 | 40.4 | −13.5% |
@@ -250,7 +250,7 @@ xychart-beta
 
 ## Observations
 
-- **LichtFeld Studio** and **Inria GS** exhibit the largest impact from SuperSplat-based cleaning, with reductions exceeding 50% in both Gaussian count and file size.
+- **LichtFeld Studio** and **Inria gaussian-splatting** exhibit the largest impact from SuperSplat-based cleaning, with reductions exceeding 50% in both Gaussian count and file size.
 
 - **gsplat** also undergoes a substantial reduction in both metrics (≈ −46%), indicating a strong impact of post-processing on its dense raw reconstruction.
 
@@ -273,9 +273,9 @@ This section focuses exclusively on the **post-cleaning appearance** of each mod
 
 This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure.
 
-### Inria Gaussian Splatting — Cleaned Output
+### Inria gaussian-splatting — Cleaned Output
 
-The cleaned Inria reconstruction exhibits a noticeably reduced spatial extent while preserving a clearly identifiable and stable outdoor scene core. Most large-scale Gaussians in the upper regions associated with the sky are removed. Elongated streak artifacts are partially suppressed, although some thin residual structures persist around the scene envelope. The cleaned model appears significantly more spatially focused than the raw version, without visible degradation of the main architectural geometry.
+The cleaned Inria gaussian-splatting reconstruction exhibits a noticeably reduced spatial extent while preserving a clearly identifiable and stable outdoor scene core. Most large-scale Gaussians in the upper regions associated with the sky are removed. Elongated streak artifacts are partially suppressed, although some thin residual structures persist around the scene envelope. The cleaned model appears significantly more spatially focused than the raw version, without visible degradation of the main architectural geometry.
 
 ![Inria cleaned view 1](../../media/outdoor/inria/cleaned/inria_cleaned_00.png)
 ![Inria cleaned view 2](../../media/outdoor/inria/cleaned/inria_cleaned_01.png)
@@ -337,7 +337,7 @@ https://github.com/user-attachments/assets/06bb0135-ab14-46e6-a061-9a2e4565e2bc
 
 After cleaning, the five pipelines show different degrees of spatial compaction and artifact suppression while preserving the main outdoor structures:
 
-- **Inria GS**, which already produced a relatively controlled raw reconstruction, further reduces its spatial footprint after cleaning.
+- **Inria gaussian-splatting**, which already produced a relatively controlled raw reconstruction, further reduces its spatial footprint after cleaning.
 
 - **gsplat**, which initially exhibited detached background splats and streak artifacts around the core, shows a clearer separation between the central structure and surrounding clutter after cleaning.
 
@@ -357,7 +357,7 @@ After cleaning, the five pipelines show different degrees of spatial compaction 
 
 - **Scene cleaning is inherently challenging**, as many Gaussians located far from the central structure correspond to valid background elements and cannot be safely removed through aggressive spatial pruning.
 
-- Quantitatively, **LichtFeld Studio** and **Inria GS** undergo the largest relative reductions after cleaning (≈ −58% and ≈ −52%, respectively), indicating the presence of substantial removable peripheral structure in their raw outputs.
+- Quantitatively, **LichtFeld Studio** and **Inria gaussian-splatting** undergo the largest relative reductions after cleaning (≈ −58% and ≈ −52%, respectively), indicating the presence of substantial removable peripheral structure in their raw outputs.
 
 - **gsplat** also experiences strong pruning (≈ −46%), reflecting its dense raw reconstruction.
 
