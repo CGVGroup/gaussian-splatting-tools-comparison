@@ -5,7 +5,7 @@ This document describes the workflow used for **Unity-VR-Gaussian-Splatting (nin
 - Unity project setup
 - project configuration
 - model import
-- VR execution on Meta Quest 3 (PCVR)
+- Gaussian Splatting Asset usage
 
 ---
 
@@ -37,7 +37,7 @@ The workflow consists of:
 
 ---
 
-# 3. Clone the Repository
+## 3. Clone the Repository
 
 ```bash
 git clone https://github.com/ninjamode/Unity-VR-Gaussian-Splatting.git
@@ -47,7 +47,7 @@ Open the project using **Unity Hub**.
 
 ---
 
-# 4. Scene Preparation
+## 4. Scene Preparation
 
 XR configuration was performed via **Project Settings → XR Plug-in Management**, enabling **OpenXR**.
 
@@ -55,4 +55,12 @@ Import the `.ply` files into the Unity project as Assets using: **Tools → Gaus
 
 During import, the asset quality level can be selected from the available presets: **Very Low, Low, Medium, High, Very High**.
 
-In a Unity scene containing an **XR Origin** game object and an **XR Interaction Manager**, create an empty GameObject and add to it the **Gaussian Splat Renderer** component.
+In a Unity scene properly configured for XR (including an XR Origin for headset tracking), create an empty GameObject and add the **Gaussian Splat Renderer** component. Assign the Gaussian Splat Asset to its Asset field in order to render the reconstruction inside the VR environment.
+
+---
+
+## 5. Using Gaussian Splats inside the Unity Project
+
+After completing the steps above, the imported Gaussian Splatting Asset can be rendered directly inside the Unity scene through the **Gaussian Splat Renderer** component and behaves as a scene object.
+
+---
