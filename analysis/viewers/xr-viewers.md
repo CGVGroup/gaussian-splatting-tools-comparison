@@ -252,8 +252,8 @@ xychart-beta
     title "Unity-VR-GS (ninjamode) - Frame Time"
     x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
     y-axis "Milliseconds" 0 --> 90
-    bar [29.00,31.30,26.62,15.39,58.35]
-    bar [52.92,56.88,51.43,30.89,82.62]
+    line [29.00,31.30,26.62,15.39,58.35]
+    line [52.92,56.88,51.43,30.89,82.62]
 ```
 
 **Legend:**
