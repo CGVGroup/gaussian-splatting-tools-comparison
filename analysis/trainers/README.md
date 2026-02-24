@@ -40,7 +40,7 @@ Both **raw reconstructions** and **cleaned outputs** are analyzed to assess:
 
 The following open-source pipelines are benchmarked in both scenarios:
 
-- Inria GS
+- Inria gaussian-splatting
 - gsplat
 - OpenSplat
 - Nerfstudio
