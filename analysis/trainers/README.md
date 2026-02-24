@@ -2,7 +2,7 @@
 
 This directory contains the full benchmarking material used to compare multiple open-source Gaussian Splatting implementations under controlled and reproducible conditions.
 
-Benchmarks are organized by **scene type** (indoor vs outdoor) and include both:
+Evaluations are organized by **scene type** (indoor vs outdoor) and include both:
 - **quantitative evaluations** (model size, Gaussian count, training time), and
 - **qualitative visual analyses** performed **before** and **after** post-processing with **SuperSplat**.
 
