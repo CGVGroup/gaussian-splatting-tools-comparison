@@ -43,13 +43,13 @@ All measurements were obtained using the same hardware platform and experimental
 
 <br>
 
-| Tool | Output Size (MB) | # Gaussians | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | Densification Strategy | Discussion |
-|------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|------------|
-| Inria gaussian-splatting | 226.1 | 955,819 | 23.7 | 120 | 12.6 | Adaptive density control | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
-| gsplat | 284.8 | 1,265,239 | 22.5 | 50 | 4.0 | CUDA-optimized default | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
-| OpenSplat | 120.8 | 510,870 | 23.6 | 60 | 11.7 | Native pruning | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
-| Nerfstudio | 40.2 | 170,150 | 23.6 | 30 | 17.6 | Adaptive culling + gsplat backend | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
-| LichtFeld Studio | 236.5 | 1,000,000 | 23.7 | 60 | 6.0 | MCMC pipeline | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/lichtfeldstudio.md) |
+| Tool | Output Size (MB) | # Gaussians | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | How-To |
+|------|----------------:|------------:|----------:|-------------------:|-----------:|----------------------|
+| Inria gaussian-splatting | 226.1 | 955,819 | 23.7 | 120 | 12.6 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
+| gsplat | 284.8 | 1,265,239 | 22.5 | 50 | 4.0 |  [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
+| OpenSplat | 120.8 | 510,870 | 23.6 | 60 | 11.7 |  [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
+| Nerfstudio | 40.2 | 170,150 | 23.6 | 30 | 17.6 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
+| LichtFeld Studio | 236.5 | 1,000,000 | 23.7 | 60 | 6.0 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/lichtfeldstudio.md) |
 
 - **Storage / 100k Gaussians (MB)** measures storage cost normalized by Gaussian count.
 - **Training Time / 100k Gaussians (min)** measures training cost normalized by Gaussian count.
