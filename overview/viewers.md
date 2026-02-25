@@ -6,12 +6,12 @@ This document provides a qualitative overview of Gaussian Splatting viewers.
 
 | Name | Tags | Platform | Execution environment | Role | Model access | Entry Guide | Notes |
 |------|------|------|------|------|------|------|------|
-| SuperSplat | editor, offline, web-based | Web | Browser | Editor & playback viewer | Local files | Easy | No installation, drag-and-drop editing and inspection |
-| Nerfstudio Viewer | training, streaming, web-based | Web | Browser | Live training viewer | Live pipeline stream | Medium | Requires running training pipeline locally |
-| SIBR Viewer | training, offline, desktop | Desktop | Standalone application | Training monitoring and trained-model viewing | Network stream or local model | Medium | Needs compiled binaries and dataset preparation |
-| UnityGaussianSplatting (aras-p) | renderer, unity | Desktop | Unity engine | Gaussian Splatting rendering package for Unity | Local assets | Advanced | Integration inside Unity project required |
-| Unity-VR-Gaussian-Splatting (ninjamode) | xr, renderer, unity | VR | Unity XR | Gaussian Splatting Virtual Reality rendering package for Unity | Local assets | Advanced | Integration inside Unity project required |
-| GaussianSplattingVRViewerUnity (clarte53) | xr, application, unity | VR | Unity XR | VR viewer application for gaussian splatting models | Local assets | Medium | Provides executable VR viewer and Unity project |
+| SuperSplat | editor, offline, web-based, open-source | Web | Browser | Editor & playback viewer | Local files | Easy | No installation, drag-and-drop editing and inspection |
+| Nerfstudio Viewer | training, streaming, web-based, open-source | Web | Browser | Live training viewer | Live pipeline stream | Medium | Requires running training pipeline locally |
+| SIBR Viewer | training, offline, desktop, open-source | Desktop | Standalone application | Training monitoring and trained-model viewing | Network stream or local model | Medium | Needs compiled binaries and dataset preparation |
+| UnityGaussianSplatting (aras-p) | renderer, unity, open-source | Desktop | Unity engine | Gaussian Splatting rendering package for Unity | Local assets | Advanced | Integration inside Unity project required |
+| Unity-VR-Gaussian-Splatting (ninjamode) | xr, renderer, unity, open-source | VR | Unity XR | Gaussian Splatting Virtual Reality rendering package for Unity | Local assets | Advanced | Integration inside Unity project required |
+| GaussianSplattingVRViewerUnity (clarte53) | xr, application, unity, open-source | VR | Unity XR | VR viewer application for gaussian splatting models | Local assets | Medium | Provides executable VR viewer and Unity project |
 
 ---
 
