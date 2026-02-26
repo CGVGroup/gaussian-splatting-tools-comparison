@@ -144,10 +144,6 @@ This separation enables independent assessment of:
 
 This repository provides a structured framework to examine selected Gaussian Splatting tools across different stages of the workflow.
 
-It integrates descriptive overviews and experimental analyses to connect:
-
-- tool documentation  
-- reconstruction inspection and post-processing  
-- immersive visualization and runtime behavior.
+It integrates descriptive overviews and experimental analyses to connect tool documentation , reconstruction inspection and post-processing, immersive visualization and runtime behavior.
 
 ---
