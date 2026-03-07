@@ -1,6 +1,6 @@
 # XR Viewers Comparative Analysis
 
-This document presents a comparative analysis of two XR Gaussian Splatting viewers, evaluated under identical hardware conditions using models trained from a single dataset across five different training pipelines.
+This document presents a comparative analysis of two tools for XR visualization of Gaussian Splatting models, evaluated under identical hardware conditions using models trained from a single dataset across five different training pipelines.
 
 ---
 
