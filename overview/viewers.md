@@ -1,6 +1,8 @@
-# Gaussian Splatting Viewers Overview
+# Gaussian Splatting Viewers, Editors and Integration Tools
 
-This document provides a qualitative overview of Gaussian Splatting viewers.
+This document provides a qualitative overview of tools used to visualize, inspect, edit, and integrate Gaussian Splatting models. The overview includes standalone viewers, web-based tools, and rendering integrations for environments such as Unity.
+
+---
 
 ## Overview Table
 
