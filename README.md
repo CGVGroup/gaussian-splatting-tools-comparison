@@ -22,7 +22,7 @@ Descriptive overview of Gaussian Splatting tools.
 Includes:
 
 - `trainers.md` — Overview of open-source and commercial Gaussian Splatting trainers  
-- `viewers.md` — Overview of desktop, web-based, and XR Gaussian Splatting viewers  
+- `viewers.md` — overview of tools used to visualize, inspect, edit, and integrate Gaussian Splatting models
 
 This section provides contextual and comparative descriptions of tools within the ecosystem.
 
@@ -48,7 +48,7 @@ Technical benchmark and visual analysis of selected **open-source trainers**, in
 
 #### `analysis/viewers/`
 
-Visual and performance analysis of XR viewers using the cleaned reconstructions produced in the trainer benchmark.
+Visual and performance analysis of XR visualization tools using the cleaned reconstructions produced in the trainer benchmark.
 
 Includes:
 
@@ -67,7 +67,7 @@ Reproducibility and execution guides.
 Divided into:
 
 - `how-to/trainers/` — Setup and execution instructions for each open-source trainer included in the benchmark  
-- `how-to/viewers/` — Setup and execution instructions for each XR viewer evaluated  
+- `how-to/viewers/` — Setup and execution instructions for each XR visualization tool evaluated  
 
 Each file contains:
 
@@ -135,7 +135,7 @@ This separation enables independent assessment of:
 
 - Tool overview → `overview/`
 - Trainer benchmark and visual analysis → `analysis/trainers/`
-- XR viewer visual and performance analysis → `analysis/viewers/`
+- XR visualization tools visual and performance analysis → `analysis/viewers/`
 - Reproduction guides → `how-to/`
 
 ---
