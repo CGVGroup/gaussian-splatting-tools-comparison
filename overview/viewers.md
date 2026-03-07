@@ -50,6 +50,7 @@ This document provides a qualitative overview of tools used to visualize, inspec
 
 ## SIBR Viewer (GraphDeco)
 - https://github.com/graphdeco-inria/gaussian-splatting
+- https://sibr.gitlabpages.inria.fr/?page=index.html&version=0.9.6
 
 ## UnityGaussianSplatting (Aras-p)
 - https://github.com/aras-p/UnityGaussianSplatting
