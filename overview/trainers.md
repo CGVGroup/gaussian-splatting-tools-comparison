@@ -113,6 +113,7 @@ They are comparative assessments derived from practical experimentation and docu
 
 ## Postshot (Jawset)
 - https://www.jawset.com/
+- https://www.jawset.com/docs/d/Postshot+User+Guide
 - https://www.youtube.com/watch?v=ERuRMOVO58Q
 
 ## Scaniverse
