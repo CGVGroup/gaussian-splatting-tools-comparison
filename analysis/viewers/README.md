@@ -1,6 +1,6 @@
 # Gaussian Splatting XR Viewers — Visual and Performance Analysis
 
-This directory contains the XR viewers evaluation conducted on Gaussian Splatting reconstructions generated during the trainer analysis phase.
+This directory contains the XR visualization tools evaluation conducted on Gaussian Splatting reconstructions generated during the trainer analysis phase.
 
 The analysis focuses on the behavior of two different XR rendering environments when visualizing identical cleaned reconstructions produced by multiple training pipelines.
 
