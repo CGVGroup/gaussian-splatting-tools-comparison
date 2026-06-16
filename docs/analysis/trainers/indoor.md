@@ -38,18 +38,18 @@ All measurements were obtained using the same hardware platform and experimental
 
 ## Quantitative Results
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
+<details markdown="1">
+<summary>Expand to view results table and charts.</summary>
 
 <br>
 
 | Tool | # Gaussians | Output Size (MB) | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | How-To |
 |------|------------:|-----------------:|-------------------------------:|--------------------:|-------------------------------------:|-------|
-| Inria gaussian-splatting | 955,819 | 226.1 | 23.7 | 120 | 12.6 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
-| gsplat | 1,265,239 | 284.8 | 22.5 | 50 | 4.0 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
-| OpenSplat | 510,870 | 120.8 | 23.6 | 60 | 11.7 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
-| Nerfstudio | 170,150 | 40.2 | 23.6 | 30 | 17.6 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
-| LichtFeld Studio | 1,000,000 | 236.5 | 23.7 | 60 | 6.0 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/lichtfeldstudio.md) |
+| Inria gaussian-splatting | 955,819 | 226.1 | 23.7 | 120 | 12.6 | [How-To](../../how-to/trainers/inria.md) |
+| gsplat | 1,265,239 | 284.8 | 22.5 | 50 | 4.0 | [How-To](../../how-to/trainers/gsplat.md) |
+| OpenSplat | 510,870 | 120.8 | 23.6 | 60 | 11.7 | [How-To](../../how-to/trainers/opensplat.md) |
+| Nerfstudio | 170,150 | 40.2 | 23.6 | 30 | 17.6 | [How-To](../../how-to/trainers/nerfstudio.md) |
+| LichtFeld Studio | 1,000,000 | 236.5 | 23.7 | 60 | 6.0 | [How-To](../../how-to/trainers/lichtfeldstudio.md) |
 
 - **Storage / 100k Gaussians (MB)** measures storage cost normalized by Gaussian count.
 - **Training Time / 100k Gaussians (min)** measures training cost normalized by Gaussian count.
@@ -79,6 +79,8 @@ xychart-beta
 ```
 
 
+</details>
+
 ### Observations
 
 - **Nerfstudio** produced the most compact representation in terms of output size and training time, with a substantially lower Gaussian count than the other pipelines.
@@ -88,8 +90,6 @@ xychart-beta
 - **gsplat** generated the densest model in terms of Gaussian count and the largest output file, followed by **LichtFeld Studio**.
 
 - The original **Inria gaussian-splatting** reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.
-
-</details>
 
 ---
 
@@ -105,11 +105,6 @@ This two-stage inspection protocol supports the qualitative analyses and visual 
 
 ## Visual Inspection — Before Cleaning (Raw Reconstructions)
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
-
 Before applying any post-processing, all reconstructed Gaussian Splatting models were visually inspected in the **SuperSplat Editor** using their exported `.ply` files.
 
 The goal of this inspection was:
@@ -120,6 +115,11 @@ The goal of this inspection was:
 - and to qualitatively assess differences between the analyzed tools prior to any cleaning operations.
 
 All figures in this section correspond to screenshots captured in SuperSplat.
+
+<details markdown="1">
+<summary>Expand to view raw reconstruction screenshots per tool.</summary>
+
+<br>
 
 ### Inria gaussian-splatting — Raw Output
 
@@ -187,11 +187,6 @@ Across all raw reconstructions, distinct patterns can be observed in how each pi
 
 ## Scene Cleaning Procedure
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
-
 After inspecting the raw reconstructions, all scenes were cleaned using **SuperSplat** in order to reduce outliers and restrict the reconstruction to the indoor region of interest.
 
 The cleaning process was designed to be consistent across all tools and relied on a combination of **spatial filtering** and **attribute-based pruning** to remove spurious Gaussians while preserving the main architectural structure of the scene. The reconstructed environment exhibited well-defined spatial boundaries inherent to indoor settings, which made it relatively easy to localize the central scene core and to separate it from peripheral and removable Gaussians.
@@ -210,14 +205,12 @@ In particular, the following operations were applied:
 
 This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.
 
-</details>
-
 ---
 
 ## Scene Cleaning Evaluation
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
+<details markdown="1">
+<summary>Expand to view cleaning impact table and chart.</summary>
 
 <br>
 
@@ -244,6 +237,8 @@ xychart-beta
     bar [45.8,45.4,21.2,25.4,20.0]
 ```
 
+</details>
+
 ## Observations
 
 - **gsplat** exhibits the largest absolute reductions both in splat count and file size, while **Inria gaussian-splatting** shows the largest percentage reduction (≈ −45%) across both metrics.
@@ -254,20 +249,18 @@ xychart-beta
 
 - **LichtFeld Studio** undergoes limited but noticeable reductions (≈ −20%) in both metrics, comparable to OpenSplat but starting from a substantially larger raw model.
 
-</details>
-
 ---
 
 ## Visual Inspection — After Cleaning
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
-
 This section focuses exclusively on the **post-cleaning appearance** of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.
 
 This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure.
+
+<details markdown="1">
+<summary>Expand to view cleaned reconstruction screenshots and videos per tool.</summary>
+
+<br>
 
 ### Inria gaussian-splatting — Cleaned Output
 
