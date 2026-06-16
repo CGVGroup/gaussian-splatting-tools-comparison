@@ -18,6 +18,9 @@ The project is organized around two complementary dimensions:
 
 ## Reading paths
 
+**"I don't know which trainer to use"**
+→ Start with [Which Trainer to Use?](overview/which-trainer.md) — a one-page decision guide with trade-offs and a bottom-line recommendation
+
 **"I want to understand the landscape of tools"**
 → Start with [Overview / Trainers](overview/trainers.md) and [Overview / Viewers](overview/viewers.md)
 

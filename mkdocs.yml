@@ -53,6 +53,7 @@ nav:
     - overview/index.md
     - Trainers: overview/trainers.md
     - Viewers: overview/viewers.md
+    - Which Trainer to Use: overview/which-trainer.md
   - Analysis:
     - Trainers:
       - Methodology: analysis/trainers/methodology.md
