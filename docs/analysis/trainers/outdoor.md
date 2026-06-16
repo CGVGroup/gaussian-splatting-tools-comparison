@@ -45,11 +45,11 @@ All measurements were obtained using the same hardware platform and experimental
 
 | Tool | # Gaussians | Output Size (MB) | Storage / 100k Gaussians (MB) | Training Time (min) | Training Time / 100k Gaussians (min) | How-to |
 |------|------------:|-----------------:|-------------------------------:|--------------------:|-------------------------------------:|-------|
-| Inria gaussian-splatting | 777,067 | 183.8 | 23.7 | 60 | 7.7 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/inria.md) |
-| gsplat | 1,031,707 | 232.2 | 22.5 | 45 | 4.4 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/gsplat.md) |
-| OpenSplat | 589,291 | 139.4 | 23.7 | 50 | 8.5 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/opensplat.md) |
-| Nerfstudio | 197,545 | 46.7 | 23.6 | 25 | 12.7 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/nerfstudio.md) |
-| LichtFeld Studio | 1,000,000 | 236.5 | 23.7 | 50 | 5.0 | [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/trainers/lichtfeldstudio.md) |
+| Inria gaussian-splatting | 777,067 | 183.8 | 23.7 | 60 | 7.7 | [How-To](../../how-to/trainers/inria.md) |
+| gsplat | 1,031,707 | 232.2 | 22.5 | 45 | 4.4 | [How-To](../../how-to/trainers/gsplat.md) |
+| OpenSplat | 589,291 | 139.4 | 23.7 | 50 | 8.5 | [How-To](../../how-to/trainers/opensplat.md) |
+| Nerfstudio | 197,545 | 46.7 | 23.6 | 25 | 12.7 | [How-To](../../how-to/trainers/nerfstudio.md) |
+| LichtFeld Studio | 1,000,000 | 236.5 | 23.7 | 50 | 5.0 | [How-To](../../how-to/trainers/lichtfeldstudio.md) |
 
 - **Storage / 100k Gaussians (MB)** measures storage cost normalized by Gaussian count.
 - **Training Time / 100k Gaussians (min)** measures training cost normalized by Gaussian count.
@@ -313,9 +313,9 @@ https://github.com/user-attachments/assets/5eee3615-8951-4d4e-a659-99d95364a8b3
 
 The cleaned Nerfstudio reconstruction shows a tightly cropped central scene, with most far-field clusters and elongated streak artifacts removed. The main architectural elements remain intact, while background Gaussians associated with the sky and surrounding vegetation are substantially reduced, yielding a visually clearer and more spatially constrained model than the raw output.
 
-![Nerfstudio cleaned view 1](../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_00.png)
-![Nerfstudio cleaned view 2](../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_01.png)
-![Nerfstudio cleaned view 2](../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_02.png)
+![Nerfstudio cleaned view 1](../../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_00.png)
+![Nerfstudio cleaned view 2](../../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_01.png)
+![Nerfstudio cleaned view 2](../../media/outdoor/nerfstudio/cleaned/nerfstudio_cleaned_02.png)
 
 https://github.com/user-attachments/assets/af5c8965-1e4b-4e24-ac9e-8b24d4b03e89
 

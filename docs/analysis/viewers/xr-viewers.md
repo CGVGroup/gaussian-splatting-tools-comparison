@@ -10,11 +10,11 @@ This document presents a comparative analysis of two tools for XR visualization 
 
 They were generated from the same dataset of **151 frames** using the following open-source Gaussian Splatting trainers: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio, LichtFeld Studio.
 
-The decision to use an indoor environment for viewer analysis is based on the comparative observations reported in: [analysis/trainers/indoor-vs-outdoor.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/analysis/trainers/indoor-vs-outdoor.md)
+The decision to use an indoor environment for viewer analysis is based on the comparative observations reported in: [analysis/trainers/indoor-vs-outdoor.md](../trainers/indoor-vs-outdoor.md)
 
 All reconstructions were cleaned prior to evaluation to ensure consistency across viewers.
 
-Detailed information about the reconstructions, the cleaning procedures applied and their impact on the exported `.ply` files  can be found in the following document: [analysis/trainers/indoor.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/analysis/trainers/indoor.md)
+Detailed information about the reconstructions, the cleaning procedures applied and their impact on the exported `.ply` files  can be found in the following document: [analysis/trainers/indoor.md](../trainers/indoor.md)
 
 ---
 
@@ -49,7 +49,7 @@ The evaluation focused on the following criteria:
 
 The following section reports the results of the visual inspection conducted on Unity-VR-Gaussian-Splatting (ninjamode).
 
-Detailed setup and execution instructions for Unity-VR-Gaussian-Splatting (ninjamode) can be found in: [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/viewers/Unity-VR-Gaussian-Splatting(ninjamode).md)
+Detailed setup and execution instructions for Unity-VR-Gaussian-Splatting (ninjamode) can be found in: [How-To](../../how-to/viewers/ninjamode.md)
 
 ### Inria gaussian-splatting
 
@@ -118,7 +118,7 @@ Some brown splats and other artifacts appear projected onto background walls. Di
 
 The following section reports the results of the visual inspection conducted on GaussianSplattingVRViewerUnity (clarte53).
 
-Detailed setup and execution instructions for GaussianSplattingVRViewerUnity (clarte53) can be found in: [How-To](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/how-to/viewers/GaussianSplattingVRViewerUnity(clarte53).md)
+Detailed setup and execution instructions for GaussianSplattingVRViewerUnity (clarte53) can be found in: [How-To](../../how-to/viewers/clarte53.md)
 
 ### Inria gaussian-splatting
 

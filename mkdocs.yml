@@ -1,0 +1,71 @@
+site_name: Gaussian Splatting Tools Comparison
+site_description: Structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.
+site_author: Ernesta Maria Sichetti
+repo_url: https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison
+repo_name: gaussian-splatting-tools-comparison
+docs_dir: docs
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - Overview:
+    - overview/index.md
+    - Trainers: overview/trainers.md
+    - Viewers: overview/viewers.md
+  - Analysis:
+    - Trainers:
+      - Methodology: analysis/trainers/methodology.md
+      - Indoor: analysis/trainers/indoor.md
+      - Outdoor: analysis/trainers/outdoor.md
+      - Indoor vs Outdoor: analysis/trainers/indoor-vs-outdoor.md
+    - Viewers:
+      - Methodology: analysis/viewers/methodology.md
+      - XR Viewers: analysis/viewers/xr-viewers.md
+  - How-To:
+    - how-to/index.md
+    - Trainers:
+      - Inria: how-to/trainers/inria.md
+      - gsplat: how-to/trainers/gsplat.md
+      - OpenSplat: how-to/trainers/opensplat.md
+      - Nerfstudio: how-to/trainers/nerfstudio.md
+      - LichtFeld Studio: how-to/trainers/lichtfeldstudio.md
+    - Viewers:
+      - ninjamode: how-to/viewers/ninjamode.md
+      - clarte53: how-to/viewers/clarte53.md

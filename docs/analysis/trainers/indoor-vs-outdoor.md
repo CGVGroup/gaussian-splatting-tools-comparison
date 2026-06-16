@@ -266,7 +266,7 @@ In summary, **indoor reconstructions** tend to converge toward tightly bounded r
 
 Considering the structural differences observed between the indoor and outdoor reconstructions, the **indoor scene** is selected as the reference case for the **XR viewers analysis**, as it provides a more controlled, spatially bounded, and structurally consistent benchmark across pipelines.
 
-The analysis conducted on the reconstructions using the XR viewers is available here: [analysis/viewers/xr-viewers.md](https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison/blob/main/analysis/viewers/xr-viewers.md)
+The analysis conducted on the reconstructions using the XR viewers is available here: [analysis/viewers/xr-viewers.md](../viewers/xr-viewers.md)
 
 ---
 
