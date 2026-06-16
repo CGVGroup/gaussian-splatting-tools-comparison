@@ -12,9 +12,9 @@ All experiments were executed on the same hardware platform and following consis
 
 ## Contents
 
-- `indoor.md` — Indoor benchmark: training statistics, raw vs cleaned visual inspection, and cleaning impact.
-- `outdoor.md` — Outdoor benchmark: training statistics, raw vs cleaned visual inspection, and cleaning impact.
-- `indoor-vs-outdoor.md` — Cross-scenario analysis highlighting structural differences between indoor and outdoor reconstructions.
+- [Indoor](indoor.md) — Indoor benchmark: training statistics, raw vs cleaned visual inspection, and cleaning impact.
+- [Outdoor](outdoor.md) — Outdoor benchmark: training statistics, raw vs cleaned visual inspection, and cleaning impact.
+- [Indoor vs Outdoor](indoor-vs-outdoor.md) — Cross-scenario analysis highlighting structural differences between indoor and outdoor reconstructions.
 
 ---
 
@@ -46,7 +46,7 @@ The following open-source pipelines are benchmarked in both scenarios:
 - Nerfstudio
 - LichtFeld Studio (MCMC densification enabled)
 
-Run instructions are linked in the tables inside `indoor.md` and `outdoor.md`.
+Run instructions are linked in the tables inside [Indoor](indoor.md) and [Outdoor](outdoor.md).
 
 ---
 
@@ -118,18 +118,18 @@ Two scene categories are considered, each represented by a single benchmark scen
 ### Indoor
 
 A single confined environment captured in an indoor setting.  
-See: `indoor.md`.
+See: [Indoor](indoor.md).
 
 ### Outdoor
 
 A single large-scale environment captured in an outdoor setting.  
-See: `outdoor.md`.
+See: [Outdoor](outdoor.md).
 
 ---
 
 ## Cross-Scenario Analysis
 
-A dedicated comparison between indoor and outdoor results is provided in: `indoor-vs-outdoor.md`.
+A dedicated comparison between indoor and outdoor results is provided in: [Indoor vs Outdoor](indoor-vs-outdoor.md).
 
 This section discusses:
 
@@ -142,7 +142,7 @@ This section discusses:
 
 ## Relation to XR Viewer Evaluation
 
-This directory is complemented by the material in `analysis/viewers/`.
+This directory is complemented by the material in [XR Viewers](../../analysis/viewers/xr-viewers.md).
 
 This section evaluates reconstructions structure, density and post-processing impact, while the XR viewer analysis evaluates how the cleaned reconstructions behave when rendered in immersive environments.
 
@@ -154,9 +154,9 @@ Training → Cleaning → XR Visualization → Runtime Behavior
 
 ## How to Navigate the Results
 
-- Indoor reconstructions → `indoor.md`
-- Outdoor reconstructions → `outdoor.md`
-- Cross-scenario comparison → `indoor-vs-outdoor.md`
-- Viewer evaluations → `analysis/viewers/`
+- Indoor reconstructions → [Indoor](indoor.md)
+- Outdoor reconstructions → [Outdoor](outdoor.md)
+- Cross-scenario comparison → [Indoor vs Outdoor](indoor-vs-outdoor.md)
+- Viewer evaluations → [XR Viewers](../../analysis/viewers/xr-viewers.md)
 
 ---
