@@ -1,0 +1,2463 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.">
+      
+      
+      
+      
+        <link rel="prev" href="methodology.html">
+      
+      
+        <link rel="next" href="../../how-to/index.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>XR Viewers - Gaussian Splatting Tools Comparison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#xr-viewers-comparative-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Gaussian Splatting Tools Comparison" class="md-header__button md-logo" aria-label="Gaussian Splatting Tools Comparison" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gaussian Splatting Tools Comparison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              XR Viewers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CGVGroup/gaussian-splatting-tools-comparison" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gaussian-splatting-tools-comparison
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/index.html" class="md-tabs__link">
+          
+  
+  
+  Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../trainers/methodology.html" class="md-tabs__link">
+          
+  
+  
+  Analysis
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/index.html" class="md-tabs__link">
+          
+  
+  
+  How-To
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Gaussian Splatting Tools Comparison" class="md-nav__button md-logo" aria-label="Gaussian Splatting Tools Comparison" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gaussian Splatting Tools Comparison
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CGVGroup/gaussian-splatting-tools-comparison" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gaussian-splatting-tools-comparison
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/trainers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/viewers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/which-trainer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Which Trainer to Use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Analysis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Trainers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trainers/methodology.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trainers/indoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trainers/outdoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outdoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trainers/indoor-vs-outdoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor vs Outdoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Viewers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="methodology.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XR Viewers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="xr-viewers.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XR Viewers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-and-reconstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset and Reconstructions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-unity-vr-gaussian-splatting-ninjamode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection - Unity-VR-Gaussian-Splatting (ninjamode)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection - Unity-VR-Gaussian-Splatting (ninjamode)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-evaluation-unity-vr-gaussian-splatting-ninjamode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection Evaluation - Unity-VR-Gaussian-Splatting (ninjamode)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-gaussiansplattingvrviewerunity-clarte53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-evaluation-gaussiansplattingvrviewerunity-clarte53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection Evaluation - GaussianSplattingVRViewerUnity (clarte53)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-viewer-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Viewer Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trainer-performance-analysis-protocol-unity-vr-gaussian-splatting-ninjamode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trainer Performance Analysis Protocol - Unity-VR-Gaussian-Splatting (ninjamode)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-To
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Trainers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/inria.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inria
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/gsplat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gsplat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/opensplat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenSplat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/nerfstudio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nerfstudio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/lichtfeldstudio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LichtFeld Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Viewers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/viewers/ninjamode.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ninjamode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/viewers/clarte53.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    clarte53
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-and-reconstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset and Reconstructions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-unity-vr-gaussian-splatting-ninjamode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection - Unity-VR-Gaussian-Splatting (ninjamode)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection - Unity-VR-Gaussian-Splatting (ninjamode)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-evaluation-unity-vr-gaussian-splatting-ninjamode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection Evaluation - Unity-VR-Gaussian-Splatting (ninjamode)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-gaussiansplattingvrviewerunity-clarte53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-evaluation-gaussiansplattingvrviewerunity-clarte53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection Evaluation - GaussianSplattingVRViewerUnity (clarte53)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-viewer-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Viewer Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trainer-performance-analysis-protocol-unity-vr-gaussian-splatting-ninjamode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trainer Performance Analysis Protocol - Unity-VR-Gaussian-Splatting (ninjamode)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="xr-viewers-comparative-analysis">XR Viewers Comparative Analysis</h1>
+<p>This document presents a comparative analysis of two tools for XR visualization of Gaussian Splatting models, evaluated under identical hardware conditions using models trained from a single dataset across five different training pipelines.</p>
+<hr />
+<h2 id="dataset-and-reconstructions">Dataset and Reconstructions</h2>
+<p><strong>Five different reconstructions</strong> of the same <strong>indoor environment</strong> were used for this analysis.  </p>
+<p>They were generated from the same dataset of <strong>151 frames</strong> using the following open-source Gaussian Splatting trainers: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio, LichtFeld Studio.</p>
+<p>The decision to use an indoor environment for viewer analysis is based on the comparative observations reported in: <a href="../trainers/indoor-vs-outdoor.html">analysis/trainers/indoor-vs-outdoor.md</a></p>
+<p>All reconstructions were cleaned prior to evaluation to ensure consistency across viewers.</p>
+<p>Detailed information about the reconstructions, the cleaning procedures applied and their impact on the exported <code>.ply</code> files  can be found in the following document: <a href="../trainers/indoor.html">analysis/trainers/indoor.md</a></p>
+<hr />
+<h2 id="visual-inspection-protocol">Visual Inspection Protocol</h2>
+<p>A qualitative visual inspection was conducted to compare the rendering behavior of <strong>Unity-VR-Gaussian-Splatting (ninjamode)</strong> and <strong>GaussianSplattingVRViewerUnity (clarte53)</strong>.</p>
+<p>The inspection was conducted on a system running <strong>Windows 11</strong> equipped with a <strong>single NVIDIA RTX 4060 GPU</strong> and a <strong>Meta Quest 3</strong> headset.</p>
+<p>All assessments were performed using a 5-point ordinal scale (1–5), where:</p>
+<ul>
+<li><strong>1</strong> indicates severe and clearly visible artifacts,</li>
+<li><strong>3</strong> indicates moderate but tolerable instability,</li>
+<li><strong>5</strong> indicates stable and visually coherent rendering.</li>
+</ul>
+<p>The evaluation focused on the following criteria:</p>
+<ul>
+<li><strong>Surface Solidity</strong> — geometric continuity and absence of holes or fragmentation.</li>
+<li><strong>Motion Parallax Stability</strong> — depth consistency during head movement.</li>
+<li><strong>Edge Stability</strong> — absence of flickering or shimmering contours.</li>
+<li><strong>Layering / Transparency Behavior</strong> — correct depth ordering and occlusion handling.</li>
+<li><strong>Near-Object Robustness</strong> — rendering stability during close inspection.</li>
+</ul>
+<hr />
+<h2 id="visual-inspection-unity-vr-gaussian-splatting-ninjamode">Visual Inspection - Unity-VR-Gaussian-Splatting (ninjamode)</h2>
+<p>The following section reports the results of the visual inspection conducted on Unity-VR-Gaussian-Splatting (ninjamode).</p>
+<p>Detailed setup and execution instructions for Unity-VR-Gaussian-Splatting (ninjamode) can be found in: <a href="../../how-to/viewers/ninjamode.html">How-To</a></p>
+<details>
+<summary>Expand to view per-trainer inspection details and evaluation scores.</summary>
+<p><br></p>
+<h3 id="inria-gaussian-splatting">Inria gaussian-splatting</h3>
+<p>Surfaces appear solid and structurally coherent across walls, furniture, and floors, with no visible holes or fragmentation. Black spike-like artifacts are observed on the table during head rotation.  When inspecting objects at extremely close range, slight surface compression is observed. </p>
+<hr />
+<h3 id="gsplat">gsplat</h3>
+<p>Surfaces remain stable but appear slightly more fluid compared to Inria gaussian-splatting, and similar spike-like artifacts appear during movement. Close-range inspection reveals visible splats at extreme proximity. </p>
+<hr />
+<h3 id="opensplat">OpenSplat</h3>
+<p>Surfaces appear moderately fluid, and colored splats located behind walls become slightly visible during movement. Contours remain generally stable, and near-object inspection behaves slightly better than in Inria gaussian-splatting and gsplat. </p>
+<hr />
+<h3 id="nerfstudio">Nerfstudio</h3>
+<p>There are visible holes in walls and structural discontinuities, while the floor exhibits transparency artifacts. Splats are more visible on near objects than in the previously evaluated pipelines.</p>
+<hr />
+<h3 id="lichtfeld-studio">LichtFeld Studio</h3>
+<p>Some brown splats and other artifacts appear projected onto background walls. Diffuse vibration is visible across the entire scene during movement and rotation. The scene appears to slide or drag during head motion. Contours may vibrate, possibly related to global motion instability. </p>
+<hr />
+<h2 id="visual-inspection-evaluation-unity-vr-gaussian-splatting-ninjamode">Visual Inspection Evaluation - Unity-VR-Gaussian-Splatting (ninjamode)</h2>
+<table>
+<thead>
+<tr>
+<th>Trainer</th>
+<th>Surface Solidity</th>
+<th>Motion Parallax Stability</th>
+<th>Edge Stability</th>
+<th>Layering / Transparency</th>
+<th>Near-Object Robustness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</details>
+<h2 id="observations">Observations</h2>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> provides the most stable reconstruction in Unity-VR-Gaussian-Splatting (ninjamode), outperforming the other trainers in terms of surface solidity and overall coherence, with only minor spike-like artifacts during rotation.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> performs similarly to Inria gaussian-splatting but with slightly reduced surface rigidity and occasional spike-like artifacts during movement, positioning it just below Inria gaussian-splatting in overall structural stability.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> maintains stable contours and good near-object robustness comparable to Inria gaussian-splatting and gsplat, but differs in showing clearer layering instability during motion, with colored splats becoming slightly visible behind walls.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> departs more significantly from the previous trainers, exhibiting visible holes, structural discontinuities, and floor transparency artifacts, resulting in notably reduced geometric solidity and transparency consistency.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> presents the strongest motion-related instability among the trainers, with diffuse vibration, dragging during movement and rotation, and brown splats projected onto walls.</p>
+</li>
+</ul>
+<hr />
+<h2 id="visual-inspection-gaussiansplattingvrviewerunity-clarte53">Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)</h2>
+<p>The following section reports the results of the visual inspection conducted on GaussianSplattingVRViewerUnity (clarte53).</p>
+<p>Detailed setup and execution instructions for GaussianSplattingVRViewerUnity (clarte53) can be found in: <a href="../../how-to/viewers/clarte53.html">How-To</a></p>
+<details>
+<summary>Expand to view per-trainer inspection details and evaluation scores.</summary>
+<p><br></p>
+<h3 id="inria-gaussian-splatting_1">Inria gaussian-splatting</h3>
+<p>Surfaces appear solid and structurally coherent across walls, furniture, and floors. The scene exhibits slowness during head movement and rotation, producing a dragging effect and visual artifacts that seem related to view stability rather than splat noise.<br />
+Contours appear slightly vibratory, and the entire scene gives the impression of vibrating during motion. A sensation of parallax instability is perceived during movement, and a very slight transparency is noticeable in some areas.  </p>
+<hr />
+<h3 id="gsplat_1">gsplat</h3>
+<p>Surfaces are generally stable but appear slightly fluid during movement and head rotation. Walls exhibit slight but visible transparency. A sensation of parallax instability is perceived during movement, as observed in Inria gaussian-splatting.  </p>
+<hr />
+<h3 id="opensplat_1">OpenSplat</h3>
+<p>Surfaces appear moderately fluid, and transparency artifacts are visible during movement. The scene exhibits slowness during head motion, as observed in Inria gaussian-splatting and gsplat, affecting visual coherence. Contours remain generally stable.  </p>
+<hr />
+<h3 id="nerfstudio_1">Nerfstudio</h3>
+<p>Walls appear perforated, with visible holes and structural discontinuities. The floor exhibits transparency artifacts, and splats are clearly visible on near objects. The overall reconstruction appears geometrically degraded, while it provides better motion stability than the previously evaluated trainers.</p>
+<hr />
+<h3 id="lichtfeld-studio_1">LichtFeld Studio</h3>
+<p>The scene runs extremely slowly, although the static visual quality appears high. Brown artifacts are present, while contours appear well defined. The scene drags noticeably during head motion, leading to severe motion instability and usability limitations.</p>
+<hr />
+<h2 id="visual-inspection-evaluation-gaussiansplattingvrviewerunity-clarte53">Visual Inspection Evaluation - GaussianSplattingVRViewerUnity (clarte53)</h2>
+<table>
+<thead>
+<tr>
+<th>Trainer</th>
+<th>Surface Solidity</th>
+<th>Motion Parallax Stability</th>
+<th>Edge Stability</th>
+<th>Layering / Transparency</th>
+<th>Near-Object Robustness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td>3</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</details>
+<h2 id="observations_1">Observations</h2>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> presents strong geometric solidity but exhibits motion slowness, dragging effects, slight contour vibration, perceived parallax instability, and minor transparency artifacts during movement.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> presents generally stable surfaces but shows noticeable motion instability and slight wall transparency in some areas, with parallax instability perceived during head movement similarly to Inria gaussian-splatting.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> presents acceptable geometric solidity and generally stable contours, yet displays recurring transparency artifacts and motion-related instability similar to Inria gaussian-splatting and gsplat.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> exhibits perforated walls, structural discontinuities, and floor transparency artifacts, resulting in strong structural degradation despite relatively better motion stability compared to the other trainers.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> provides high static visual quality with well-defined contours but suffers from extreme slowness, dragging during motion, and severe motion instability affecting usability.</p>
+</li>
+</ul>
+<hr />
+<h2 id="cross-viewer-comparison">Cross-Viewer Comparison</h2>
+<p>The following section directly compares the rendering behavior of the two XR viewers.</p>
+<ul>
+<li><strong>Structural solidity</strong>:</li>
+<li>Both viewers preserve strong geometric solidity for <strong>Inria gaussian-splatting</strong>, though Unity-VR-Gaussian-Splatting (ninjamode) maintains more stable surfaces with only minor spike-like artifacts, while GaussianSplattingVRViewerUnity (clarte53) introduces motion slowness, dragging, slight contour vibration, and perceived parallax instability.</li>
+<li>For <strong>gsplat</strong> and <strong>OpenSplat</strong>, geometric solidity remains acceptable in both viewers. In Unity-VR-Gaussian-Splatting (ninjamode), instability is mainly limited to layering artifacts or slight surface fluidity, while in GaussianSplattingVRViewerUnity (clarte53), instability is more closely linked to motion slowness, dragging, transparency, and parallax inconsistency.</li>
+<li>For <strong>Nerfstudio</strong>, both viewers expose structural weaknesses such as holes and transparency artifacts.</li>
+<li>
+<p>For <strong>LichtFeld Studio</strong>, instability appears in both viewers. Unity-VR-Gaussian-Splatting (ninjamode) shows diffuse vibration and depth ordering issues, whereas GaussianSplattingVRViewerUnity (clarte53) is dominated by extreme slowness and dragging.</p>
+</li>
+<li>
+<p><strong>Motion Behavior and Parallax Stability</strong>:</p>
+</li>
+<li><strong>Unity-VR-Gaussian-Splatting (ninjamode)</strong> generally maintains stable motion across trainers, with artifacts mostly localized to specific reconstructions.</li>
+<li>
+<p><strong>GaussianSplattingVRViewerUnity (clarte53)</strong> consistently exhibits motion slowness, dragging, and visual instability. Perceived parallax inconsistency and slight contour vibration recurrently reduce visual coherence during head movement.</p>
+</li>
+<li>
+<p><strong>Visual Artifacts</strong>:</p>
+</li>
+<li>In <strong>Unity-VR-Gaussian-Splatting (ninjamode)</strong>, artifacts are primarily related to spike-like splats and layering instability.</li>
+<li>
+<p>In <strong>GaussianSplattingVRViewerUnity (clarte53)</strong>, artifacts are more strongly associated with motion instability, dragging, parallax inconsistency, transparency, and overall scene slowness.</p>
+</li>
+<li>
+<p><strong>Usability and Comfort</strong>:</p>
+</li>
+<li><strong>GaussianSplattingVRViewerUnity (clarte53)</strong> proved more difficult to use overall due to visual instability, dragging, and non-stable parallax, resulting in a less comfortable immersive experience, while <strong>Unity-VR-Gaussian-Splatting (ninjamode)</strong> provided a more stable and comfortable overall experience.</li>
+</ul>
+<hr />
+<h2 id="trainer-performance-analysis-protocol-unity-vr-gaussian-splatting-ninjamode">Trainer Performance Analysis Protocol - Unity-VR-Gaussian-Splatting (ninjamode)</h2>
+<p>After completing the comparative evaluation of the two XR viewers, <strong>Unity-VR-Gaussian-Splatting (ninjamode)</strong> was selected for further performance analysis due to its more stable runtime behavior and overall more comfortable immersive experience.  </p>
+<p>Quantitative measurements were therefore conducted to evaluate the runtime performance of the different training pipelines when rendered within this viewer.</p>
+<p>The values reported in the following table correspond to the average of two acquisition runs. For each scene, measurements were recorded after a 5-second load time, followed by a 30-second performance acquisition window.</p>
+<hr />
+<h2 id="quantitative-results">Quantitative Results</h2>
+<details>
+<summary>Expand to view runtime performance table and charts.</summary>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Trainer</th>
+<th style="text-align: right;">Avg FPS</th>
+<th style="text-align: right;">Avg Frame Time (ms)</th>
+<th style="text-align: right;">Avg Max Frame Time (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td style="text-align: right;">34.5</td>
+<td style="text-align: right;">29.00</td>
+<td style="text-align: right;">52.92</td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td style="text-align: right;">32.0</td>
+<td style="text-align: right;">31.30</td>
+<td style="text-align: right;">56.88</td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td style="text-align: right;">37.8</td>
+<td style="text-align: right;">26.62</td>
+<td style="text-align: right;">51.43</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td style="text-align: right;">65.0</td>
+<td style="text-align: right;">15.39</td>
+<td style="text-align: right;">30.89</td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">58.35</td>
+<td style="text-align: right;">82.62</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Avg FPS</strong> indicates average frames per second measured during the 30 s acquisition window</li>
+<li><strong>Avg Frame Time (ms)</strong> indicates the mean frame rendering time</li>
+<li><strong>Avg Max Frame Time (ms)</strong> indicates the mean peak frame time observed during acquisition</li>
+</ul>
+<hr />
+<h2 id="quantitative-visualizations">Quantitative Visualizations</h2>
+<pre class="mermaid"><code>xychart-beta
+    title "Unity-VR-GS (ninjamode) - Average FPS"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "FPS" 0 --&gt; 70
+    bar [34.5,32.0,37.8,65.0,17.2]</code></pre>
+<pre class="mermaid"><code>xychart-beta
+    title "Unity-VR-GS (ninjamode) - Frame Time"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "Milliseconds" 0 --&gt; 90
+    line [29.00,31.30,26.62,15.39,58.35]
+    line [52.92,56.88,51.43,30.89,82.62]</code></pre>
+<p><strong>Legend</strong>: lighter line = Avg Frame Time (ms), darker line = Avg Max Frame Time (ms)</p>
+<hr />
+</details>
+<h2 id="observations_2">Observations</h2>
+<ul>
+<li>
+<p><strong>Nerfstudio</strong> achieves the highest average FPS (65.0) and the lowest average frame time (15.39 ms), indicating the strongest real-time performance among the evaluated trainers.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> records the lowest average FPS (17.2) and the highest average frame time (58.35 ms), along with the highest maximum frame time (82.62 ms), indicating the weakest runtime performance.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> provides the second-highest average FPS (37.8) and the second-lowest frame time (26.62 ms), outperforming Inria gaussian-splatting and gsplat in rendering speed.</p>
+</li>
+<li>
+<p><strong>Inria gaussian-splatting</strong> and <strong>gsplat</strong> show comparable performance, with Inria gaussian-splatting achieving slightly higher FPS and lower maximum frame time peaks.</p>
+</li>
+</ul>
+<hr />
+<h2 id="conclusions">Conclusions</h2>
+<p>Based on the quantitative results reported in the previous table and the qualitative scores presented in the <strong>Visual Inspection Evaluation — Unity-VR-Gaussian-Splatting (ninjamode)</strong> table, the overall selection falls on <strong>Inria gaussian-splatting</strong> as the most balanced solution in terms of visual stability and runtime performance.</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li>
+<p><strong>Unity-VR-Gaussian-Splatting (ninjamode)</strong> provides more stable motion handling and a more comfortable immersive experience, with artifacts generally limited to reconstruction-specific limitations.</p>
+</li>
+<li>
+<p><strong>GaussianSplattingVRViewerUnity (clarte53)</strong> preserves static detail but consistently exhibits motion slowness, dragging effects, and perceived parallax instability, reducing visual coherence and comfort.</p>
+</li>
+<li>
+<p>Quantitatively within ninjamode, <strong>Nerfstudio</strong> achieves the highest FPS and lowest frame time.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> delivers high rendering speed with balanced frame timing, while <strong>Inria gaussian-splatting</strong> offers a stable compromise between visual solidity and runtime performance.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> shows the weakest runtime behavior, with low FPS and high frame time variability.</p>
+</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="methodology.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Methodology">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Methodology
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../how-to/index.html" class="md-footer__link md-footer__link--next" aria-label="Next: How-To Guides">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                How-To Guides
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

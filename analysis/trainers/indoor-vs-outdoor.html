@@ -1,0 +1,2277 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.">
+      
+      
+      
+      
+        <link rel="prev" href="outdoor.html">
+      
+      
+        <link rel="next" href="../viewers/methodology.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Indoor vs Outdoor - Gaussian Splatting Tools Comparison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#indoor-vs-outdoor-comparative-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Gaussian Splatting Tools Comparison" class="md-header__button md-logo" aria-label="Gaussian Splatting Tools Comparison" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gaussian Splatting Tools Comparison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Indoor vs Outdoor
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CGVGroup/gaussian-splatting-tools-comparison" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gaussian-splatting-tools-comparison
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/index.html" class="md-tabs__link">
+          
+  
+  
+  Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="methodology.html" class="md-tabs__link">
+          
+  
+  
+  Analysis
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/index.html" class="md-tabs__link">
+          
+  
+  
+  How-To
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Gaussian Splatting Tools Comparison" class="md-nav__button md-logo" aria-label="Gaussian Splatting Tools Comparison" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gaussian Splatting Tools Comparison
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CGVGroup/gaussian-splatting-tools-comparison" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gaussian-splatting-tools-comparison
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/trainers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/viewers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/which-trainer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Which Trainer to Use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Analysis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Trainers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="methodology.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="indoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="outdoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outdoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor vs Outdoor
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="indoor-vs-outdoor.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor vs Outdoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope-of-the-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope of the Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-benchmarking-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Benchmarking Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantitative Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-reconstructions-structural-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw Reconstructions: Structural Differences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Raw Reconstructions: Structural Differences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indoor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indoor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outdoor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outdoor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleaning-difficulty-and-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleaning Difficulty and Strategies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cleaning Difficulty and Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indoor-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indoor Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outdoor-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outdoor Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-impact-of-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Impact of Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qualitative-impact-of-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qualitative Impact of Cleaning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qualitative Impact of Cleaning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-reconstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw Reconstructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Viewers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../viewers/methodology.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../viewers/xr-viewers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XR Viewers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-To
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Trainers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/inria.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inria
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/gsplat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gsplat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/opensplat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenSplat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/nerfstudio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nerfstudio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/lichtfeldstudio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LichtFeld Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Viewers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/viewers/ninjamode.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ninjamode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/viewers/clarte53.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    clarte53
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope-of-the-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope of the Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-benchmarking-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Benchmarking Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantitative Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-reconstructions-structural-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw Reconstructions: Structural Differences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Raw Reconstructions: Structural Differences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indoor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indoor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outdoor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outdoor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleaning-difficulty-and-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleaning Difficulty and Strategies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cleaning Difficulty and Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indoor-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indoor Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outdoor-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outdoor Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-impact-of-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Impact of Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qualitative-impact-of-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qualitative Impact of Cleaning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qualitative Impact of Cleaning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-reconstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw Reconstructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After Cleaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="indoor-vs-outdoor-comparative-analysis">Indoor vs Outdoor — Comparative Analysis</h1>
+<p>This document compares the behavior of the evaluated Gaussian Splatting pipelines across two different scene categories: an indoor and an outdoor setting.
+The comparison focuses on differences in:</p>
+<ul>
+<li>raw reconstruction structure,</li>
+<li>background modeling,</li>
+<li>artifact distribution,</li>
+<li>cleaning difficulty,</li>
+<li>quantitative impact of post-processing,</li>
+<li>emerging trends across environments.</li>
+</ul>
+<p>All results discussed here are derived from the detailed analyses reported in <code>indoor.md</code> and <code>outdoor.md</code>.</p>
+<hr />
+<h2 id="scope-of-the-comparison">Scope of the Comparison</h2>
+<p>The same five pipelines—Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio, and LichtFeld Studio—were evaluated on one <strong>indoor scene</strong> and one <strong>outdoor scene</strong>.</p>
+<p>For both scenarios:</p>
+<ul>
+<li>training was executed on the <strong>same hardware platform</strong>,</li>
+<li>reconstructions were <strong>exported</strong> to <code>.ply</code> format,</li>
+<li>a <strong>quantitative benchmarking analysis</strong> was conducted,</li>
+<li><strong>qualitative inspection</strong> and <strong>post-processing</strong> were performed using <strong>SuperSplat</strong>,</li>
+<li>similar <strong>cleaning principles</strong> were applied, with parameters adapted to each scene.</li>
+</ul>
+<p>The objective of this comparison is to highlight how each pipeline behaves when confronted with markedly different spatial layouts.</p>
+<hr />
+<h2 id="quantitative-benchmarking-comparison">Quantitative Benchmarking Comparison</h2>
+<details>
+<summary>Expand to view cross-scenario results table and charts.</summary>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th style="text-align: right;">Gaussians Indoor</th>
+<th style="text-align: right;">Gaussians Outdoor</th>
+<th style="text-align: right;">Size Indoor (MB)</th>
+<th style="text-align: right;">Size Outdoor (MB)</th>
+<th style="text-align: right;">Training Indoor (min)</th>
+<th style="text-align: right;">Training Outdoor (min)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td style="text-align: right;">955,819</td>
+<td style="text-align: right;">777,067</td>
+<td style="text-align: right;">226.1</td>
+<td style="text-align: right;">183.8</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td style="text-align: right;">1,265,239</td>
+<td style="text-align: right;">1,031,707</td>
+<td style="text-align: right;">284.8</td>
+<td style="text-align: right;">232.2</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td style="text-align: right;">510,870</td>
+<td style="text-align: right;">589,291</td>
+<td style="text-align: right;">120.8</td>
+<td style="text-align: right;">139.4</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td style="text-align: right;">170,150</td>
+<td style="text-align: right;">197,545</td>
+<td style="text-align: right;">40.2</td>
+<td style="text-align: right;">46.7</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td style="text-align: right;">1,000,000</td>
+<td style="text-align: right;">1,000,000</td>
+<td style="text-align: right;">236.5</td>
+<td style="text-align: right;">236.5</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">50</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quantitative-visualizations">Quantitative Visualizations</h2>
+<pre class="mermaid"><code>xychart-beta
+    title "Indoor vs Outdoor — Raw Gaussian Count"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "Gaussians" 0 --&gt; 1400000
+    line [955819,1265239,510870,170150,1000000]
+    line [777067,1031707,589291,197545,1000000]</code></pre>
+<p><strong>Legend:</strong> lighter line = indoor, darker line = outdoor</p>
+<pre class="mermaid"><code>xychart-beta
+    title "Indoor vs Outdoor — Training Time"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "minutes" 0 --&gt; 140
+    line [120,50,60,30,60]
+    line [60,45,50,25,50]</code></pre>
+<p><strong>Legend:</strong> lighter line = indoor, darker line = outdoor</p>
+</details>
+<h3 id="observations">Observations</h3>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> produces fewer Gaussians and a smaller model for the outdoor scenario, together with a substantially shorter training time.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> remains the densest pipeline in both scenarios, with consistently large models and only limited differences between indoor and outdoor.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> increases both Gaussian count and file size for the outdoor scenario.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> remains the most compact pipeline in both settings, although the outdoor scene leads to a slightly larger model.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> reaches the same Gaussian budget in both scenarios, but trains faster on the outdoor one.</p>
+</li>
+</ul>
+<hr />
+<h2 id="raw-reconstructions-structural-differences">Raw Reconstructions: Structural Differences</h2>
+<p>Clear structural differences emerge between indoor and outdoor raw reconstructions.</p>
+<h3 id="indoor">Indoor</h3>
+<p>Indoor scenes are characterized by:</p>
+<ul>
+<li>compact spatial envelopes,</li>
+<li>well-defined scene boundaries,</li>
+<li>limited far-field geometry,</li>
+<li>peripheral Gaussians not associated with interior geometry,</li>
+<li>streak artifacts mostly concentrated near the main structure.</li>
+</ul>
+<p>Across pipelines, raw indoor reconstructions tend to occupy <strong>relatively constrained volumes</strong>, making spurious splats clusters easier to identify.</p>
+<h3 id="outdoor">Outdoor</h3>
+<p>Outdoor scenes present fundamentally different challenges:</p>
+<ul>
+<li>large spatial extents,</li>
+<li>far-field environmental geometry corresponding to sky and vegetation,</li>
+<li>peripheral halos of Gaussians around the main structure,</li>
+<li>elongated streak artifacts extending from the core,</li>
+<li>detached background elements that may still represent valid scene content.</li>
+</ul>
+<p>Compared to indoor cases, outdoor raw reconstructions consistently exhibit <strong>wider spatial footprints</strong> and <strong>more complex splats distributions</strong>.</p>
+<hr />
+<h2 id="cleaning-difficulty-and-strategies">Cleaning Difficulty and Strategies</h2>
+<p>The qualitative differences between indoor and outdoor scenes are reflected directly in the <strong>complexity of post-processing</strong>.</p>
+<h3 id="indoor-cleaning">Indoor Cleaning</h3>
+<p>Indoor cleaning operations were <strong>generally straightforward</strong>:</p>
+<ul>
+<li>the scene core was easy to localize,</li>
+<li>bounding volumes could be tightly defined,</li>
+<li>aggressive spatial restriction was often feasible,</li>
+<li>many peripheral Gaussians could be removed without damaging structural elements,</li>
+<li>manual refinement was limited and primarily used for final inspection.</li>
+</ul>
+<p>As a result, large portions of removable geometry could be pruned confidently.</p>
+<h3 id="outdoor-cleaning">Outdoor Cleaning</h3>
+<p>Outdoor cleaning proved substantially <strong>more challenging</strong>:</p>
+<ul>
+<li>far-field Gaussians frequently corresponded to valid environmental elements,</li>
+<li>background geometry often formed detached clusters rather than continuous shells,</li>
+<li>sky-related streaks and large surface Gaussians required careful handling,</li>
+<li>aggressive spatial pruning risked removing legitimate scene content,</li>
+<li>manual inspection and selective filtering were critical at later stages.</li>
+</ul>
+<p>Cleaning strategies therefore remained conservative, prioritizing preservation of environmental context over maximal size reduction.</p>
+<hr />
+<h2 id="quantitative-impact-of-cleaning">Quantitative Impact of Cleaning</h2>
+<details>
+<summary>Expand to view cleaning impact comparison table and chart.</summary>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th style="text-align: right;">Δ Gaussians Indoor (%)</th>
+<th style="text-align: right;">Δ Size Indoor (%)</th>
+<th style="text-align: right;">Δ Gaussians Outdoor (%)</th>
+<th style="text-align: right;">Δ Size Outdoor (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td style="text-align: right;">−45.8</td>
+<td style="text-align: right;">−45.8</td>
+<td style="text-align: right;">−52.5</td>
+<td style="text-align: right;">−52.4</td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td style="text-align: right;">−45.4</td>
+<td style="text-align: right;">−45.4</td>
+<td style="text-align: right;">−46.1</td>
+<td style="text-align: right;">−46.1</td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td style="text-align: right;">−21.2</td>
+<td style="text-align: right;">−21.2</td>
+<td style="text-align: right;">−21.3</td>
+<td style="text-align: right;">−21.3</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td style="text-align: right;">−25.4</td>
+<td style="text-align: right;">−25.4</td>
+<td style="text-align: right;">−13.5</td>
+<td style="text-align: right;">−13.5</td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td style="text-align: right;">−20.0</td>
+<td style="text-align: right;">−20.0</td>
+<td style="text-align: right;">−58.4</td>
+<td style="text-align: right;">−58.3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quantitative-visualizations_1">Quantitative Visualizations</h2>
+<pre class="mermaid"><code>xychart-beta
+    title "Indoor vs Outdoor — Cleaning Impact (Δ Gaussians %)"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "% removed" 0 --&gt; 65
+    line [45.8,45.4,21.2,25.4,20.0]
+    line [52.5,46.1,21.3,13.5,58.4]</code></pre>
+<p><strong>Legend:</strong> lighter line = indoor, darker line = outdoor</p>
+</details>
+<h2 id="observations_1">Observations</h2>
+<p>The numerical effect of post-processing differs markedly between indoor and outdoor settings.</p>
+<p>In <strong>indoor reconstructions</strong>:</p>
+<ul>
+<li><strong>Inria gaussian-splatting</strong> and <strong>gsplat</strong> experience the largest reductions in Gaussian count and file size (≈ −45%),</li>
+<li><strong>OpenSplat</strong> and <strong>LichtFeld Studio</strong> show more moderate decreases (≈ −21% and ≈ −20%),</li>
+<li><strong>Nerfstudio</strong> occupies an intermediate regime (≈ −25%).</li>
+</ul>
+<p>In <strong>outdoor reconstructions</strong>:</p>
+<ul>
+<li>reductions are more variable across pipelines, ranging from limited (<strong>Nerfstudio</strong>, ≈ −13%) to very large (<strong>LichtFeld Studio</strong>, ≈ −58%),</li>
+<li><strong>Inria gaussian-splatting</strong> exhibits a substantial reduction after cleaning (≈ −52%),</li>
+<li><strong>gsplat</strong> also undergoes a strong reduction (≈ −46%),</li>
+<li><strong>OpenSplat</strong> again shows a moderate reduction (≈ −21%).</li>
+</ul>
+<p>These results confirm that post-processing efficiency depends strongly on the spatial organization of the raw reconstruction.</p>
+<p>Across environments, <strong>LichtFeld Studio</strong> and <strong>Inria gaussian-splatting</strong> are pruned more aggressively in outdoor reconstructions than in the indoor reconstructions, while <strong>gsplat</strong> and <strong>OpenSplat</strong> show smaller cross-scenario differences.</p>
+<p><strong>Nerfstudio</strong> behaves differently across settings: it undergoes moderate pruning in the indoor scene but only limited reductions in the outdoor scene, suggesting that a larger fraction of its outdoor Gaussians contribute to retained background geometry and cannot be safely removed without degrading scene completeness.</p>
+<hr />
+<h2 id="qualitative-impact-of-cleaning">Qualitative Impact of Cleaning</h2>
+<p>Visual inspection across the two scenarios reveals systematic differences in how the same pipelines distribute Gaussians and how effectively artifacts can be controlled.</p>
+<h3 id="raw-reconstructions">Raw Reconstructions</h3>
+<p>Across tools, the indoor scenes generally produced more spatially constrained raw outputs than outdoor scenes:</p>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> remains relatively compact in both environments, but the outdoor reconstruction contains more detached peripheral elements and streak artifacts than indoors.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> remains relatively compact in both environments, but the outdoor scene includes detached environmental splats and more far-field streaks extending from the scene core.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> produces streak artifacts and peripheral clusters in both scenarios; however, in the outdoor scene these form broader halos compared to the indoor case.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> is characterized by sparse central reconstructions in both environments, with a wide halo of streaks, spike-like structures, and clusters of splats.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> reconstructs dense scene cores in both settings, with a large spatial footprint and peripheral halo (stronger in the outdoor reconstructuion).</p>
+</li>
+</ul>
+<p>Overall, outdoor raw reconstructions systematically contain larger far-field regions, halos around the scene core, and the sky reconstruction is a dominant source of large Gaussians and streak artifacts.</p>
+<hr />
+<h3 id="after-cleaning">After Cleaning</h3>
+<p>Post-processing reduces clutter in both scenarios, but different residual patterns remain:</p>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> converges to a compact reconstruction in both environments, though the outdoor scene retains more peripheral streaks than the indoor scene.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> becomes tightly focused after cleaning in the indoor scene, whereas the outdoor reconstruction still preserves some streak artifacts near the core and in sky-related regions.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> achieves strong spatial compaction in both cases, but the outdoor scene continues to show more significant residual elongated structures than the indoor one.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> transitions to very tightly cropped reconstructions in both environments, with the outdoor scene still retaining peripheral remnants and streaks.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> shows the largest qualitative contrast: while the indoor scene becomes compact with only faint residual halos, the outdoor scene preserves a dense core surrounded by thin but persistent peripheral halos.</p>
+</li>
+</ul>
+<p>In summary, <strong>indoor reconstructions</strong> tend to converge toward tightly bounded reconstructions after cleaning across pipelines, whereas <strong>outdoor reconstructions</strong> consistently preserve larger envelopes and detached structures, reflecting the increased complexity of environmental geometry and sky regions.</p>
+<hr />
+<h2 id="conclusions">Conclusions</h2>
+<p>Considering the structural differences observed between the indoor and outdoor reconstructions, the <strong>indoor scene</strong> is selected as the reference case for the <strong>XR viewers analysis</strong>, as it provides a more controlled, spatially bounded, and structurally consistent benchmark across pipelines.</p>
+<p>The analysis conducted on the reconstructions using the XR viewers is available here: <a href="../viewers/xr-viewers.html">analysis/viewers/xr-viewers.md</a></p>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Outdoor reconstructions</strong> show <strong>larger far-field regions</strong> and <strong>more complex splats distributions</strong> than indoor reconstructions.</li>
+<li><strong>Indoor cleaning</strong> is generally <strong>more straightforward</strong> due to clearer scene boundaries and a more localized scene core.</li>
+<li><strong>Outdoor cleaning</strong> requires <strong>more cautious and selective pruning</strong>, since far-field Gaussians may correspond to <strong>valid environmental elements</strong> (e.g., sky and vegetation).</li>
+<li>Quantitatively, <strong>outdoor post-processing amplifies inter-method variability</strong> (e.g., very large reductions for <strong>LichtFeld Studio</strong> and <strong>Inria gaussian-splatting</strong>, but limited reductions for <strong>Nerfstudio</strong>), while some pipelines (e.g., <strong>OpenSplat</strong>) show similar reduction rates across environments.</li>
+<li>Combining indoor and outdoor benchmarks highlights tool behaviors that would not be visible when evaluating a single scene category.</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="outdoor.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Outdoor">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Outdoor
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../viewers/methodology.html" class="md-footer__link md-footer__link--next" aria-label="Next: Methodology">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Methodology
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2510 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.">
+      
+      
+      
+      
+        <link rel="prev" href="methodology.html">
+      
+      
+        <link rel="next" href="outdoor.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Indoor - Gaussian Splatting Tools Comparison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#indoor-dataset-benchmark-results-and-visual-inspection" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Gaussian Splatting Tools Comparison" class="md-header__button md-logo" aria-label="Gaussian Splatting Tools Comparison" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gaussian Splatting Tools Comparison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Indoor
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CGVGroup/gaussian-splatting-tools-comparison" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gaussian-splatting-tools-comparison
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/index.html" class="md-tabs__link">
+          
+  
+  
+  Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="methodology.html" class="md-tabs__link">
+          
+  
+  
+  Analysis
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/index.html" class="md-tabs__link">
+          
+  
+  
+  How-To
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Gaussian Splatting Tools Comparison" class="md-nav__button md-logo" aria-label="Gaussian Splatting Tools Comparison" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gaussian Splatting Tools Comparison
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CGVGroup/gaussian-splatting-tools-comparison" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gaussian-splatting-tools-comparison
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/trainers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/viewers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/which-trainer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Which Trainer to Use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Analysis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Trainers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="methodology.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="indoor.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experimental Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-evaluation-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Evaluation Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantitative Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qualitative-evaluation-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qualitative Evaluation Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-before-cleaning-raw-reconstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection — Before Cleaning (Raw Reconstructions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection — Before Cleaning (Raw Reconstructions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-visual-findings-before-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Visual Findings (Before Cleaning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scene-cleaning-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scene Cleaning Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scene-cleaning-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scene Cleaning Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-after-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection — After Cleaning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection — After Cleaning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-visual-findings-after-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Visual Findings (After Cleaning)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="outdoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outdoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="indoor-vs-outdoor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indoor vs Outdoor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Viewers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../viewers/methodology.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../viewers/xr-viewers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XR Viewers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-To
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trainers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Trainers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/inria.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inria
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/gsplat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gsplat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/opensplat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenSplat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/nerfstudio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nerfstudio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/trainers/lichtfeldstudio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LichtFeld Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Viewers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Viewers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/viewers/ninjamode.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ninjamode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/viewers/clarte53.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    clarte53
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experimental Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-evaluation-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Evaluation Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantitative Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qualitative-evaluation-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qualitative Evaluation Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-before-cleaning-raw-reconstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection — Before Cleaning (Raw Reconstructions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection — Before Cleaning (Raw Reconstructions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio-raw-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio — Raw Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-visual-findings-before-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Visual Findings (Before Cleaning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scene-cleaning-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scene Cleaning Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scene-cleaning-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scene Cleaning Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quantitative-visualizations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantitative Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-inspection-after-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Inspection — After Cleaning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Inspection — After Cleaning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inria-gaussian-splatting-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inria gaussian-splatting — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsplat-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gsplat — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensplat-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSplat — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nerfstudio-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nerfstudio — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lichtfeld-studio-cleaned-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LichtFeld Studio — Cleaned Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-visual-findings-after-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Visual Findings (After Cleaning)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="indoor-dataset-benchmark-results-and-visual-inspection">Indoor Dataset — Benchmark Results and Visual Inspection</h1>
+<p>This document reports quantitative benchmarking results for five open-source Gaussian Splatting implementations evaluated on the same indoor dataset: Inria gaussian-splatting, gsplat, OpenSplat, Nerfstudio and LichtFeld Studio.</p>
+<hr />
+<h2 id="dataset-description">Dataset Description</h2>
+<p>The indoor dataset consists of <strong>151 frames</strong> extracted from the following video sequence:</p>
+<p><a href="https://huggingface.co/datasets/DL3DV/DL3DV-10K-Sample/tree/main/5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00">https://huggingface.co/datasets/DL3DV/DL3DV-10K-Sample/tree/main/5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00</a></p>
+<hr />
+<h2 id="experimental-protocol">Experimental Protocol</h2>
+<p>All implementations were trained under the following conditions:</p>
+<ul>
+<li><strong>30,000 optimization iterations</strong></li>
+<li>Same image set (151 frames)</li>
+<li>Training executed on a system running <strong>Windows 11</strong> equipped with a <strong>single NVIDIA RTX 4060 GPU</strong></li>
+<li>Default hyperparameters were used unless explicitly modified for reproducibility</li>
+<li>Exported models were converted to <code>.ply</code> format </li>
+</ul>
+<p>For LichtFeld Studio, the <strong>MCMC densification pipeline</strong> was enabled.</p>
+<hr />
+<h2 id="quantitative-evaluation-protocol">Quantitative Evaluation Protocol</h2>
+<p>Quantitative benchmarking was conducted on the raw reconstructions produced by each pipeline prior to any post-processing or cleaning operations.</p>
+<p>For each method, the total output file size, the number of reconstructed Gaussians, and the corresponding storage cost normalized per 100k Gaussians are reported. Training time is provided both in absolute minutes and normalized per 100k Gaussians to facilitate cross-method comparison.</p>
+<p>All measurements were obtained using the same hardware platform and experimental setup described above.</p>
+<hr />
+<h2 id="quantitative-results">Quantitative Results</h2>
+<details>
+<summary>Expand to view results table and charts.</summary>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th style="text-align: right;"># Gaussians</th>
+<th style="text-align: right;">Output Size (MB)</th>
+<th style="text-align: right;">Storage / 100k Gaussians (MB)</th>
+<th style="text-align: right;">Training Time (min)</th>
+<th style="text-align: right;">Training Time / 100k Gaussians (min)</th>
+<th>How-To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td style="text-align: right;">955,819</td>
+<td style="text-align: right;">226.1</td>
+<td style="text-align: right;">23.7</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">12.6</td>
+<td><a href="../../how-to/trainers/inria.html">How-To</a></td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td style="text-align: right;">1,265,239</td>
+<td style="text-align: right;">284.8</td>
+<td style="text-align: right;">22.5</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">4.0</td>
+<td><a href="../../how-to/trainers/gsplat.html">How-To</a></td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td style="text-align: right;">510,870</td>
+<td style="text-align: right;">120.8</td>
+<td style="text-align: right;">23.6</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">11.7</td>
+<td><a href="../../how-to/trainers/opensplat.html">How-To</a></td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td style="text-align: right;">170,150</td>
+<td style="text-align: right;">40.2</td>
+<td style="text-align: right;">23.6</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">17.6</td>
+<td><a href="../../how-to/trainers/nerfstudio.html">How-To</a></td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td style="text-align: right;">1,000,000</td>
+<td style="text-align: right;">236.5</td>
+<td style="text-align: right;">23.7</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">6.0</td>
+<td><a href="../../how-to/trainers/lichtfeldstudio.html">How-To</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Storage / 100k Gaussians (MB)</strong> measures storage cost normalized by Gaussian count.</li>
+<li><strong>Training Time / 100k Gaussians (min)</strong> measures training cost normalized by Gaussian count.</li>
+</ul>
+<h2 id="quantitative-visualizations">Quantitative Visualizations</h2>
+<p><pre class="mermaid"><code>xychart-beta
+    title "Indoor — Raw Gaussian Count"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "Gaussians" 0 --&gt; 1400000
+    bar [955819,1265239,510870,170150,1000000]</code></pre>
+<pre class="mermaid"><code>xychart-beta
+    title "Indoor — Raw Output Size (.ply)"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "MB" 0 --&gt; 320
+    bar [226.1,284.8,120.8,40.2,236.5]</code></pre>
+<pre class="mermaid"><code>xychart-beta
+    title "Indoor — Training Time"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "minutes" 0 --&gt; 140
+    bar [120,50,60,30,60]</code></pre></p>
+</details>
+<h3 id="observations">Observations</h3>
+<ul>
+<li>
+<p><strong>Nerfstudio</strong> produced the most compact representation in terms of output size and training time, with a substantially lower Gaussian count than the other pipelines.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> occupies an intermediate position in terms of Gaussian count and storage footprint.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> generated the densest model in terms of Gaussian count and the largest output file, followed by <strong>LichtFeld Studio</strong>.</p>
+</li>
+<li>
+<p>The original <strong>Inria gaussian-splatting</strong> reference implementation is the slowest, although it produced a structurally stable reconstruction and a dense model.</p>
+</li>
+</ul>
+<hr />
+<h2 id="qualitative-evaluation-protocol">Qualitative Evaluation Protocol</h2>
+<p>Beyond quantitative benchmarking, a qualitative evaluation was conducted on all reconstructed scenes.</p>
+<p>Each raw <code>.ply</code> output was first inspected visually using <strong>SuperSplat</strong> in order to assess noise distribution and structural coherence.</p>
+<p>Subsequently, scene-cleaning was applied to all models. The cleaned reconstructions were then re-inspected using <strong>SuperSplat</strong> to enable direct visual comparison between raw and post-processed outputs.</p>
+<p>This two-stage inspection protocol supports the qualitative analyses and visual materials presented in the following sections.</p>
+<h2 id="visual-inspection-before-cleaning-raw-reconstructions">Visual Inspection — Before Cleaning (Raw Reconstructions)</h2>
+<p>Before applying any post-processing, all reconstructed Gaussian Splatting models were visually inspected in the <strong>SuperSplat Editor</strong> using their exported <code>.ply</code> files.</p>
+<p>The goal of this inspection was:</p>
+<ul>
+<li>to evaluate the <strong>spatial compactness</strong> of the reconstruction,</li>
+<li>to analyze the <strong>distribution of outlier Gaussians</strong>,</li>
+<li>to identify large-scale <strong>floating artifacts</strong>,</li>
+<li>and to qualitatively assess differences between the analyzed tools prior to any cleaning operations.</li>
+</ul>
+<p>All figures in this section correspond to screenshots captured in SuperSplat.</p>
+<details>
+<summary>Expand to view raw reconstruction screenshots per tool.</summary>
+<p><br></p>
+<h3 id="inria-gaussian-splatting-raw-output">Inria gaussian-splatting — Raw Output</h3>
+<p>The raw reconstruction produced by Inria gaussian-splatting shows a compact central scene volume with clearly recognizable furniture geometry. The overall spatial extent remains limited, with a small detached cluster visible on the left side of the scene and a few thin elongated Gaussians forming far-field artifacts around the core scene structure.</p>
+<p><img alt="Inria raw view 1" src="../../media/indoor/inria/raw/inria_00.png" />
+<img alt="Inria raw view 2" src="../../media/indoor/inria/raw/inria_01.png" /></p>
+<hr />
+<h3 id="gsplat-raw-output">gsplat — Raw Output</h3>
+<p>The raw gsplat reconstruction presents a clearly defined central core, surrounded by a loose halo of elongated splats and semi-transparent structures, mainly in the upper and lateral regions. These artifacts remain close to the main scene rather than forming large detached clusters.</p>
+<p><img alt="gsplat raw view 1" src="../../media/indoor/gsplat/raw/gsplat_00.png" />
+<img alt="gsplat raw view 2" src="../../media/indoor/gsplat/raw/gsplat_01.png" /></p>
+<hr />
+<h3 id="opensplat-raw-output">OpenSplat — Raw Output</h3>
+<p>The raw OpenSplat reconstruction shows a compact central scene core with clearly recognizable geometry, but is surrounded by elongated streak artifacts and detached peripheral clusters that extend the spatial footprint around the main structure. </p>
+<p><img alt="OpenSplat raw view 1" src="../../media/indoor/opensplat/raw/opensplat_00.png" />
+<img alt="OpenSplat raw view 2" src="../../media/indoor/opensplat/raw/opensplat_01.png" /></p>
+<hr />
+<h3 id="nerfstudio-raw-output">Nerfstudio — Raw Output</h3>
+<p>The raw Nerfstudio reconstruction exhibits a sparse central scene core surrounded by multiple elongated streak artifacts and isolated peripheral clusters. Thin far-field Gaussians extend well beyond the main interior structure, yielding a fragmented outer envelope and reduced overall compactness.</p>
+<p><img alt="Nerfstudio raw view 1" src="../../media/indoor/nerfstudio/raw/nerfstudio_00.png" />
+<img alt="Nerfstudio raw view 2" src="../../media/indoor/nerfstudio/raw/nerfstudio_01.png" /></p>
+<hr />
+<h3 id="lichtfeld-studio-raw-output">LichtFeld Studio — Raw Output</h3>
+<p>The raw LichtFeld Studio reconstruction shows a very dense central scene core, surrounded by a broad halo of peripheral outliers and far-field streak artifacts, which markedly increase the overall spatial extent of the model.</p>
+<p><img alt="Lichtfeld raw view 1" src="../../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_00.png" />
+<img alt="Lichtfeld raw view 2" src="../../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_01.png" />
+<img alt="Lichtfeld raw view 3" src="../../media/indoor/lichtfeldstudio/raw/lichtfeldstudio_02.png" /></p>
+<hr />
+<h3 id="summary-of-visual-findings-before-cleaning">Summary of Visual Findings (Before Cleaning)</h3>
+<p>Across all raw reconstructions, distinct patterns can be observed in how each pipeline distributes Gaussians around the central scene:</p>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> produced one of the most compact raw models, with a clearly defined scene core and only limited peripheral outliers and thin far-field streaks.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> retained a relatively concentrated scene core but exhibited larger elongated streak artifacts and scattered peripheral Gaussians around the core.</p>
+</li>
+<li>
+<p><strong>gsplat</strong> generated a dense reconstruction with a visible halo of peripheral Gaussians surrounding the scene core, comparable to Inria gaussian-splatting and OpenSplat, but without large detached background clusters.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> showed the strongest spatial dispersion, combining a very dense scene core with extensive far-field clutter and numerous floating clusters distributed around the core.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> produced the sparsest central reconstruction, but still displayed isolated distant clusters and streak-like artifacts that reduce overall compactness compared to Inria gaussian-splatting and OpenSplat.</p>
+</li>
+</ul>
+</details>
+<hr />
+<h2 id="scene-cleaning-procedure">Scene Cleaning Procedure</h2>
+<p>After inspecting the raw reconstructions, all scenes were cleaned using <strong>SuperSplat</strong> in order to reduce outliers and restrict the reconstruction to the indoor region of interest.</p>
+<p>The cleaning process was designed to be consistent across all tools and relied on a combination of <strong>spatial filtering</strong> and <strong>attribute-based pruning</strong> to remove spurious Gaussians while preserving the main architectural structure of the scene. The reconstructed environment exhibited well-defined spatial boundaries inherent to indoor settings, which made it relatively easy to localize the central scene core and to separate it from peripheral and removable Gaussians.</p>
+<p>In particular, the confined nature of the indoor scene allowed for an effective spatial restriction of the region of interest, enabling the removal of a large number of removable Gaussians without compromising walls, furniture, or other structural elements. As a result, filtering operations could be applied in a controlled manner, with their effects being straightforward to visually assess and validate.</p>
+<p>In particular, the following operations were applied:</p>
+<ul>
+<li><strong>Spatial restriction of the scene volume</strong>, by isolating the main indoor region and removing distant background splats outside the room boundaries.</li>
+<li><strong>Distance-based pruning</strong>, aimed at deleting Gaussians located far from the main reconstructed volume.</li>
+<li><strong>Opacity-based filtering</strong>, removing low-opacity Gaussians that contributed negligibly to rendering but increased clutter and memory usage.</li>
+<li><strong>Scale-based filtering</strong> on the Gaussian axes (scale <em>x</em>, <em>y</em>, <em>z</em>), used to eliminate streaks and spike-like artifacts.</li>
+<li><strong>Surface-area filtering</strong>, targeting oversized Gaussians that spanned large regions of space and typically represented poorly constrained geometry.</li>
+<li><strong>Manual inspection and refinement</strong>, performed to ensure that walls, furniture, and major structural elements were preserved.</li>
+<li><strong>Export of the cleaned models</strong> as new <code>.ply</code>.</li>
+</ul>
+<p>This cleaning stage was applied uniformly to all reconstructions in order to enable a fair qualitative comparison between raw and post-processed outputs.</p>
+<hr />
+<h2 id="scene-cleaning-evaluation">Scene Cleaning Evaluation</h2>
+<details>
+<summary>Expand to view cleaning impact table and chart.</summary>
+<p><br></p>
+<p>This table quantifies the impact of SuperSplat-based cleaning by comparing each raw reconstruction against its cleaned counterpart.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th style="text-align: right;">Raw Gaussians</th>
+<th style="text-align: right;">Cleaned Gaussians</th>
+<th style="text-align: right;">Δ Gaussians (%)</th>
+<th style="text-align: right;">Raw Size (MB)</th>
+<th style="text-align: right;">Cleaned Size (MB)</th>
+<th style="text-align: right;">Δ Size (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inria gaussian-splatting</td>
+<td style="text-align: right;">955,819</td>
+<td style="text-align: right;">518,140</td>
+<td style="text-align: right;">−45.8%</td>
+<td style="text-align: right;">226.1</td>
+<td style="text-align: right;">122.6</td>
+<td style="text-align: right;">−45.8%</td>
+</tr>
+<tr>
+<td>gsplat</td>
+<td style="text-align: right;">1,265,239</td>
+<td style="text-align: right;">690,776</td>
+<td style="text-align: right;">−45.4%</td>
+<td style="text-align: right;">284.8</td>
+<td style="text-align: right;">155.5</td>
+<td style="text-align: right;">−45.4%</td>
+</tr>
+<tr>
+<td>OpenSplat</td>
+<td style="text-align: right;">510,870</td>
+<td style="text-align: right;">402,531</td>
+<td style="text-align: right;">−21.2%</td>
+<td style="text-align: right;">120.8</td>
+<td style="text-align: right;">95.2</td>
+<td style="text-align: right;">−21.2%</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td style="text-align: right;">170,150</td>
+<td style="text-align: right;">126,841</td>
+<td style="text-align: right;">−25.4%</td>
+<td style="text-align: right;">40.2</td>
+<td style="text-align: right;">30.0</td>
+<td style="text-align: right;">−25.4%</td>
+</tr>
+<tr>
+<td>LichtFeld Studio</td>
+<td style="text-align: right;">1,000,000</td>
+<td style="text-align: right;">800,515</td>
+<td style="text-align: right;">−20.0%</td>
+<td style="text-align: right;">236.5</td>
+<td style="text-align: right;">189.3</td>
+<td style="text-align: right;">−20.0%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Δ Gaussians (%) indicates the relative change in the number of Gaussians after cleaning with respect to the raw reconstruction.</li>
+<li>Δ Size (%) reports the relative reduction in file size after cleaning, measured on the exported .ply models.</li>
+</ul>
+<h2 id="quantitative-visualizations_1">Quantitative Visualizations</h2>
+<pre class="mermaid"><code>xychart-beta
+    title "Indoor — Cleaning Impact (Δ Gaussians %)"
+    x-axis ["Inria","gsplat","OpenSplat","Nerfstudio","LichtFeld"]
+    y-axis "% removed" 0 --&gt; 60
+    bar [45.8,45.4,21.2,25.4,20.0]</code></pre>
+</details>
+<h2 id="observations_1">Observations</h2>
+<ul>
+<li>
+<p><strong>gsplat</strong> exhibits the largest absolute reductions both in splat count and file size, while <strong>Inria gaussian-splatting</strong> shows the largest percentage reduction (≈ −45%) across both metrics.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> shows a moderate reduction (≈ −21%) in both file size and splat count, indicating more conservative cleaning operations compared to Inria gaussian-splatting and gsplat.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> exhibits a consistent decrease in both metrics while maintaining the most compact absolute representation in terms of final file size.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong> undergoes limited but noticeable reductions (≈ −20%) in both metrics, comparable to OpenSplat but starting from a substantially larger raw model.</p>
+</li>
+</ul>
+<hr />
+<h2 id="visual-inspection-after-cleaning">Visual Inspection — After Cleaning</h2>
+<p>This section focuses exclusively on the <strong>post-cleaning appearance</strong> of each model, highlighting changes in spatial compactness, peripheral noise removal, and preservation of structural detail.</p>
+<p>This section presents both screenshots and screen-recorded orbit videos captured in SuperSplat after the cleaning procedure.</p>
+<details>
+<summary>Expand to view cleaned reconstruction screenshots and videos per tool.</summary>
+<p><br></p>
+<h3 id="inria-gaussian-splatting-cleaned-output">Inria gaussian-splatting — Cleaned Output</h3>
+<p>The cleaned Inria gaussian-splatting reconstruction preserves the compact central scene volume and clearly recognizable furniture geometry. The previously detached cluster on the left side is no longer visible, and the thin elongated Gaussians forming far-field artifacts around the core are largely removed. The overall spatial extent is further reduced, resulting in a tighter and more spatially focused reconstruction.</p>
+<p><img alt="Inria cleaned view 1" src="../../media/indoor/inria/cleaned/inria_cleaned_00.png" />
+<img alt="Inria cleaned view 2" src="../../media/indoor/inria/cleaned/inria_cleaned_01.png" /></p>
+<p><a href="https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420">https://github.com/user-attachments/assets/978274ee-fd2b-4a49-ab45-47e485ae0420</a></p>
+<hr />
+<h3 id="gsplat-cleaned-output">gsplat — Cleaned Output</h3>
+<p>The cleaned gsplat reconstruction shows a markedly more compact central scene volume. Most of the loose halo of elongated splats and semi-transparent structures has been removed, particularly in the upper and lateral regions. The remaining Gaussians are tightly clustered around the main furniture geometry, with only a few faint peripheral streaks persisting near the scene margins and no clearly detached background clusters visible.</p>
+<p><img alt="gsplat cleaned view 1" src="../../media/indoor/gsplat/cleaned/gsplat_cleaned_00.png" />
+<img alt="gsplat cleaned view 2" src="../../media/indoor/gsplat/cleaned/gsplat_cleaned_01.png" /></p>
+<p><a href="https://github.com/user-attachments/assets/52903544-0081-4fda-bc09-5f5cf14f5438">https://github.com/user-attachments/assets/52903544-0081-4fda-bc09-5f5cf14f5438</a></p>
+<hr />
+<h3 id="opensplat-cleaned-output">OpenSplat — Cleaned Output</h3>
+<p>The cleaned OpenSplat reconstruction shows a sharply delimited central scene core with Gaussians concentrated almost exclusively within the true interior region. The overall spatial extent is strongly reduced, with most elongated streak artifacts and detached peripheral clusters removed, leaving only minor residual outliers near the scene boundaries.</p>
+<p><img alt="OpenSplat cleaned view 1" src="../../media/indoor/opensplat/cleaned/opensplat_cleaned_00.png" />
+<img alt="OpenSplat cleaned view 2" src="../../media/indoor/opensplat/cleaned/opensplat_cleaned_01.png" /></p>
+<p><a href="https://github.com/user-attachments/assets/b99ac571-9364-4af1-9bc2-538ebe8a8344">https://github.com/user-attachments/assets/b99ac571-9364-4af1-9bc2-538ebe8a8344</a></p>
+<hr />
+<h3 id="nerfstudio-cleaned-output">Nerfstudio — Cleaned Output</h3>
+<p>The cleaned Nerfstudio reconstruction presents a highly compact central scene core with a strongly reduced spatial footprint. Most elongated streak artifacts and detached far-field clusters visible in the raw output are removed, resulting in a tightly cropped volume that preserves the main architectural structures of the interior scene.</p>
+<p><img alt="Nerfstudio cleaned view 1" src="../../media/indoor/nerfstudio/cleaned/nerfstudio_cleaned_00.png" />
+<img alt="Nerfstudio cleaned view 2" src="../../media/indoor/nerfstudio/cleaned/nerfstudio_cleaned_01.png" /></p>
+<p><a href="https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49">https://github.com/user-attachments/assets/880a85ce-ecfc-4653-ad6b-e24bb658ed49</a></p>
+<hr />
+<h3 id="lichtfeld-studio-cleaned-output">LichtFeld Studio — Cleaned Output</h3>
+<p>The cleaned LichtFeld Studio reconstruction presents a compact central scene volume with a strongly reduced spatial footprint. Most peripheral outliers and far-field streak artifacts are removed, although a faint residual halo remains near the scene boundaries, indicating conservative final pruning while preserving dense interior geometry.</p>
+<p><img alt="LichtFeld Studio cleaned view 1" src="../../media/indoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_00.png" />
+<img alt="LichtFeld Studio cleaned view 2" src="../../media/indoor/lichtfeldstudio/cleaned/lichtfeldstudio_cleaned_01.png" /></p>
+<p><a href="https://github.com/user-attachments/assets/0363dd17-6705-4a65-b7c4-8bd875d3a325">https://github.com/user-attachments/assets/0363dd17-6705-4a65-b7c4-8bd875d3a325</a></p>
+<hr />
+<h2 id="summary-of-visual-findings-after-cleaning">Summary of Visual Findings (After Cleaning)</h2>
+<p>After cleaning, the five pipelines exhibit different balances between noise removal, spatial compactness, and reconstruction density:</p>
+<ul>
+<li>
+<p><strong>Inria gaussian-splatting</strong> and <strong>OpenSplat</strong>, which already produced relatively compact raw reconstructions, further reduce their overall spatial extent after cleaning, leaving only minor peripheral remnants near the scene boundaries.</p>
+</li>
+<li>
+<p><strong>gsplat</strong>, which initially exhibited a moderate halo of peripheral splats, converges to a compact scene volume after cleaning.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong>, which originally displayed sparse reconstructions with isolated distant clusters, presents a tightly cropped scene after cleaning while preserving the main architectural and furniture structures.</p>
+</li>
+<li>
+<p><strong>LichtFeld Studio</strong>, previously characterized by very large spatial extent and heavy far-field clutter, now shows a substantially tighter reconstruction.</p>
+</li>
+</ul>
+</details>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li>
+<p>The indoor scene yields <strong>spatially compact raw reconstructions</strong> across most pipelines.</p>
+</li>
+<li>
+<p><strong>Scene cleaning is generally straightforward</strong>, thanks to well-defined spatial limits.</p>
+</li>
+<li>
+<p>Quantitatively, <strong>Inria gaussian-splatting</strong> and <strong>gsplat</strong> experience the largest relative reductions after cleaning (≈ −45%), reflecting the presence of removable peripheral splats in their raw outputs.</p>
+</li>
+<li>
+<p><strong>OpenSplat</strong> and <strong>LichtFeld Studio</strong> undergo more moderate pruning (≈ −21% and ≈ −20%), suggesting that a larger fraction of their Gaussians already contributes to the retained interior structure.</p>
+</li>
+<li>
+<p><strong>Nerfstudio</strong> remains the most compact pipeline both before and after cleaning, with limited absolute size and a moderate relative reduction.</p>
+</li>
+<li>
+<p>After post-processing, all methods converge toward <strong>tightly bounded reconstructions focused on the interior volume</strong>, with only minor residual artifacts near scene boundaries.</p>
+</li>
+<li>
+<p>Overall, the indoor benchmark highlights <strong>differences in raw artifact distributions</strong> while demonstrating that confined environments strongly facilitate aggressive and reliable post-processing.</p>
+</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="methodology.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Methodology">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Methodology
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="outdoor.html" class="md-footer__link md-footer__link--next" aria-label="Next: Outdoor">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Outdoor
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
