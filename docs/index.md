@@ -1,7 +1,5 @@
 # Gaussian Splatting Tools Comparison
 
-*Author: Ernesta Maria Sichetti*
-
 This site documents a structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.
 
 ---
@@ -54,3 +52,9 @@ The analysis is limited to:
 All experiments use fixed datasets, consistent optimization settings, a standardized cleaning workflow, identical hardware, and exported `.ply` files for inspection and XR loading.
 
 Commercial trainers and desktop/web-based viewers are documented at overview level only and are not included in the controlled experimental analysis.
+
+---
+
+## Acknowledgments
+
+Special thanks to **Ernesta Maria Sichetti** for carrying out the experiments, collecting the results, and producing the initial documentation that forms the foundation of this repository.

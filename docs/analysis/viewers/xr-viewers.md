@@ -42,14 +42,14 @@ The evaluation focused on the following criteria:
 
 ## Visual Inspection - Unity-VR-Gaussian-Splatting (ninjamode)
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
-
 The following section reports the results of the visual inspection conducted on Unity-VR-Gaussian-Splatting (ninjamode).
 
 Detailed setup and execution instructions for Unity-VR-Gaussian-Splatting (ninjamode) can be found in: [How-To](../../how-to/viewers/ninjamode.md)
+
+<details markdown="1">
+<summary>Expand to view per-trainer inspection details and evaluation scores.</summary>
+
+<br>
 
 ### Inria gaussian-splatting
 
@@ -93,6 +93,8 @@ Some brown splats and other artifacts appear projected onto background walls. Di
 
 ---
 
+</details>
+
 ## Observations
 
 - **Inria gaussian-splatting** provides the most stable reconstruction in Unity-VR-Gaussian-Splatting (ninjamode), outperforming the other trainers in terms of surface solidity and overall coherence, with only minor spike-like artifacts during rotation.
@@ -105,20 +107,18 @@ Some brown splats and other artifacts appear projected onto background walls. Di
 
 - **LichtFeld Studio** presents the strongest motion-related instability among the trainers, with diffuse vibration, dragging during movement and rotation, and brown splats projected onto walls.
 
-</details>
-
 ---
 
 ## Visual Inspection - GaussianSplattingVRViewerUnity (clarte53)
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
-
 The following section reports the results of the visual inspection conducted on GaussianSplattingVRViewerUnity (clarte53).
 
 Detailed setup and execution instructions for GaussianSplattingVRViewerUnity (clarte53) can be found in: [How-To](../../how-to/viewers/clarte53.md)
+
+<details markdown="1">
+<summary>Expand to view per-trainer inspection details and evaluation scores.</summary>
+
+<br>
 
 ### Inria gaussian-splatting
 
@@ -164,6 +164,8 @@ The scene runs extremely slowly, although the static visual quality appears high
 
 ---
 
+</details>
+
 ## Observations
 
 - **Inria gaussian-splatting** presents strong geometric solidity but exhibits motion slowness, dragging effects, slight contour vibration, perceived parallax instability, and minor transparency artifacts during movement.
@@ -176,16 +178,9 @@ The scene runs extremely slowly, although the static visual quality appears high
 
 - **LichtFeld Studio** provides high static visual quality with well-defined contours but suffers from extreme slowness, dragging during motion, and severe motion instability affecting usability.
 
-</details>
-
 ---
 
 ## Cross-Viewer Comparison
-
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
 
 The following section directly compares the rendering behavior of the two XR viewers.
 
@@ -206,8 +201,6 @@ The following section directly compares the rendering behavior of the two XR vie
 - **Usability and Comfort**:
   - **GaussianSplattingVRViewerUnity (clarte53)** proved more difficult to use overall due to visual instability, dragging, and non-stable parallax, resulting in a less comfortable immersive experience, while **Unity-VR-Gaussian-Splatting (ninjamode)** provided a more stable and comfortable overall experience.
 
-</details>
-
 ---
 
 ## Trainer Performance Analysis Protocol - Unity-VR-Gaussian-Splatting (ninjamode)
@@ -222,8 +215,8 @@ The values reported in the following table correspond to the average of two acqu
 
 ## Quantitative Results
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
+<details markdown="1">
+<summary>Expand to view runtime performance table and charts.</summary>
 
 <br>
 
@@ -264,6 +257,8 @@ xychart-beta
     
 ---
 
+</details>
+
 ## Observations
 
 - **Nerfstudio** achieves the highest average FPS (65.0) and the lowest average frame time (15.39 ms), indicating the strongest real-time performance among the evaluated trainers.
@@ -273,8 +268,6 @@ xychart-beta
 - **OpenSplat** provides the second-highest average FPS (37.8) and the second-lowest frame time (26.62 ms), outperforming Inria gaussian-splatting and gsplat in rendering speed.
 
 - **Inria gaussian-splatting** and **gsplat** show comparable performance, with Inria gaussian-splatting achieving slightly higher FPS and lower maximum frame time peaks.
-
-</details>
 
 ---
 

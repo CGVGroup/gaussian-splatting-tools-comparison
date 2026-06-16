@@ -32,8 +32,8 @@ The objective of this comparison is to highlight how each pipeline behaves when 
 
 ## Quantitative Benchmarking Comparison
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
+<details markdown="1">
+<summary>Expand to view cross-scenario results table and charts.</summary>
 
 <br>
 
@@ -69,6 +69,8 @@ xychart-beta
 
 **Legend:** lighter line = indoor, darker line = outdoor
 
+</details>
+
 ### Observations
 
 - **Inria gaussian-splatting** produces fewer Gaussians and a smaller model for the outdoor scenario, together with a substantially shorter training time.
@@ -81,16 +83,9 @@ xychart-beta
 
 - **LichtFeld Studio** reaches the same Gaussian budget in both scenarios, but trains faster on the outdoor one.
 
-</details>
-
 ---
 
 ## Raw Reconstructions: Structural Differences
-
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
 
 Clear structural differences emerge between indoor and outdoor raw reconstructions.
 
@@ -118,16 +113,9 @@ Outdoor scenes present fundamentally different challenges:
 
 Compared to indoor cases, outdoor raw reconstructions consistently exhibit **wider spatial footprints** and **more complex splats distributions**.
 
-</details>
-
 ---
 
 ## Cleaning Difficulty and Strategies
-
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
 
 The qualitative differences between indoor and outdoor scenes are reflected directly in the **complexity of post-processing**.
 
@@ -155,14 +143,12 @@ Outdoor cleaning proved substantially **more challenging**:
 
 Cleaning strategies therefore remained conservative, prioritizing preservation of environmental context over maximal size reduction.
 
-</details>
-
 ---
 
 ## Quantitative Impact of Cleaning
 
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
+<details markdown="1">
+<summary>Expand to view cleaning impact comparison table and chart.</summary>
 
 <br>
 
@@ -187,6 +173,8 @@ xychart-beta
 
 **Legend:** lighter line = indoor, darker line = outdoor
 
+</details>
+
 ## Observations
 
 The numerical effect of post-processing differs markedly between indoor and outdoor settings.
@@ -210,17 +198,9 @@ Across environments, **LichtFeld Studio** and **Inria gaussian-splatting** are p
 
 **Nerfstudio** behaves differently across settings: it undergoes moderate pruning in the indoor scene but only limited reductions in the outdoor scene, suggesting that a larger fraction of its outdoor Gaussians contribute to retained background geometry and cannot be safely removed without degrading scene completeness.
 
-
-</details>
-
 ---
 
 ## Qualitative Impact of Cleaning
-
-<details open>
-<summary><strong>Show / Hide Section</strong></summary>
-
-<br>
 
 Visual inspection across the two scenarios reveals systematic differences in how the same pipelines distribute Gaussians and how effectively artifacts can be controlled.
 
@@ -257,8 +237,6 @@ Post-processing reduces clutter in both scenarios, but different residual patter
 - **LichtFeld Studio** shows the largest qualitative contrast: while the indoor scene becomes compact with only faint residual halos, the outdoor scene preserves a dense core surrounded by thin but persistent peripheral halos.
 
 In summary, **indoor reconstructions** tend to converge toward tightly bounded reconstructions after cleaning across pipelines, whereas **outdoor reconstructions** consistently preserve larger envelopes and detached structures, reflecting the increased complexity of environmental geometry and sky regions.
-
-</details>
 
 ---
 

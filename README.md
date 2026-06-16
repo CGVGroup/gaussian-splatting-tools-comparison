@@ -1,7 +1,5 @@
 # Gaussian Splatting Tools Comparison
 
-*Author: Ernesta Maria Sichetti*
-
 This repository provides a structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.
 
 **The full documentation is available at: [ernesta-sichetti.github.io/gaussian-splatting-tools-comparison](https://ernesta-sichetti.github.io/gaussian-splatting-tools-comparison)**
@@ -21,3 +19,9 @@ Documentation source lives in `docs/`. The site is built with [MkDocs Material](
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding how-to guides, new tools to the overview, or corrections.
+
+---
+
+## Acknowledgments
+
+Special thanks to **Ernesta Maria Sichetti** for carrying out the experiments, collecting the results, and producing the initial documentation that forms the foundation of this repository.

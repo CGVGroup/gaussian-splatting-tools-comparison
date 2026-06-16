@@ -1,13 +1,15 @@
 site_name: Gaussian Splatting Tools Comparison
 site_description: Structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.
-site_author: Ernesta Maria Sichetti
 repo_url: https://github.com/ernesta-sichetti/gaussian-splatting-tools-comparison
 repo_name: gaussian-splatting-tools-comparison
 docs_dir: docs
+use_directory_urls: false
 
 theme:
   name: material
   features:
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.top
@@ -17,14 +19,14 @@ theme:
     - content.code.copy
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: deep orange
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: deep orange
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -36,7 +38,9 @@ markdown_extensions:
   - admonition
   - tables
   - attr_list
+  - md_in_html
   - pymdownx.details
+  - pymdownx.magiclink
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
