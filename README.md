@@ -2,7 +2,7 @@
 
 This repository provides a structured overview and experimental analysis of Gaussian Splatting training pipelines and XR visualization environments.
 
-**The full documentation is available at: [ernesta-sichetti.github.io/gaussian-splatting-tools-comparison](https://ernesta-sichetti.github.io/gaussian-splatting-tools-comparison)**
+**The full documentation is available at: [cgvgroup.github.io/gaussian-splatting-tools-comparison](https://cgvgroup.github.io/gaussian-splatting-tools-comparison)**
 
 ---
 
